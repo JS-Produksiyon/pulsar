@@ -28,9 +28,44 @@ if sys.version_info < MIN_PYTHON:
 from nebula import Nebula
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize
-from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon
+from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog
 from PySide6.QtGui import QIcon, QAction
 
+# windows
+from ui.pulsar_about_ui import Ui_AboutDialog
+from ui.pulsar_status_ui import Ui_ConnStatusWindow
+from ui.pulsar_main_ui import Ui_MainWindow
+
+
+# Windows
+class AboutWindow(QDialog):
+    def __init__(self, parent=None):
+        super(AboutWindow, self).__init__()
+
+        self.ui = Ui_AboutDialog()
+        self.ui.setupUi(self)
+
+
+class ConnStatusWindow(QMainWindow):
+    def __init__(self, parent=None):
+        super(ConnStatusWindow, self).__init__()
+
+        self.ui = Ui_ConnStatusWindow()
+        self.ui.setupUi(self)
+
+
+class MainWindow(QMainWindow):
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__()
+
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+    
+        # hide the disconnect button on init
+        self.ui.btnDisconnect.hide()
+
+
+# Primary driver is the System Tray Icon
 class systemTray():
     """
     System Tray Icon
@@ -50,6 +85,8 @@ class systemTray():
         self.menu.quit.triggered.connect(parent.quit)
         self.menu.connItem.triggered.connect(self.nebulaConnect)
         self.menu.disconnItem.triggered.connect(self.nebulaDisconnect)
+        self.menu.settingsWin.triggered.connect(self.showMainWin)
+        self.menu.statusWin.triggered.connect(self.showStatusWin)
         self.trayObj.setContextMenu(self.menu)
         self.nebulaObj = nebula
 
@@ -78,6 +115,17 @@ class systemTray():
             self.connected = False
             self.connectStatusIcon()
 
+    def showMainWin(self) -> None:
+        """
+        Display main window
+        """
+        mainWin.show()
+
+    def showStatusWin(self) -> None:
+        """
+        Display Connection Status window
+        """
+        connWin.show()
 
 class systemTrayMenu(QMenu):
     """
@@ -100,11 +148,15 @@ class systemTrayMenu(QMenu):
         self.addAction(self.quit)
 
 
+
 if __name__ == '__main__':
     app = QApplication([])
     app.setQuitOnLastWindowClosed(False)
 
     st = systemTray(app)
+    mainWin = MainWindow()
+    connWin = ConnStatusWindow()
+    
 
     app.exec()
     

@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="icon">
+    <file>resources/pulsar-icon-16.png</file>
+    <file>resources/pulsar-icon-24.png</file>
+    <file>resources/pulsar-icon-32.png</file>
+    <file>resources/pulsar-icon-48.png</file>
+    <file>resources/pulsar-icon-64.png</file>
+    <file>resources/pulsar-icon-128.png</file>
+    <file>resources/pulsar-icon-256.png</file>
+    <file>resources/pulsar-icon-512.png</file>
+    <file>resources/pulsar-icon-gray-16.png</file>
+    <file>resources/pulsar-icon-gray-24.png</file>
+    <file>resources/pulsar-icon-gray-32.png</file>
+  </qresource>
+</RCC>
