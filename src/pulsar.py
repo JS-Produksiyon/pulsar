@@ -4,7 +4,7 @@
 """
     File name: pulsar.py
     Date Created: 2024-05-03
-    Date Modified: 2024-05-03
+    Date Modified: 2024-05-05
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -25,6 +25,7 @@ MIN_PYTHON = (3,11)
 if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
+from nebula import Nebula
 from PySide6 import QtCore
 from PySide6.QtCore import QTranslator, QLocale
 
