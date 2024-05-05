@@ -19,15 +19,92 @@ __languages__ = ['en','de','tr']  # languages the interface has been translated 
 __build__ = ''
 # ================================================================================
 # Check for python version
-import sys
+import sys, os
 
 MIN_PYTHON = (3,11)
 if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
 from nebula import Nebula
-from PySide6 import QtCore
-from PySide6.QtCore import QTranslator, QLocale
+from PySide6 import QtCore, QtGui
+from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize
+from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon
+from PySide6.QtGui import QIcon, QAction
+
+class systemTray():
+    """
+    System Tray Icon
+    """
+    def __init__(self, parent, nebula=None) -> None:
+        self.connected = False
+        self.iconOn = QIcon(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-16.png', size=QSize(16, 16))
+        self.iconOn.addFile(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-24.png', size=QSize(24, 24))
+        self.iconOn.addFile(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-32.png', size=QSize(32, 32))
+        self.iconOff = QIcon(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-gray-16.png', size=QSize(16, 16))
+        self.iconOff.addFile(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-gray-24.png', size=QSize(24, 24))
+        self.iconOff.addFile(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-gray-32.png', size=QSize(32, 32))
+        self.trayObj = QSystemTrayIcon()
+        self.trayObj.setIcon(self.iconOff)
+        self.trayObj.setVisible(True)
+        self.menu = systemTrayMenu(self)
+        self.menu.quit.triggered.connect(parent.quit)
+        self.menu.connItem.triggered.connect(self.nebulaConnect)
+        self.menu.disconnItem.triggered.connect(self.nebulaDisconnect)
+        self.trayObj.setContextMenu(self.menu)
+        self.nebulaObj = nebula
+
+    def connectStatusIcon(self) -> None:
+        """
+        Change icon depending on connection status
+        """
+        if self.connected:
+            self.trayObj.setIcon(self.iconOn)
+        elif not self.connected:
+            self.trayObj.setIcon(self.iconOff)
+
+    def nebulaConnect(self) -> None:
+        """
+        Enable connection 
+        """
+        if not self.connected:
+            self.connected = True
+            self.connectStatusIcon()
+
+    def nebulaDisconnect(self) -> None:
+        """
+        Disable connection
+        """
+        if self.connected:
+            self.connected = False
+            self.connectStatusIcon()
+
+
+class systemTrayMenu(QMenu):
+    """
+    Menu for the system Tray Icon
+    """
+    def __init__(self, parent=None):
+        super(systemTrayMenu, self).__init__()
+        
+        self.connItem = QAction(self.tr('Connect to Nebula'))
+        self.addAction(self.connItem)
+        self.disconnItem = QAction(self.tr('Disconnect from Nebula'))
+        self.addAction(self.disconnItem)
+        self.addSeparator()
+        self.statusWin = QAction(self.tr('Status...')) 
+        self.addAction(self.statusWin)
+        self.settingsWin = QAction(self.tr('Settings...'))
+        self.addAction(self.settingsWin)
+        self.addSeparator()
+        self.quit = QAction(self.tr('Quit'))
+        self.addAction(self.quit)
+
 
 if __name__ == '__main__':
-    print('Pulsar: Nebula GUI for Windows and MacOS')
+    app = QApplication([])
+    app.setQuitOnLastWindowClosed(False)
+
+    st = systemTray(app)
+
+    app.exec()
+    
