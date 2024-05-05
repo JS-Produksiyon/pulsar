@@ -76,14 +76,15 @@ class Nebula():
             # because this application does not work with Linux!
 
         if self.validConfig:
+            if self.testMode:
+                # elevate()
+                showShell = False
+
             if self.configPath != '':
                 os.chdir(self.configPath)
 
-            if self.testMode:
-                elevate()
-                showShell = False
 
-            self.nProcess = subprocess.Popen(f'{nPath} -config {self.configFile}', shell=showShell)
+            self.nProcess = subprocess.Popen(f'{nPath} -config {self.configFile}', shell=True)
 
 
     def disconnect(self) -> None:
@@ -91,7 +92,11 @@ class Nebula():
         stops the nebula binary
         """
         if self.nProcess:
-            self.nProcess.send_signal(signal.CTRL_C_EVENT)
+            if sys.platform == 'win32':
+                self.nProcess.send_signal(signal.CTRL_C_EVENT)
+            elif sys.platform == 'darwin':
+                os.kill(self.nProcess.pid, signal.SIGINT)
+
             self.nProcess = False
 
 
@@ -123,6 +128,7 @@ if __name__ == '__main__':
         elif sys.platform == 'win32':
             cf = 'C:\\Users\\wolfh\\Repositories\\pulsar\\creds\\joshw-config.yaml'
 
+        elevate()
         n = Nebula(cf, test=True)
         n.connect()
         sleep(10)
