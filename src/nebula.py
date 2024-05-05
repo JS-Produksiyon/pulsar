@@ -64,6 +64,7 @@ class Nebula():
         :type  configFile: string
         """
         nPathBase = os.path.dirname(__file__) + os.sep + 'bin' + os.sep + '{os}' + os.sep + '{binary}'
+        showShell = True
 
         # load proper binary
         if sys.platform == 'darwin':
@@ -80,7 +81,9 @@ class Nebula():
 
             if self.testMode:
                 elevate()
-            self.nProcess = subprocess.Popen(f'{nPath} -config {self.configFile}', shell=True)
+                showShell = False
+
+            self.nProcess = subprocess.Popen(f'{nPath} -config {self.configFile}', shell=showShell)
 
 
     def disconnect(self) -> None:
@@ -115,7 +118,12 @@ if __name__ == '__main__':
     print("This module is not meant to be called by itself unless testing. Please import using from nebula import Nebula.")
 
     try:
-        n = Nebula('C:\\Users\\wolfh\\Repositories\\pulsar\\creds\\joshw-config.yaml', test=True)
+        if sys.platform == 'darwin':
+            cf = '/Users/wolfhawke/Repositories/pulsar/creds/joshw-config.yaml'
+        elif sys.platform == 'win32':
+            cf = 'C:\\Users\\wolfh\\Repositories\\pulsar\\creds\\joshw-config.yaml'
+
+        n = Nebula(cf, test=True)
         n.connect()
         sleep(10)
         n.disconnect()
