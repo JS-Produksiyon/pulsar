@@ -150,7 +150,8 @@ class systemTrayMenu(QMenu):
 
 
 if __name__ == '__main__':
-    app = QApplication([])
+    app = QApplication(sys.argv)
+    app.setStyle('fusion')
     app.setQuitOnLastWindowClosed(False)
 
     st = systemTray(app)
