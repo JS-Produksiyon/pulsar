@@ -382,7 +382,7 @@ def setLanguage(app, language) -> bool:
         app.installTranslator(translator)
         translator = QTranslator(app)
         app.removeTranslator(translator)
-        translator.load(os.path.dirname(__file__) + os.sep + 'translations' + os.sep + 'culmt_{}.qm'.format(language))
+        translator.load(os.path.dirname(__file__) + os.sep + 'i18n' + os.sep + 'culmt_{}.qm'.format(language))
         app.installTranslator(translator)
         return True
     else:

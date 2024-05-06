@@ -49,7 +49,7 @@ class Ui_AboutDialog(object):
         self.label_2.setText(u"Pulsar")
         self.label_3 = QLabel(AboutDialog)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(50, 30, 251, 16))
+        self.label_3.setGeometry(QRect(50, 30, 341, 16))
         self.label_4 = QLabel(AboutDialog)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setGeometry(QRect(10, 60, 300, 16))
