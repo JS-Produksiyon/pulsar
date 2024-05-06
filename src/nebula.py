@@ -4,7 +4,7 @@
 """
     File name: nebula.py
     Date Created: 2024-05-03
-    Date Modified: 2024-05-05
+    Date Modified: 2024-05-06
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -39,7 +39,7 @@ class Nebula():
     :type  test  : boolean
     """
 
-    def __init__(self, config, test=False) -> None:
+    def __init__(self, config='', test=False) -> None:
         """ Class initialization """
         # status variables
         self.validConfig = False
@@ -48,11 +48,7 @@ class Nebula():
         self.configPath = ''
         self.configFile = ''
         self.testMode = test
-
-        if os.path.exists(config):
-            self.configFile = config
-            self.configPath = self.configFile[:self.configFile.rfind(os.sep)] if os.sep in self.configFile else ''
-            
+        self.setConfig(config)
         self.validConfig = self.validateConfig()
 
     
@@ -100,6 +96,24 @@ class Nebula():
             self.nProcess = False
 
 
+    def setConfig(self, config) -> None:
+        """
+        sets a new configuration file
+
+        :param config: path to config file
+        :type  config: str
+        """
+        if os.path.exists(config):
+            self.configFile = config
+            self.configPath = self.configFile[:self.configFile.rfind(os.sep)] if os.sep in self.configFile else ''
+
+        self.validConfig = self.validateConfig()
+
+        if not self.validConfig:
+            self.configFile = ''            
+            self.configPath = ''
+
+
     def validateConfig(self) -> bool:
         """
         validates the object config file
@@ -107,14 +121,17 @@ class Nebula():
         :returns: boolean denoting validity
         """
         if os.path.exists(self.configFile):
-            with open(self.configFile, 'r', encoding='utf-8') as cf:
-                config = yaml.safe_load(cf)
-            
-            if self.configPath != '':
-                os.chdir(self.configPath)
+            try:
+                with open(self.configFile, 'r', encoding='utf-8') as cf:
+                    config = yaml.safe_load(cf)
                 
-            if os.path.exists(config['pki']['ca']) and os.path.exists(config['pki']['cert']) and os.path.exists(config['pki']['key']):
-                return True
+                if self.configPath != '':
+                    os.chdir(self.configPath)
+                    
+                if os.path.exists(config['pki']['ca']) and os.path.exists(config['pki']['cert']) and os.path.exists(config['pki']['key']):
+                    return True
+            except:
+                return False
 
         return False
 

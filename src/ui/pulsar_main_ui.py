@@ -16,9 +16,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QLabel,
-    QLineEdit, QMainWindow, QMenu, QMenuBar,
-    QPushButton, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
+    QLabel, QLineEdit, QMainWindow, QMenu,
+    QMenuBar, QPushButton, QSizePolicy, QWidget)
 try: 
     import ui.pulsar_rc
 except ModuleNotFoundError:
@@ -54,64 +54,81 @@ class Ui_MainWindow(object):
         self.labelExplanation.setObjectName(u"labelExplanation")
         self.labelExplanation.setGeometry(QRect(90, 10, 531, 81))
         self.labelExplanation.setWordWrap(True)
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(10, 20, 64, 64))
-        self.label.setPixmap(QPixmap(u":/icon/resources/pulsar-icon-64.png"))
+        self.labelIcon = QLabel(self.centralwidget)
+        self.labelIcon.setObjectName(u"labelIcon")
+        self.labelIcon.setGeometry(QRect(10, 20, 64, 64))
+        self.labelIcon.setText(u"")
+        self.labelIcon.setPixmap(QPixmap(u":/icon/resources/pulsar-icon-64.png"))
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(20, 130, 601, 131))
+        self.frame.setGeometry(QRect(20, 130, 601, 171))
         self.frame.setFrameShape(QFrame.Panel)
         self.frame.setFrameShadow(QFrame.Plain)
-        self.label_4 = QLabel(self.frame)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setGeometry(QRect(10, 10, 61, 16))
+        self.labelSettings = QLabel(self.frame)
+        self.labelSettings.setObjectName(u"labelSettings")
+        self.labelSettings.setGeometry(QRect(10, 10, 61, 16))
         font = QFont()
-        font.setPointSize(10)
+        font.setPointSize(11)
         font.setBold(True)
-        self.label_4.setFont(font)
-        self.label_2 = QLabel(self.frame)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(10, 30, 171, 24))
-        self.label_3 = QLabel(self.frame)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(10, 60, 171, 24))
+        self.labelSettings.setFont(font)
+        self.labelConfigFile = QLabel(self.frame)
+        self.labelConfigFile.setObjectName(u"labelConfigFile")
+        self.labelConfigFile.setGeometry(QRect(10, 30, 171, 24))
+        self.labelLanguage = QLabel(self.frame)
+        self.labelLanguage.setObjectName(u"labelLanguage")
+        self.labelLanguage.setGeometry(QRect(10, 60, 171, 24))
         self.configFilePath = QLineEdit(self.frame)
         self.configFilePath.setObjectName(u"configFilePath")
-        self.configFilePath.setGeometry(QRect(160, 30, 341, 24))
+        self.configFilePath.setGeometry(QRect(190, 30, 311, 24))
         self.btnConfigFileSelect = QPushButton(self.frame)
         self.btnConfigFileSelect.setObjectName(u"btnConfigFileSelect")
         self.btnConfigFileSelect.setGeometry(QRect(510, 30, 75, 24))
-        self.comboBox = QComboBox(self.frame)
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.setObjectName(u"comboBox")
-        self.comboBox.setGeometry(QRect(160, 60, 341, 24))
+        self.cmbLanguages = QComboBox(self.frame)
+        self.cmbLanguages.setObjectName(u"cmbLanguages")
+        self.cmbLanguages.setGeometry(QRect(190, 60, 311, 24))
         self.btnSaveSettings = QPushButton(self.frame)
         self.btnSaveSettings.setObjectName(u"btnSaveSettings")
-        self.btnSaveSettings.setGeometry(QRect(464, 100, 121, 24))
+        self.btnSaveSettings.setGeometry(QRect(460, 130, 121, 24))
+        self.checkTrayOnly = QCheckBox(self.frame)
+        self.checkTrayOnly.setObjectName(u"checkTrayOnly")
+        self.checkTrayOnly.setGeometry(QRect(190, 90, 301, 20))
+        self.checkTrayOnly.setChecked(True)
+        self.checkAutostart = QCheckBox(self.frame)
+        self.checkAutostart.setObjectName(u"checkAutostart")
+        self.checkAutostart.setGeometry(QRect(190, 110, 301, 20))
         self.btnConnect = QPushButton(self.centralwidget)
         self.btnConnect.setObjectName(u"btnConnect")
-        self.btnConnect.setGeometry(QRect(150, 290, 340, 51))
-        font1 = QFont()
-        font1.setPointSize(11)
-        font1.setBold(True)
-        self.btnConnect.setFont(font1)
-        self.btnConnect.setStyleSheet(u"color: white;\n"
-"background-color: rgb(0, 170, 0);\n"
-"border-color: rgb(0, 255, 0);\n"
-"")
+        self.btnConnect.setEnabled(True)
+        self.btnConnect.setGeometry(QRect(150, 330, 340, 51))
+        self.btnConnect.setFont(font)
+        self.btnConnect.setStyleSheet(u"QPushButton#btnConnect {\n"
+"	color: white;\n"
+"	background-color: rgb(0, 170, 0);\n"
+"	border-color: rgb(0, 255, 0);\n"
+"	border-radius: 10px;\n"
+"}\n"
+"QPushButton#btnConnect:pressed {\n"
+"	background-color: rgb(0, 255, 0)\n"
+"}\n"
+"QPushButton#btnConnect:disabled {\n"
+"	background-color: rgb(0, 85, 0);\n"
+"}")
         self.btnDisconnect = QPushButton(self.centralwidget)
         self.btnDisconnect.setObjectName(u"btnDisconnect")
-        self.btnDisconnect.setGeometry(QRect(150, 290, 340, 51))
-        self.btnDisconnect.setFont(font1)
-        self.btnDisconnect.setStyleSheet(u"color: white;\n"
-"background-color: rgb(202, 0, 0);\n"
-"border-color: rgb(255, 0, 0);")
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(210, 370, 220, 24))
+        self.btnDisconnect.setGeometry(QRect(150, 330, 340, 51))
+        self.btnDisconnect.setFont(font)
+        self.btnDisconnect.setStyleSheet(u"QPushButton#btnDisconnect {\n"
+"	color: white;\n"
+"	background-color: rgb(202, 0, 0);\n"
+"	border-color: rgb(255, 0, 0);\n"
+"	border-radius: 10px;\n"
+"}\n"
+"QPushButton#btnDisconnect:pressed {\n"
+"	background-color: rgb(255,0,0);\n"
+"}")
+        self.btnStatus = QPushButton(self.centralwidget)
+        self.btnStatus.setObjectName(u"btnStatus")
+        self.btnStatus.setGeometry(QRect(210, 400, 220, 24))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -163,19 +180,16 @@ class Ui_MainWindow(object):
         self.actionAbout_Pulsar.setText(QCoreApplication.translate("MainWindow", u"About Pulsar", None))
         self.actionLicense.setText(QCoreApplication.translate("MainWindow", u"License", None))
         self.labelExplanation.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:700;\">Pulsar</span> is a GUI client that makes it possible for Windows or MacOS computers to connect to a Nebula mesh network. For Pulsar to work, a valid Nebula configuration <code>.yaml</code> file location must be supplied in the box below. The Nebula CA file, and the client key and certificate files must either be saved relative to the configuration file, or else be defined with a full path. The client will only connect to the Nebula Mesh Network if all files are present.</p></body></html>", None))
-        self.label.setText("")
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Nebula Configuration File:", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Interface Language:", None))
+        self.labelSettings.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
+        self.labelConfigFile.setText(QCoreApplication.translate("MainWindow", u"Nebula Configuration File:", None))
+        self.labelLanguage.setText(QCoreApplication.translate("MainWindow", u"Interface Language:", None))
         self.btnConfigFileSelect.setText(QCoreApplication.translate("MainWindow", u"Open...", None))
-        self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Deutsch (German)", None))
-        self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"English", None))
-        self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"T\u00fcrk\u00e7e (Turkish)", None))
-
         self.btnSaveSettings.setText(QCoreApplication.translate("MainWindow", u"Save Settings", None))
+        self.checkTrayOnly.setText(QCoreApplication.translate("MainWindow", u"Start in Tray Only", None))
+        self.checkAutostart.setText(QCoreApplication.translate("MainWindow", u"Connect to Nebula Network on Startup", None))
         self.btnConnect.setText(QCoreApplication.translate("MainWindow", u"Connect to Nebula Mesh Network", None))
         self.btnDisconnect.setText(QCoreApplication.translate("MainWindow", u"Disconnect from Nebula Mesh Network", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Display Connection Status...", None))
+        self.btnStatus.setText(QCoreApplication.translate("MainWindow", u"Display Connection Status...", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))
     # retranslateUi

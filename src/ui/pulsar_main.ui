@@ -35,7 +35,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="labelIcon">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -45,7 +45,7 @@
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string notr="true"/>
     </property>
     <property name="pixmap">
      <pixmap resource="pulsar.qrc">:/icon/resources/pulsar-icon-64.png</pixmap>
@@ -57,7 +57,7 @@
       <x>20</x>
       <y>130</y>
       <width>601</width>
-      <height>131</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -66,7 +66,7 @@
     <property name="frameShadow">
      <enum>QFrame::Plain</enum>
     </property>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="labelSettings">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -77,7 +77,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>11</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -85,7 +85,7 @@
       <string>Settings</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="labelConfigFile">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -98,7 +98,7 @@
       <string>Nebula Configuration File:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="labelLanguage">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -114,9 +114,9 @@
     <widget class="QLineEdit" name="configFilePath">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>190</x>
        <y>30</y>
-       <width>341</width>
+       <width>311</width>
        <height>24</height>
       </rect>
      </property>
@@ -134,36 +134,21 @@
       <string>Open...</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="cmbLanguages">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>190</x>
        <y>60</y>
-       <width>341</width>
+       <width>311</width>
        <height>24</height>
       </rect>
      </property>
-     <item>
-      <property name="text">
-       <string>Deutsch (German)</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>English</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Türkçe (Turkish)</string>
-      </property>
-     </item>
     </widget>
     <widget class="QPushButton" name="btnSaveSettings">
      <property name="geometry">
       <rect>
-       <x>464</x>
-       <y>100</y>
+       <x>460</x>
+       <y>130</y>
        <width>121</width>
        <height>24</height>
       </rect>
@@ -172,12 +157,44 @@
       <string>Save Settings</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkTrayOnly">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>90</y>
+       <width>301</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Start in Tray Only</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkAutostart">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>110</y>
+       <width>301</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Connect to Nebula Network on Startup</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="btnConnect">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>290</y>
+      <y>330</y>
       <width>340</width>
       <height>51</height>
      </rect>
@@ -189,10 +206,18 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: white;
-background-color: rgb(0, 170, 0);
-border-color: rgb(0, 255, 0);
-</string>
+     <string notr="true">QPushButton#btnConnect {
+	color: white;
+	background-color: rgb(0, 170, 0);
+	border-color: rgb(0, 255, 0);
+	border-radius: 10px;
+}
+QPushButton#btnConnect:pressed {
+	background-color: rgb(0, 255, 0)
+}
+QPushButton#btnConnect:disabled {
+	background-color: rgb(0, 85, 0);
+}</string>
     </property>
     <property name="text">
      <string>Connect to Nebula Mesh Network</string>
@@ -202,7 +227,7 @@ border-color: rgb(0, 255, 0);
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>290</y>
+      <y>330</y>
       <width>340</width>
       <height>51</height>
      </rect>
@@ -214,19 +239,25 @@ border-color: rgb(0, 255, 0);
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: white;
-background-color: rgb(202, 0, 0);
-border-color: rgb(255, 0, 0);</string>
+     <string notr="true">QPushButton#btnDisconnect {
+	color: white;
+	background-color: rgb(202, 0, 0);
+	border-color: rgb(255, 0, 0);
+	border-radius: 10px;
+}
+QPushButton#btnDisconnect:pressed {
+	background-color: rgb(255,0,0);
+}</string>
     </property>
     <property name="text">
      <string>Disconnect from Nebula Mesh Network</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btnStatus">
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>370</y>
+      <y>400</y>
       <width>220</width>
       <height>24</height>
      </rect>

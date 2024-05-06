@@ -26,8 +26,8 @@ if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
 import os, yaml
-from PySide6.QtCore import QCoreApplication, QLocale, QTranslator
-from PySide6.QtWidgets import QMessageBox
+from PySide6.QtCore import QCoreApplication, QLocale, QTranslator, QLibraryInfo
+from PySide6.QtWidgets import QMessageBox, QApplication
 
 # Dialogs
 def errModal(parent,msg,errList=[],endMsg="") -> None:

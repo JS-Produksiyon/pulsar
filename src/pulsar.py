@@ -25,11 +25,11 @@ MIN_PYTHON = (3,11)
 if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
-import os
+import os, locale
 from nebula import Nebula
 from PySide6 import QtCore, QtGui
-from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize
-from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog
+from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize, QLibraryInfo, QCoreApplication
+from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog, QFileDialog
 from PySide6.QtGui import QIcon, QAction
 from utils import (errModal, infoModal, loadSettings, saveSettings)
 
@@ -41,13 +41,17 @@ from ui.pulsar_main_ui import Ui_MainWindow
 SETTINGS = loadSettings()
 
 
-# Windows
+### Window Objects ###
 class AboutWindow(QDialog):
     def __init__(self, parent=None):
         super(AboutWindow, self).__init__()
 
         self.ui = Ui_AboutDialog()
         self.ui.setupUi(self)
+
+    def openWin(self):
+        self.ui.retranslateUi()
+        self.show()
 
 
 class ConnStatusWindow(QMainWindow):
@@ -64,17 +68,125 @@ class MainWindow(QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-    
+
+        # setup the UI
+        self.loadLanguages(parent)
+        self.aboutWin = AboutWindow(self)
+        self.ui.configFilePath = SETTINGS['config']
+
+
         # hide the disconnect button on init
         self.ui.btnDisconnect.hide()
 
-    def noConfig(self):
+        # Menu Actions
+        self.ui.actionAbout_Pulsar.triggered.connect(self.aboutWin.openWin)
+        self.ui.actionQuit_2.triggered.connect(parent.quit)
+
+        # link buttons
+        # self.ui.btnConnect.released.connect()
+        # self.ui.btnDisconnect.released.connect()
+        self.ui.btnStatus.released.connect(self.showStatusWin)
+        self.ui.btnConfigFileSelect.released.connect(self.getConfigFile)
+        self.ui.btnSaveSettings.released.connect(self.saveSettingsBtn)
+
+    def getConfigFile(self) -> None:
+        """
+        Opens a dialog that allows you to pick a config file and places the content into 
+        the file path box
+        """
+        file = QFileDialog(self)
+        file.setFileMode(QFileDialog.AnyFile)
+        file.setNameFilter(self.tr('Nebula Config File (*.yml *.yaml)'))
+        file.setViewMode(QFileDialog.Detail)
+        if file.exec():
+            self.ui.configFilePath.setText(file.selectedFiles()[0])
+
+
+    def loadLanguages(self, parent=None):
+        """
+        Loads the languages into the combo box and retranslates the UI accordingly
+        """
+        # add languages to dropdown
+        self.ui.cmbLanguages.clear()
+
+        curLocale = QLocale()
+        localeLangCode = curLocale.languageToCode(curLocale.language())
+
+        # English is the default language, if we don't have the proper one in the locale
+        if SETTINGS['language'] == localeLangCode and localeLangCode not in __languages__:
+            SETTINGS['language'] = 'en'
+            
+        curLocale = QLocale(SETTINGS['language'])
+
+        locale.setlocale(locale.LC_ALL, curLocale.name())
+
+        self.langDict = {}
+        langList = []
+        
+        for lang in __languages__:
+            subLocale = QLocale(lang)
+            lString = subLocale.nativeLanguageName()
+            if 'English' in lString:
+                lString = 'English'
+
+            if lang != localeLangCode:
+                lString = f"{lString} ({subLocale.languageToString(subLocale.language())})"
+
+            self.langDict[lang] = lString
+            langList.append(lString)
+
+        self.ui.cmbLanguages.addItems(sorted(langList, key=locale.strxfrm))
+        self.ui.cmbLanguages.setCurrentText(self.langDict[SETTINGS['language']])
+        setLanguage(app, SETTINGS['language'])
+        self.ui.retranslateUi(self)
+        self.aboutWin.ui.retranslateUi(self.aboutWin)
+        connWin.ui.retranslateUi(connWin)
+        st.menu.retranslateUi()
+
+
+    def noConfig(self) -> None:
         """
         Set up display for instance when no valid config file is found
         """
         self.ui.btnConnect.setDisabled(True)
         self.show()
         errModal(self, self.tr('No valid Nebula configuration file was found so the connection cannot be made.<br>Please set the path to a valid Nebula configuration file below to continue.'))
+
+
+    def saveSettingsBtn(self) -> bool:
+        """
+        Saves the settings when clicking on the button
+        """
+        configFile = self.ui.configFilePath.text()
+        # in Windows we need to make sure that the separators are \ not /
+        if sys.platform == 'win32':
+            if not os.sep in configFile:
+                configFile = configFile.replace('/', os.sep)
+
+        nebulaObj.setConfig(configFile)
+        if nebulaObj.validConfig:
+            SETTINGS['config'] = configFile
+        else:
+            errModal(self, 'Invalid Nebula configuration file selected. Please try again!')
+            return False
+        
+        for lang in self.langDict:
+            if self.ui.cmbLanguages.currentText() == self.langDict[lang]:
+                SETTINGS['language'] = lang
+
+        SETTINGS['tray_start'] = True if self.ui.checkTrayOnly.isChecked() else False
+        SETTINGS['auto_connect'] = True if self.ui.checkAutostart.isChecked() else False
+
+        saveSettings(SETTINGS)
+        self.loadLanguages(app)
+        return True
+
+    def showStatusWin(self) -> None:
+        """
+        shows the status window
+        """
+        connWin.show()
+
 
 
 # Primary driver is the System Tray Icon
@@ -127,6 +239,11 @@ class systemTray():
             self.connected = False
             self.connectStatusIcon()
 
+    def retranslateUi(self) -> None:
+        """
+        Retranslates the interface
+        """
+
     def showMainWin(self) -> None:
         """
         Display main window
@@ -158,16 +275,48 @@ class systemTrayMenu(QMenu):
         self.addSeparator()
         self.quit = QAction(self.tr('Quit'))
         self.addAction(self.quit)
+        self.retranslateUi()
 
+    def retranslateUi(self):
+        """
+        translate the menu
+        """
+        self.connItem.setText(QCoreApplication.translate("SystemTray", u"Connect to Nebula", None))
+        self.disconnItem.setText(QCoreApplication.translate("SystemTray", u"Disconnect from Nebula", None))
+        self.statusWin.setText(QCoreApplication.translate("SystemTray", u"Status...", None))
+        self.settingsWin.setText(QCoreApplication.translate("SystemTray", u"Settings...", None))
+        self.quit.setText(QCoreApplication.translate("SystemTray", u"Quit", None))
+
+
+def setLanguage(app, language) -> bool:
+    """
+    set interface language
+
+    """
+    if type(app) == QApplication:
+        translator = QTranslator(app)
+        translator.load(language, 'qtbase', '_', QLibraryInfo.path(QLibraryInfo.TranslationsPath))
+        app.installTranslator(translator)
+        translator = QTranslator(app)
+        app.removeTranslator(translator)
+        translator.load(os.path.dirname(__file__) + os.sep + 'translations' + os.sep + 'culmt_{}.qm'.format(language))
+        app.installTranslator(translator)
+        return True
+    else:
+        return False
 
 
 if __name__ == '__main__':
+    nebulaObj = Nebula()
+
     app = QApplication(sys.argv)
     app.setStyle('fusion')
     app.setQuitOnLastWindowClosed(False)
 
+    setLanguage(app, SETTINGS['language'])
+
     st = systemTray(app)
-    mainWin = MainWindow()
+    mainWin = MainWindow(app)
     connWin = ConnStatusWindow()
     
     if not os.path.exists(SETTINGS['config']):
