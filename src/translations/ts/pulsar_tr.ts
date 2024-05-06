@@ -9,8 +9,12 @@
         <translation>Pulsar Hakkında</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_about.ui" line="81"/>
         <source>A GUI for the Nebula Mesh Network Client</source>
+        <translation type="vanished">Nebula Mesh Ağı için grafik arabirim</translation>
+    </message>
+    <message>
+        <location filename="../../ui/pulsar_about.ui" line="81"/>
+        <source>A Graphical User Interface for the Nebula Mesh Network</source>
         <translation>Nebula Mesh Ağı için grafik arabirim</translation>
     </message>
     <message>
@@ -75,27 +79,42 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../pulsar.py" line="134"/>
+        <location filename="../../pulsar.py" line="137"/>
         <source>Nebula Config File (*.yml *.yaml)</source>
         <translation>Nebula Ayar Dosyası (*.yml *.yaml)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="189"/>
+        <location filename="../../pulsar.py" line="162"/>
+        <source>Deutsch (German)</source>
+        <translation>Deutsch (Almanca)</translation>
+    </message>
+    <message>
+        <location filename="../../pulsar.py" line="163"/>
+        <source>English</source>
+        <translation>English (İngilizce)</translation>
+    </message>
+    <message>
+        <location filename="../../pulsar.py" line="165"/>
+        <source>Türkçe (Turkish)</source>
+        <translation>Türkçe</translation>
+    </message>
+    <message>
+        <location filename="../../pulsar.py" line="186"/>
         <source>No valid Nebula configuration file was found so the connection cannot be made.&lt;br&gt;Please set the path to a valid Nebula configuration file below to continue.</source>
         <translation>Geçerli bir Nebula ayar dosyası bulunamadı. Bundan dolayı bağlantı kurulamadı.&lt;br&gt;Devam etmek için lütfen geçerli bir Nebula ayar dosyasına yolu giriniz.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="198"/>
+        <location filename="../../pulsar.py" line="195"/>
         <source>Unable to open link to license.</source>
         <translation>Lisans dosyasına bağlantı açılamadı.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="207"/>
+        <location filename="../../pulsar.py" line="204"/>
         <source>Unable to open link to user guide.</source>
         <translation>Kullanıcı kılavuzuna bağlantı açılamadı.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="218"/>
+        <location filename="../../pulsar.py" line="215"/>
         <source>Pulsar is still connected to the Nebula mesh network.&lt;br&gt;Are you sure you want to quit the program?</source>
         <translatorcomment>Pulsar hâlâ Nebula mesh ağına bağlıdır.&lt;br&gt;Yazılımı kapatmak istediğinizden emin misiniz?</translatorcomment>
         <translation></translation>
@@ -111,123 +130,123 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pulsar&lt;/span&gt;, Windows veya MacOS bilgisayarların bir Nebula mesh ağına bağlanmasını mümkün kılan bir grafik arabirmi istemcisidir. Pulsar&apos;ın çalışması için aşağıdaki kutuda geçerli bir Nebula ayar &lt;code&gt;.yaml&lt;/code&gt; dosya konumu sağlanmalıdır. Nebula CA dosyası, istemci anahtarı ve sertifika dosyaları ya yapılandırma dosyasına göre kaydedilmelidir ya da tam bir yol ile tanımlanmalıdır. İstemci, yalnızca tüm dosyalar mevcutsa Nebula Mesh Ağı&apos;na bağlanacaktır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="85"/>
+        <location filename="../../ui/pulsar_main.ui" line="88"/>
         <source>Settings</source>
         <translation>Ayarlar</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="98"/>
+        <location filename="../../ui/pulsar_main.ui" line="101"/>
         <source>Nebula Configuration File:</source>
         <translation>Nebula Ayar Dosyası:</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="111"/>
+        <location filename="../../ui/pulsar_main.ui" line="114"/>
         <source>Interface Language:</source>
         <translation>Arabirim Dili:</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="134"/>
+        <location filename="../../ui/pulsar_main.ui" line="137"/>
         <source>Open...</source>
         <translation>Aç...</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="157"/>
+        <location filename="../../ui/pulsar_main.ui" line="160"/>
         <source>Save Settings</source>
         <translation>Ayarları Kaydet</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="170"/>
+        <location filename="../../ui/pulsar_main.ui" line="173"/>
         <source>Start in Tray Only</source>
         <translation>Sadece bildirim alanında başlat</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="186"/>
+        <location filename="../../ui/pulsar_main.ui" line="189"/>
         <source>Connect to Nebula Network on Startup</source>
         <translation>Açılırken Nebula Ağı ile bağlantı kur</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="223"/>
+        <location filename="../../ui/pulsar_main.ui" line="226"/>
         <source>Connect to Nebula Mesh Network</source>
         <translation>Nebula Mesh Ağı ile Bağlan</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="253"/>
+        <location filename="../../ui/pulsar_main.ui" line="256"/>
         <source>Disconnect from Nebula Mesh Network</source>
         <translation>Nebula Ağına bağlantıyı kapat</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="269"/>
+        <location filename="../../ui/pulsar_main.ui" line="272"/>
         <source>Display Connection Status...</source>
         <translation>Bağlantı durumun göster...</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="282"/>
-        <location filename="../../ui/pulsar_main.ui" line="354"/>
+        <location filename="../../ui/pulsar_main.ui" line="285"/>
+        <location filename="../../ui/pulsar_main.ui" line="357"/>
         <source>Quit Pulsar</source>
         <translation>Pulsar’ı Kapat</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="297"/>
+        <location filename="../../ui/pulsar_main.ui" line="300"/>
         <source>File</source>
         <translation>Dosya</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="307"/>
+        <location filename="../../ui/pulsar_main.ui" line="310"/>
         <source>Help</source>
         <translation>Yardım</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="319"/>
+        <location filename="../../ui/pulsar_main.ui" line="322"/>
         <source>Connect</source>
         <translation>Bağlan</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="322"/>
+        <location filename="../../ui/pulsar_main.ui" line="325"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="327"/>
+        <location filename="../../ui/pulsar_main.ui" line="330"/>
         <source>Disconnect</source>
         <translation>Bağlantıyı kes</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="330"/>
+        <location filename="../../ui/pulsar_main.ui" line="333"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="335"/>
+        <location filename="../../ui/pulsar_main.ui" line="338"/>
         <source>Quit</source>
         <translation>Kapat</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="343"/>
+        <location filename="../../ui/pulsar_main.ui" line="346"/>
         <source>Connection Status...</source>
         <translation>Bağlantı durumu...</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="346"/>
+        <location filename="../../ui/pulsar_main.ui" line="349"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="357"/>
+        <location filename="../../ui/pulsar_main.ui" line="360"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="362"/>
+        <location filename="../../ui/pulsar_main.ui" line="365"/>
         <source>User Guide</source>
         <translation>Kullanım Kılavuzu</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="367"/>
+        <location filename="../../ui/pulsar_main.ui" line="370"/>
         <source>About Pulsar</source>
         <translation>Pulsar Hakkında</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="372"/>
+        <location filename="../../ui/pulsar_main.ui" line="375"/>
         <source>License</source>
         <translation>Lisans</translation>
     </message>
@@ -235,13 +254,13 @@
 <context>
     <name>systemTray</name>
     <message>
-        <location filename="../../pulsar.py" line="281"/>
-        <location filename="../../pulsar.py" line="320"/>
+        <location filename="../../pulsar.py" line="295"/>
+        <location filename="../../pulsar.py" line="336"/>
         <source>Pulsar not connected</source>
         <translation>Pulsar bağlı değil</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="310"/>
+        <location filename="../../pulsar.py" line="326"/>
         <source>Pulsar connected</source>
         <translation>Pulsar bağlıdır</translation>
     </message>
@@ -249,22 +268,22 @@
 <context>
     <name>systemTrayMenu</name>
     <message>
-        <location filename="../../pulsar.py" line="349"/>
+        <location filename="../../pulsar.py" line="366"/>
         <source>Connect to Nebula</source>
         <translation>Nebula’ya bağlan</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="351"/>
+        <location filename="../../pulsar.py" line="368"/>
         <source>Disconnect from Nebula</source>
         <translation>Nebula Ağına bağlantıyı kapat</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="354"/>
+        <location filename="../../pulsar.py" line="371"/>
         <source>Show Pulsar Window</source>
         <translation>Pulsar penceresini aç</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="359"/>
+        <location filename="../../pulsar.py" line="376"/>
         <source>Quit</source>
         <translation>Kapat</translation>
     </message>
