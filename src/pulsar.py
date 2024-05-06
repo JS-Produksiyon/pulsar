@@ -217,7 +217,11 @@ class MainWindow(QMainWindow):
         nebulaObj.setConfig(configFile)
         if nebulaObj.validConfig:
             SETTINGS['config'] = configFile
+            if self.ui.btnConnect.isEnabled() == False:
+                self.ui.btnConnect.isEnabled(True)
         else:
+            if self.ui.btnConnect.isEnabled() == True:
+                self.ui.btnConnect.isEnabled(False)
             errModal(self, 'Invalid Nebula configuration file selected. Please try again!')
             return False
         
@@ -276,10 +280,6 @@ class systemTray(QSystemTrayIcon):
         elif not self.connected:
             self.setIcon(self.iconOff)
 
-    def mouseDoubleClickEvent(self, event):
-        print('Double-click event')
-        mainWin.show()
-
     def nebulaConnect(self) -> None:
         """
         Enable connection 
@@ -291,17 +291,16 @@ class systemTray(QSystemTrayIcon):
             mainWin.ui.btnDisconnect.show()
             self.setToolTip(self.tr('Pulsar connected'))
 
-
     def nebulaDisconnect(self) -> None:
         """
         Disable connection
         """
         if self.connected:
-            self.nebulaObj.disconnect()
             self.connected = False
             self.connectStatusIcon()
             mainWin.ui.btnDisconnect.hide()
             self.setToolTip(self.tr('Pulsar not connected'))
+            self.nebulaObj.disconnect()
 
     def retranslateUi(self) -> None:
         """
