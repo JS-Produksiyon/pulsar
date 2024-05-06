@@ -84,7 +84,7 @@ class ConfigHostsWindow(QDialog):
     def __init__(self, parent=None):
         super(ConfigHostsWindow, self).__init__()
 
-        self.ui = Ui_configHostsDialog
+        self.ui = Ui_configHostsDialog()
         self.ui.setupUi(self)
 
 
@@ -255,10 +255,10 @@ class MainWindow(QMainWindow):
         if nebulaObj.validConfig:
             SETTINGS['config'] = configFile
             if self.ui.btnConnect.isEnabled() == False:
-                self.ui.btnConnect.isEnabled(True)
+                self.ui.btnConnect.setEnabled(True)
         else:
             if self.ui.btnConnect.isEnabled() == True:
-                self.ui.btnConnect.isEnabled(False)
+                self.ui.btnConnect.setEnabled(False)
             errModal(self, 'Invalid Nebula configuration file selected. Please try again!')
             return False
         
@@ -426,6 +426,9 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle('fusion')
     app.setQuitOnLastWindowClosed(False)
+
+    if SETTINGS == False:
+        errModal(app, 'Settings file is corrupt. Delete <code>settings.yaml</code> to make the application work again!')
 
     # connWin = ConnStatusWindow()
     mainWin = MainWindow(app, nebulaObj)

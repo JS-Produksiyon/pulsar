@@ -147,7 +147,7 @@ def validateSettings(settings) -> bool:
     :type  settings: dict
     :returns       : boolean denoting validity
     """
-    scaffold = {'config': str, 'language': str, 'tray_start': bool, 'auto_connect': bool}
+    scaffold = {'config': str, 'language': str, 'tray_start': bool, 'auto_connect': bool, 'use_hosts': bool, 'hosts_file': str}
 
     if type(settings) != dict:
         return False
