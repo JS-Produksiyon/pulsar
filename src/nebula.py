@@ -136,19 +136,45 @@ class Nebula():
         return False
 
 
+    def version(self) -> str:
+        """
+        Returns the version of tue current Nebula binary
+        """
+        # load proper binary
+        nPathBase = os.path.dirname(__file__) + os.sep + 'bin' + os.sep + '{os}' + os.sep + '{binary}'
+
+        if sys.platform == 'darwin':
+            nPath = nPathBase.format(os='macos', binary='nebula')
+        elif sys.platform == 'win32':
+            nPath = nPathBase.format(os='windows', binary='nebula.exe')
+        else:
+            return False 
+            # because this application does not work with Linux!
+
+        out = []
+        with subprocess.Popen([nPath, '-version'], stdout=subprocess.PIPE) as p:
+            while p.poll() is None:
+                out.append(p.stdout.read())
+            return out[0].decode('utf-8')[9:-1]
+
+
+
+
 if __name__ == '__main__':
     print("This module is not meant to be called by itself unless testing. Please import using from nebula import Nebula.")
 
-    try:
-        if sys.platform == 'darwin':
-            cf = '/Users/wolfhawke/Repositories/pulsar/creds/joshw-config.yaml'
-        elif sys.platform == 'win32':
-            cf = 'C:\\Users\\wolfh\\Repositories\\pulsar\\creds\\joshw-config.yaml'
+    # try:
+    #     if sys.platform == 'darwin':
+    #         cf = '/Users/wolfhawke/Repositories/pulsar/creds/joshw-config.yaml'
+    #     elif sys.platform == 'win32':
+    #         cf = 'C:\\Users\\wolfh\\Repositories\\pulsar\\creds\\joshw-config.yaml'
 
-        elevate()
-        n = Nebula(cf, test=True)
-        n.connect()
-        sleep(10)
-        n.disconnect()
-    except SystemExit:
-        pass
+    #     elevate()
+    #     n = Nebula(cf, test=True)
+    #     n.connect()
+    #     sleep(10)
+    #     n.disconnect()
+    # except SystemExit:
+    #     pass
+    n = Nebula()
+    print(n.version())
