@@ -254,6 +254,9 @@ QPushButton#btnDisconnect:pressed {
     </property>
    </widget>
    <widget class="QPushButton" name="btnStatus">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -264,6 +267,19 @@ QPushButton#btnDisconnect:pressed {
     </property>
     <property name="text">
      <string>Display Connection Status...</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnQuit">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>400</y>
+      <width>120</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Quit Pulsar</string>
     </property>
    </widget>
   </widget>
@@ -284,7 +300,6 @@ QPushButton#btnDisconnect:pressed {
     <addaction name="actionDisconnect"/>
     <addaction name="separator"/>
     <addaction name="actionConnection_Status"/>
-    <addaction name="separator"/>
     <addaction name="actionQuit_2"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -321,11 +336,17 @@ QPushButton#btnDisconnect:pressed {
    </property>
   </action>
   <action name="actionConnection_Status">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Connection Status...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionQuit_2">

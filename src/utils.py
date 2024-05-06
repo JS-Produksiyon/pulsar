@@ -57,7 +57,7 @@ def errModal(parent,msg,errList=[],endMsg="") -> None:
         endMsg = "<p>{}</p>".format(endMsg)
 
     # concatenate error message to display
-    box = QMessageBox.critical(parent, parent.tr("Celsus ULMT - Error!"), 
+    box = QMessageBox.critical(parent, parent.tr("Pulsar - Error!"), 
             errOut.format(msg=msg,list=errListOut,closing=endMsg))
 
 
@@ -72,9 +72,28 @@ def infoModal(parent, msg) -> None:
     """
     msgOut = "<html><head/><body><p>{msg}</p></body></html>"
 
-    box = QMessageBox.information(parent, parent.tr("Celsus ULMT"), 
+    box = QMessageBox.information(parent, parent.tr("Pulsar"), 
                                   msgOut.format(msg=msg))
 
+
+def yesNoModal(parent, msg) -> bool:
+    """
+    Pops up an informational modal
+    
+    :param parent  : reference to calling QMainWindow class
+    :type  parent  : QMainWindow
+    :param msg     : Message to display
+    :type  msg     : string
+    """
+    msgOut = "<html><head/><body><p>{msg}</p></body></html>"
+
+    box = QMessageBox.question(parent, parent.tr("Pulsar"),
+                                msgOut.format(msg=msg))
+
+    if box == QMessageBox.Yes:
+        return True
+    else:
+        return False
 
 # Settings functions
 def loadSettings() -> dict:

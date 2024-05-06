@@ -32,12 +32,13 @@ elevate()
 
 # Now run the actual application
 import os, locale
+from functools import partial
 from nebula import Nebula
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize, QLibraryInfo, QCoreApplication
 from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog, QFileDialog
 from PySide6.QtGui import QIcon, QAction
-from utils import (errModal, infoModal, loadSettings, saveSettings)
+from utils import (errModal, infoModal, loadSettings, saveSettings, yesNoModal)
 
 
 # windows
@@ -98,12 +99,13 @@ class MainWindow(QMainWindow):
 
         # hide the disconnect button on init
         self.ui.btnDisconnect.hide()
+        self.ui.btnStatus.hide()
 
         # Menu Actions
         self.ui.actionConnect.triggered.connect(st.nebulaConnect)
         self.ui.actionDisconnect.triggered.connect(st.nebulaDisconnect)
-        self.ui.actionConnection_Status.triggered.connect(self.showStatusWin)
-        self.ui.actionQuit_2.triggered.connect(parent.quit)
+        # self.ui.actionConnection_Status.triggered.connect(self.showStatusWin)
+        self.ui.actionQuit_2.triggered.connect(partial(self.quitPulsar, parent))
         self.ui.actionUser_Guide.triggered.connect(self.openManual)
         self.ui.actionLicense.triggered.connect(self.openLicense)
         self.ui.actionAbout_Pulsar.triggered.connect(self.aboutWin.openWin)
@@ -111,9 +113,10 @@ class MainWindow(QMainWindow):
         # link buttons
         self.ui.btnConnect.released.connect(st.nebulaConnect)
         self.ui.btnDisconnect.released.connect(st.nebulaDisconnect)
-        self.ui.btnStatus.released.connect(self.showStatusWin)
+        # self.ui.btnStatus.released.connect(self.showStatusWin)
         self.ui.btnConfigFileSelect.released.connect(self.getConfigFile)
         self.ui.btnSaveSettings.released.connect(self.saveSettingsBtn)
+        self.ui.btnQuit.released.connect(partial(self.quitPulsar, parent))
 
         # set focus
         if st.connected:
@@ -172,7 +175,7 @@ class MainWindow(QMainWindow):
         setLanguage(app, SETTINGS['language'])
         self.ui.retranslateUi(self)
         self.aboutWin.ui.retranslateUi(self.aboutWin)
-        connWin.ui.retranslateUi(connWin)
+        # connWin.ui.retranslateUi(connWin)
         st.menu.retranslateUi()
 
 
@@ -202,6 +205,21 @@ class MainWindow(QMainWindow):
         url = QtCore.QUrl('https://github.com/JS-Produksiyon/pulsar/blob/main/README.md')
         if not QtGui.QDesktopServices.openUrl(url):
             errModal(self, self.tr('Unable to open link to user guide.'))
+
+
+    def quitPulsar(self, parent) -> None:
+        """
+        Checks if Pulsar is connected and pops up a query if still connected
+        """
+        if not st.connected:
+            parent.quit()
+        else:
+            msg = self.tr("Pulsar is still connected to the Nebula mesh network.<br>Are you sure you want to quit the program?")
+            q = yesNoModal(self, msg)
+            
+            if q:
+                st.nebulaDisconnect()
+                parent.quit()
 
 
     def saveSettingsBtn(self) -> bool:
@@ -236,11 +254,11 @@ class MainWindow(QMainWindow):
         self.loadLanguages(app)
         return True
 
-    def showStatusWin(self) -> None:
-        """
-        shows the status window
-        """
-        connWin.show()
+    # def showStatusWin(self) -> None:
+    #     """
+    #     shows the status window
+    #     """
+    #     connWin.show()
 
 
 
@@ -263,11 +281,11 @@ class systemTray(QSystemTrayIcon):
         self.setToolTip(self.tr('Pulsar not connected'))
         self.setVisible(True)
         self.menu = systemTrayMenu(self)
-        self.menu.quit.triggered.connect(parent.quit)
+        self.menu.quit.triggered.connect(partial(self.quitPulsar, parent))
         self.menu.connItem.triggered.connect(self.nebulaConnect)
         self.menu.disconnItem.triggered.connect(self.nebulaDisconnect)
         self.menu.settingsWin.triggered.connect(self.showMainWin)
-        self.menu.statusWin.triggered.connect(self.showStatusWin)
+        # self.menu.statusWin.triggered.connect(self.showStatusWin)
         self.setContextMenu(self.menu)
         self.nebulaObj = nebula
 
@@ -302,10 +320,11 @@ class systemTray(QSystemTrayIcon):
             self.setToolTip(self.tr('Pulsar not connected'))
             self.nebulaObj.disconnect()
 
-    def retranslateUi(self) -> None:
-        """
-        Retranslates the interface
-        """
+    def quitPulsar(self,parent):
+        if self.connected:
+            self.nebulaDisconnect()
+        
+        parent.quit()
 
     def showMainWin(self) -> None:
         """
@@ -313,11 +332,11 @@ class systemTray(QSystemTrayIcon):
         """
         mainWin.show()
 
-    def showStatusWin(self) -> None:
-        """
-        Display Connection Status window
-        """
-        connWin.show()
+    # def showStatusWin(self) -> None:
+    #     """
+    #     Display Connection Status window
+    #     """
+    #     connWin.show()
 
 class systemTrayMenu(QMenu):
     """
@@ -326,6 +345,7 @@ class systemTrayMenu(QMenu):
     def __init__(self, parent=None):
         super(systemTrayMenu, self).__init__()
         
+        self.parent = parent
         self.connItem = QAction(self.tr('Connect to Nebula'))
         self.addAction(self.connItem)
         self.disconnItem = QAction(self.tr('Disconnect from Nebula'))
@@ -333,8 +353,8 @@ class systemTrayMenu(QMenu):
         self.addSeparator()
         self.settingsWin = QAction(self.tr('Show Pulsar Window'))
         self.addAction(self.settingsWin)
-        self.statusWin = QAction(self.tr('Show Connection Status')) 
-        self.addAction(self.statusWin)
+        # self.statusWin = QAction(self.tr('Show Connection Status')) 
+        # self.addAction(self.statusWin)
         self.addSeparator()
         self.quit = QAction(self.tr('Quit'))
         self.addAction(self.quit)
@@ -346,7 +366,7 @@ class systemTrayMenu(QMenu):
         """
         self.connItem.setText(QCoreApplication.translate("SystemTray", u"Connect to Nebula", None))
         self.disconnItem.setText(QCoreApplication.translate("SystemTray", u"Disconnect from Nebula", None))
-        self.statusWin.setText(QCoreApplication.translate("SystemTray", u"Show Connection Status", None))
+        # self.statusWin.setText(QCoreApplication.translate("SystemTray", u"Show Connection Status", None))
         self.settingsWin.setText(QCoreApplication.translate("SystemTray", u"Show Pulsar Window", None))
         self.quit.setText(QCoreApplication.translate("SystemTray", u"Quit", None))
 
@@ -380,7 +400,7 @@ if __name__ == '__main__':
     setLanguage(app, SETTINGS['language'])
 
     st = systemTray(app, nebulaObj)
-    connWin = ConnStatusWindow()
+    # connWin = ConnStatusWindow()
     mainWin = MainWindow(app)
     
     if not os.path.exists(SETTINGS['config']):
@@ -390,6 +410,9 @@ if __name__ == '__main__':
     
     if not SETTINGS['tray_start']:
         mainWin.show()
+
+    if SETTINGS['auto_connect']:
+        st.nebulaConnect()
 
     sys.exit(app.exec())
     
