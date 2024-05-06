@@ -79,8 +79,8 @@ class Nebula():
             if self.configPath != '':
                 os.chdir(self.configPath)
 
-
-            self.nProcess = subprocess.Popen(f'{nPath} -config {self.configFile}', shell=True)
+            elevate()
+            self.nProcess = subprocess.Popen([nPath, '-config' ,self.configFile])
 
 
     def disconnect(self) -> None:
@@ -163,18 +163,15 @@ class Nebula():
 if __name__ == '__main__':
     print("This module is not meant to be called by itself unless testing. Please import using from nebula import Nebula.")
 
-    # try:
-    #     if sys.platform == 'darwin':
-    #         cf = '/Users/wolfhawke/Repositories/pulsar/creds/joshw-config.yaml'
-    #     elif sys.platform == 'win32':
-    #         cf = 'C:\\Users\\wolfh\\Repositories\\pulsar\\creds\\joshw-config.yaml'
+    try:
+        if sys.platform == 'darwin':
+            cf = '/Users/wolfhawke/Repositories/pulsar/creds/joshw-config.yaml'
+        elif sys.platform == 'win32':
+            cf = 'C:\\Users\\wolfh\\Repositories\\pulsar\\creds\\joshw-config.yaml'
 
-    #     elevate()
-    #     n = Nebula(cf, test=True)
-    #     n.connect()
-    #     sleep(10)
-    #     n.disconnect()
-    # except SystemExit:
-    #     pass
-    n = Nebula()
-    print(n.version())
+        n = Nebula(cf, test=True)
+        n.connect()
+        sleep(10)
+        n.disconnect()
+    except SystemExit:
+        pass

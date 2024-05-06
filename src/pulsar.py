@@ -26,6 +26,11 @@ MIN_PYTHON = (3,11)
 if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
+# start application in Administrator mode
+from elevate import elevate
+elevate()
+
+# Now run the actual application
 import os, locale
 from nebula import Nebula
 from PySide6 import QtCore, QtGui
@@ -33,6 +38,7 @@ from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize, QLibraryInf
 from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog, QFileDialog
 from PySide6.QtGui import QIcon, QAction
 from utils import (errModal, infoModal, loadSettings, saveSettings)
+
 
 # windows
 from ui.pulsar_about_ui import Ui_AboutDialog
@@ -279,6 +285,7 @@ class systemTray(QSystemTrayIcon):
         Enable connection 
         """
         if not self.connected:
+            self.nebulaObj.connect()
             self.connected = True
             self.connectStatusIcon()
             mainWin.ui.btnDisconnect.show()
@@ -290,6 +297,7 @@ class systemTray(QSystemTrayIcon):
         Disable connection
         """
         if self.connected:
+            self.nebulaObj.disconnect()
             self.connected = False
             self.connectStatusIcon()
             mainWin.ui.btnDisconnect.hide()
