@@ -116,7 +116,7 @@ def loadSettings() -> dict:
         
     else:
         settings = {'config': '', 'language': locale.languageToCode(locale.language()),
-             'tray_start': True, 'auto_connect': False}
+             'tray_start': True, 'auto_connect': False, 'use_hosts': False, 'hosts_file': ''}
         saveSettings(settings)
         return settings
 

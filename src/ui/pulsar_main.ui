@@ -60,7 +60,7 @@
       <x>20</x>
       <y>130</y>
       <width>601</width>
-      <height>171</height>
+      <height>191</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -151,7 +151,7 @@
      <property name="geometry">
       <rect>
        <x>460</x>
-       <y>130</y>
+       <y>160</y>
        <width>121</width>
        <height>24</height>
       </rect>
@@ -189,6 +189,35 @@
       <string>Connect to Nebula Network on Startup</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkUseHosts">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>130</y>
+       <width>301</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Register Nebula network hosts locally</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnConfigureHosts">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>130</y>
+       <width>101</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Configure...</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="btnConnect">
     <property name="enabled">
@@ -197,7 +226,7 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>330</y>
+      <y>340</y>
       <width>340</width>
       <height>51</height>
      </rect>
@@ -230,7 +259,7 @@ QPushButton#btnConnect:disabled {
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>330</y>
+      <y>340</y>
       <width>340</width>
       <height>51</height>
      </rect>
@@ -263,7 +292,7 @@ QPushButton#btnDisconnect:pressed {
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>400</y>
+      <y>410</y>
       <width>220</width>
       <height>24</height>
      </rect>
@@ -276,7 +305,7 @@ QPushButton#btnDisconnect:pressed {
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>400</y>
+      <y>410</y>
       <width>120</width>
       <height>24</height>
      </rect>

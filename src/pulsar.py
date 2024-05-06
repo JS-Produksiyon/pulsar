@@ -45,8 +45,10 @@ from utils import (errModal, infoModal, loadSettings, saveSettings, yesNoModal)
 
 # windows
 from ui.pulsar_about_ui import Ui_AboutDialog
-from ui.pulsar_status_ui import Ui_ConnStatusWindow
+from ui.pulsar_hosts_ui import Ui_configHostsDialog
 from ui.pulsar_main_ui import Ui_MainWindow
+# from ui.pulsar_status_ui import Ui_ConnStatusWindow
+
 
 SETTINGS = loadSettings()
 
@@ -70,11 +72,19 @@ class AboutWindow(QDialog):
         self.show()
 
 
-class ConnStatusWindow(QMainWindow):
-    def __init__(self, parent=None):
-        super(ConnStatusWindow, self).__init__()
+# class ConnStatusWindow(QMainWindow):
+#     def __init__(self, parent=None):
+#         super(ConnStatusWindow, self).__init__()
 
-        self.ui = Ui_ConnStatusWindow()
+#         self.ui = Ui_ConnStatusWindow()
+#         self.ui.setupUi(self)
+
+
+class ConfigHostsWindow(QDialog):
+    def __init__(self, parent=None):
+        super(ConfigHostsWindow, self).__init__()
+
+        self.ui = Ui_configHostsDialog
         self.ui.setupUi(self)
 
 
@@ -87,6 +97,7 @@ class MainWindow(QMainWindow):
 
         # setup the UI
         self.aboutWin = AboutWindow(self)
+        self.configHostsWin = ConfigHostsWindow(self)
         self.st = systemTray(app, nebula)
         self.loadLanguages(parent)
         self.ui.configFilePath.setText(SETTINGS['config'])
@@ -99,6 +110,11 @@ class MainWindow(QMainWindow):
             self.ui.checkAutostart.setChecked(True)
         else:
             self.ui.checkAutostart.setChecked(False)
+
+        if SETTINGS['use_hosts']:
+            self.ui.checkUseHosts.setChecked(True)
+        else:
+            self.ui.checkUseHosts.setChecked(False)
 
         # hide the disconnect button on init
         self.ui.btnDisconnect.hide()
@@ -118,6 +134,7 @@ class MainWindow(QMainWindow):
         self.ui.btnDisconnect.released.connect(self.st.nebulaDisconnect)
         # self.ui.btnStatus.released.connect(self.showStatusWin)
         self.ui.btnConfigFileSelect.released.connect(self.getConfigFile)
+        self.ui.btnConfigureHosts.released.connect(self.configHostsWin.show)
         self.ui.btnSaveSettings.released.connect(self.saveSettingsBtn)
         self.ui.btnQuit.released.connect(partial(self.quitPulsar, parent))
 
@@ -250,6 +267,7 @@ class MainWindow(QMainWindow):
 
         SETTINGS['tray_start'] = True if self.ui.checkTrayOnly.isChecked() else False
         SETTINGS['auto_connect'] = True if self.ui.checkAutostart.isChecked() else False
+        SETTINGS['use_hosts'] = True if self.ui.checkUseHosts.isChecked() else False
 
         saveSettings(SETTINGS)
         self.loadLanguages(app)
