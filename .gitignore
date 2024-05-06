@@ -161,3 +161,4 @@ cython_debug/
 
 # pulsar specific
 creds/
+*.yaml

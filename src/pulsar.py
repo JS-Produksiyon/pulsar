@@ -4,7 +4,7 @@
 """
     File name: pulsar.py
     Date Created: 2024-05-03
-    Date Modified: 2024-05-05
+    Date Modified: 2024-05-06
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -19,22 +19,26 @@ __languages__ = ['en','de','tr']  # languages the interface has been translated 
 __build__ = ''
 # ================================================================================
 # Check for python version
-import sys, os
+import sys
 
 MIN_PYTHON = (3,11)
 if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
+import os
 from nebula import Nebula
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize
 from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog
 from PySide6.QtGui import QIcon, QAction
+from utils import (errModal, infoModal, loadSettings, saveSettings)
 
 # windows
 from ui.pulsar_about_ui import Ui_AboutDialog
 from ui.pulsar_status_ui import Ui_ConnStatusWindow
 from ui.pulsar_main_ui import Ui_MainWindow
+
+SETTINGS = loadSettings()
 
 
 # Windows
@@ -63,6 +67,14 @@ class MainWindow(QMainWindow):
     
         # hide the disconnect button on init
         self.ui.btnDisconnect.hide()
+
+    def noConfig(self):
+        """
+        Set up display for instance when no valid config file is found
+        """
+        self.ui.btnConnect.setDisabled(True)
+        self.show()
+        errModal(self, self.tr('No valid Nebula configuration file was found so the connection cannot be made.<br>Please set the path to a valid Nebula configuration file below to continue.'))
 
 
 # Primary driver is the System Tray Icon
@@ -158,6 +170,9 @@ if __name__ == '__main__':
     mainWin = MainWindow()
     connWin = ConnStatusWindow()
     
+    if not os.path.exists(SETTINGS['config']):
+        mainWin.noConfig()
+
 
     app.exec()
     
