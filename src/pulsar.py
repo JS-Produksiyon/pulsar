@@ -179,6 +179,7 @@ class MainWindow(QMainWindow):
         self.switchLanguage(parent, SETTINGS['language'])
         self.ui.retranslateUi(self)
         self.aboutWin.ui.retranslateUi(self.aboutWin)
+        self.configHostsWin.ui.retranslateUi(self.configHostsWin)
         # connWin.ui.retranslateUi(connWin)
         self.st.retranslateUi(self.st)
         self.st.setToolTip(self.st.connToolTip if self.st.connected else self.st.disconnToolTip)
