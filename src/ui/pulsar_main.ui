@@ -25,11 +25,14 @@
       <x>90</x>
       <y>10</y>
       <width>531</width>
-      <height>81</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pulsar&lt;/span&gt; is a GUI client that makes it possible for Windows or MacOS computers to connect to a Nebula mesh network. For Pulsar to work, a valid Nebula configuration &lt;code&gt;.yaml&lt;/code&gt; file location must be supplied in the box below. The Nebula CA file, and the client key and certificate files must either be saved relative to the configuration file, or else be defined with a full path. The client will only connect to the Nebula Mesh Network if all files are present.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
     </property>
     <property name="wordWrap">
      <bool>true</bool>
@@ -71,7 +74,7 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>61</width>
+       <width>171</width>
        <height>16</height>
       </rect>
      </property>

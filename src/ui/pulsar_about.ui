@@ -78,7 +78,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>A GUI for the Nebula Mesh Network Client</string>
+    <string>A Graphical User Interface for the Nebula Mesh Network</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">

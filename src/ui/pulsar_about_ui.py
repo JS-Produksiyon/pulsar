@@ -22,6 +22,7 @@ try:
 except ModuleNotFoundError:
     import pulsar_rc
 
+
 class Ui_AboutDialog(object):
     def setupUi(self, AboutDialog):
         if not AboutDialog.objectName():
@@ -125,7 +126,7 @@ class Ui_AboutDialog(object):
     def retranslateUi(self, AboutDialog):
         AboutDialog.setWindowTitle(QCoreApplication.translate("AboutDialog", u"About Pulsar", None))
         self.label.setText("")
-        self.label_3.setText(QCoreApplication.translate("AboutDialog", u"A GUI for the Nebula Mesh Network Client", None))
+        self.label_3.setText(QCoreApplication.translate("AboutDialog", u"A Graphical User Interface for the Nebula Mesh Network", None))
         self.label_4.setText(QCoreApplication.translate("AboutDialog", u"Developed by JS Prod\u00fcksiyon Ltd. \u015eti. ", None))
         self.label_5.setText("")
         self.label_6.setText(QCoreApplication.translate("AboutDialog", u"Released under the GNU GPL v3.0 license.", None))
