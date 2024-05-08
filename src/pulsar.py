@@ -18,7 +18,7 @@ __status__ = "Development"
 __languages__ = ['en','de','tr']  # languages the interface has been translated into.
 __nebula__ = '1.8.2'
 __build__ = ''
-__debugState__ = True
+__debugState__ = False
 # ================================================================================
 # Check for python version
 import sys
@@ -105,7 +105,8 @@ class ConfigHostsWindow(QDialog):
             
         elif self.ui.radioUseFile.isChecked():
             if not hostsFileTools.validateHostsFile(nHostsPath):
-                errModal(self, QApplication.translate('configHostsDialog', u'The selected file is not a valid hosts file. Please check it and try again.', None))
+                modalTxt = self.tr('The selected file is not a valid hosts file. Please check it and try again.')
+                errModal(self, QApplication.translate('ConfigHostsWindow', u'The selected file is not a valid hosts file. Please check it and try again.', None))
                 self.ui.hostFilePath.setFocus
                 return False
             
@@ -129,7 +130,7 @@ class ConfigHostsWindow(QDialog):
         file.setViewMode(QFileDialog.Detail)
         if file.exec():
             if not hostsFileTools.validateHostsFile(file.selectedFiles()[0]):
-                errModal(self, QApplication.translate('configHostsDialog', u'The selected file is not a valid hosts file. Please check it and try again.', None))
+                errModal(self, QApplication.translate('ConfigHostsWindow', u'The selected file is not a valid hosts file. Please check it and try again.', None))
                 self.ui.hostFilePath.setText('')
                 self.ui.btnSelectFile.setFocus()
                 return False
@@ -174,7 +175,8 @@ class ConfigHostsWindow(QDialog):
 
         else:
             SETTINGS['hosts_file'] = ''
-            errModal(self, QCoreApplication.translate('configHostsDialog', u'No valid IP Address - Hostname pairs were entered. Hosts cannot be used.<br>Please either check the list and try again or point to a valid file containing the list.'))
+            modalTxt = self.tr('No valid IP Address - Hostname pairs were entered. Hosts cannot be used.<br>Please either check the list and try again or point to a valid file containing the list.')
+            errModal(self, QCoreApplication.translate('ConfigHostsWindow', u'No valid IP Address - Hostname pairs were entered. Hosts cannot be used.<br>Please either check the list and try again or point to a valid file containing the list.', None))
             return False
 
 
@@ -303,6 +305,7 @@ class MainWindow(QMainWindow):
         self.st.setToolTip(self.st.connToolTip if self.st.connected else self.st.disconnToolTip)
         self.st.menu.retranslateUi(self.st.menu)
 
+        langTxt = [self.tr('Deutsch (German)'), self.tr('English'), self.tr('Türkçe (Turkish)')]
 
         self.langDict = {'de': QCoreApplication.translate('MainWindow', u'Deutsch (German)', None),
                          'en': QCoreApplication.translate('MainWindow', u'English', None),
@@ -323,6 +326,7 @@ class MainWindow(QMainWindow):
         self.ui.btnConnect.setDisabled(True)
         self.ui.configFilePath.setFocus()
         self.show()
+        modalTxt = self.tr('No valid Nebula configuration file was found so the connection cannot be made.<br>Please set the path to a valid Nebula configuration file below to continue.')
         infoModal(self, 
                   QCoreApplication.translate('MainWindow', u'No valid Nebula configuration file was found so the connection cannot be made.<br>Please set the path to a valid Nebula configuration file below to continue.', None))
 
@@ -333,6 +337,7 @@ class MainWindow(QMainWindow):
         """
         url = QtCore.QUrl('https://github.com/JS-Produksiyon/pulsar/blob/main/LICENSE')
         if not QtGui.QDesktopServices.openUrl(url):
+            modalTxt = self.tr('Unable to open link to license.')
             errModal(self, QCoreApplication.translate('MainWindow', u'Unable to open link to license.', None))
 
 
@@ -342,6 +347,7 @@ class MainWindow(QMainWindow):
         """
         url = QtCore.QUrl('https://github.com/JS-Produksiyon/pulsar/blob/main/README.md')
         if not QtGui.QDesktopServices.openUrl(url):
+            modalTxt = self.tr('Unable to open link to user guide.')
             errModal(self, QCoreApplication.translate('MainWindow', 'Unable to open link to user guide.', None))
 
 
@@ -352,6 +358,7 @@ class MainWindow(QMainWindow):
         if not self.st.connected:
             parent.quit()
         else:
+            msg = self.tr("Pulsar is still connected to the Nebula mesh network.<br>Are you sure you want to quit the program?")
             msg = QCoreApplication.translate("MainWindow", u"Pulsar is still connected to the Nebula mesh network.<br>Are you sure you want to quit the program?", None)
             q = yesNoModal(self, msg)
             
@@ -426,6 +433,8 @@ class systemTray(QSystemTrayIcon):
     def __init__(self, parent, nebula=None) -> None:
         super(systemTray, self).__init__()
 
+        self.hostsFile = HostsFile()
+
         self.connected = False
         self.connToolTip = self.tr('Pulsar connected')
         self.disconnToolTip = self.tr('Pulsar not connected')
@@ -465,6 +474,9 @@ class systemTray(QSystemTrayIcon):
         if not self.connected:
             if not __debugState__:
                 self.nebulaObj.connect()
+                if SETTINGS['use_hosts']:
+                    self.hostsFile.setComment('Hosts added by Pulsar')
+                    self.hostsFile.loadFromFile(SETTINGS['hosts_file'])
             
             self.connected = True
             self.connectStatusIcon()
@@ -481,16 +493,20 @@ class systemTray(QSystemTrayIcon):
             mainWin.ui.btnDisconnect.hide()
             self.setToolTip(self.disconnToolTip)
             if not __debugState__:
+                if SETTINGS['use_hosts']:
+                    self.hostsFile.restoreHostsFile()
                 self.nebulaObj.disconnect()
 
     def quitPulsar(self,parent):
         if self.connected and not __debugState__:
             self.nebulaDisconnect()
-        
+
         parent.quit()
 
     def retranslateUi(self, systemTray):
+        self.connToolTip = self.tr('Pulsar connected')
         self.connToolTip = QCoreApplication.translate('systemTray', u'Pulsar connected', None)
+        self.disconnToolTip = self.tr('Pulsar not connected')
         self.disconnToolTip = QCoreApplication.translate('systemTray', u'Pulsar not connected', None)
 
     def showMainWin(self) -> None:
@@ -531,6 +547,7 @@ class systemTrayMenu(QMenu):
         """
         translate the menu
         """
+        strings = [self.tr("Connect to Nebula"), self.tr("Disconnect from Nebula"), self.tr("Show Pulsar Window"), self.tr("Quit")]
         self.connItem.setText(QCoreApplication.translate("systemTrayMenu", u"Connect to Nebula", None))
         self.disconnItem.setText(QCoreApplication.translate("systemTrayMenu", u"Disconnect from Nebula", None))
         # self.statusWin.setText(QCoreApplication.translate("systemTrayMenu", u"Show Connection Status", None))

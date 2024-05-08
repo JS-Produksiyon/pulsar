@@ -55,6 +55,19 @@
     </message>
 </context>
 <context>
+    <name>ConfigHostsWindow</name>
+    <message>
+        <location filename="../../pulsar.py" line="109"/>
+        <source>The selected file is not a valid hosts file. Please check it and try again.</source>
+        <translation>Die angegebene Datei enthält keine gültigen Daten für Hosts. Bitte kontrollieren Sie die Datei und probieren Sie es noch einmal.</translation>
+    </message>
+    <message>
+        <location filename="../../pulsar.py" line="179"/>
+        <source>No valid IP Address - Hostname pairs were entered. Hosts cannot be used.&lt;br&gt;Please either check the list and try again or point to a valid file containing the list.</source>
+        <translation>Es wurden keine gültigen IP Addresse- / Hostnamenpaare eingegeben. Diese Hosts können nicht verwendet werden&lt;br&gt;Kontrollieren Sie bitte die Liste oder geben Sie eine Datei mit gültigen Hostdaten an.</translation>
+    </message>
+</context>
+<context>
     <name>ConnStatusWindow</name>
     <message>
         <location filename="../../ui/pulsar_status.ui" line="14"/>
@@ -80,39 +93,42 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../pulsar.py" line="137"/>
+        <location filename="../../pulsar.py" line="274"/>
         <source>Nebula Config File (*.yml *.yaml)</source>
         <translation>Nebula Configurationsdatei (*.yml *.yaml)</translation>
     </message>
     <message>
+        <location filename="../../pulsar.py" line="308"/>
         <source>Deutsch (German)</source>
-        <translation type="vanished">Deutsch</translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
+        <location filename="../../pulsar.py" line="308"/>
         <source>English</source>
-        <translation type="vanished">English (Englisch)</translation>
+        <translation>English (Englisch)</translation>
     </message>
     <message>
+        <location filename="../../pulsar.py" line="310"/>
         <source>Türkçe (Turkish)</source>
-        <translation type="vanished">Türkçe (Türkisch)</translation>
+        <translation>Türkçe (Türkisch)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="190"/>
+        <location filename="../../pulsar.py" line="330"/>
         <source>No valid Nebula configuration file was found so the connection cannot be made.&lt;br&gt;Please set the path to a valid Nebula configuration file below to continue.</source>
         <translation>Es wurde keine gültige Nebula Konfigurationsdatei gefunden. Daher konnte keiene Verbindung hergestellt werden.&lt;br&gt;Um fortzufahren geben Sie bitte den Pfad zu einer gültigen Nebula Konfigurationsdatei ein.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="199"/>
+        <location filename="../../pulsar.py" line="341"/>
         <source>Unable to open link to license.</source>
         <translation>Link zur Lizenzdatei konnte nicht geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="208"/>
+        <location filename="../../pulsar.py" line="351"/>
         <source>Unable to open link to user guide.</source>
         <translation>Link zum Benutzerhandbuch konnte nicht geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="219"/>
+        <location filename="../../pulsar.py" line="362"/>
         <source>Pulsar is still connected to the Nebula mesh network.&lt;br&gt;Are you sure you want to quit the program?</source>
         <translation>Pulsar ist immer noch mit dem Nebula Mesh-Netzwerk verbunden.&lt;br&gt;Sind Sie sicher, dass Sie das Programm schleißen wollen?</translation>
     </message>
@@ -132,128 +148,128 @@
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="101"/>
+        <location filename="../../ui/pulsar_main.ui" line="104"/>
         <source>Nebula Configuration File:</source>
         <translation>Nebula Konfigurationsdatei:</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="114"/>
+        <location filename="../../ui/pulsar_main.ui" line="117"/>
         <source>Interface Language:</source>
         <translation>Schnittstellensprache:</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="137"/>
+        <location filename="../../ui/pulsar_main.ui" line="140"/>
         <source>Open...</source>
         <translation>Öffnen...</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="160"/>
+        <location filename="../../ui/pulsar_main.ui" line="163"/>
         <source>Save Settings</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="173"/>
+        <location filename="../../ui/pulsar_main.ui" line="176"/>
         <source>Start in Tray Only</source>
         <translation>Nur im Infobereich starten</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="189"/>
+        <location filename="../../ui/pulsar_main.ui" line="192"/>
         <source>Connect to Nebula Network on Startup</source>
         <translation>Beim Start mit Nebula Netzwerk verbinden</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="202"/>
+        <location filename="../../ui/pulsar_main.ui" line="205"/>
         <source>Register Nebula network hosts locally</source>
         <translation>Nebula Netzwerkhosts lokal registrieren</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="218"/>
+        <location filename="../../ui/pulsar_main.ui" line="221"/>
         <source>Configure...</source>
         <translation>Konfigurieren...</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="255"/>
+        <location filename="../../ui/pulsar_main.ui" line="258"/>
         <source>Connect to Nebula Mesh Network</source>
         <translation>Mit Nebula Mesh Netzwerk Verbinden</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="285"/>
+        <location filename="../../ui/pulsar_main.ui" line="288"/>
         <source>Disconnect from Nebula Mesh Network</source>
         <translation>Verbindung zum Nebula-Netzwerk schließen</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="301"/>
+        <location filename="../../ui/pulsar_main.ui" line="304"/>
         <source>Display Connection Status...</source>
         <translation>Verbindungsstatus anzeigen...</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="314"/>
-        <location filename="../../ui/pulsar_main.ui" line="386"/>
+        <location filename="../../ui/pulsar_main.ui" line="317"/>
+        <location filename="../../ui/pulsar_main.ui" line="389"/>
         <source>Quit Pulsar</source>
         <translation>Pulsar schließen</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="329"/>
+        <location filename="../../ui/pulsar_main.ui" line="332"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="339"/>
+        <location filename="../../ui/pulsar_main.ui" line="342"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="351"/>
+        <location filename="../../ui/pulsar_main.ui" line="354"/>
         <source>Connect</source>
         <translation>Verbindung aufbauen</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="354"/>
+        <location filename="../../ui/pulsar_main.ui" line="357"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="359"/>
+        <location filename="../../ui/pulsar_main.ui" line="362"/>
         <source>Disconnect</source>
         <translation>Verbindung schließen</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="362"/>
+        <location filename="../../ui/pulsar_main.ui" line="365"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="367"/>
+        <location filename="../../ui/pulsar_main.ui" line="370"/>
         <source>Quit</source>
         <translation>Programm beenden</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="375"/>
+        <location filename="../../ui/pulsar_main.ui" line="378"/>
         <source>Connection Status...</source>
         <translation>Verbindungsstatus...</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="378"/>
+        <location filename="../../ui/pulsar_main.ui" line="381"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="389"/>
+        <location filename="../../ui/pulsar_main.ui" line="392"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="394"/>
+        <location filename="../../ui/pulsar_main.ui" line="397"/>
         <source>User Guide</source>
         <translation>Benutzerhandbuch</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="399"/>
+        <location filename="../../ui/pulsar_main.ui" line="402"/>
         <source>About Pulsar</source>
         <translation>Über Pulsar</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_main.ui" line="404"/>
+        <location filename="../../ui/pulsar_main.ui" line="407"/>
         <source>License</source>
         <translation>Lizenz</translation>
     </message>
@@ -276,30 +292,41 @@
         <translation>Falls Sie die Hosts im Nebula-Netzwerk mit ihrem Hostnamen aufrufen wollen, können Sie hier die IP-Adresse / Hostnamenpaare entweder aus einer Textdatei  (&lt;code&gt;.txt&lt;/code&gt;) abrufen oder im untenstehenden Feld eingeben.</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_hosts.ui" line="87"/>
+        <location filename="../../ui/pulsar_hosts.ui" line="123"/>
         <source>File:</source>
         <translation>Datei:</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_hosts.ui" line="110"/>
+        <location filename="../../ui/pulsar_hosts.ui" line="139"/>
+        <source>IP Address / Hostame Pairs:</source>
+        <translation>IP Addresse- / Hostnamenpaare:</translation>
+    </message>
+    <message>
+        <location filename="../../ui/pulsar_hosts.ui" line="152"/>
+        <source>Use the radio buttons above to select the priority of the entry method.</source>
+        <translation>Die Engabefeldpriorität wird mit den Radiobuttons eingestellt.</translation>
+    </message>
+    <message>
+        <location filename="../../ui/pulsar_hosts.ui" line="97"/>
         <source>Open...</source>
         <translation>Öffnen...</translation>
     </message>
     <message>
-        <location filename="../../ui/pulsar_hosts.ui" line="123"/>
         <source>IP Address - Hostname Pairs:</source>
-        <translation>IP-Addressen / Hostnamenpaare:</translation>
+        <translation type="vanished">IP-Addressen / Hostnamenpaare:</translation>
     </message>
 </context>
 <context>
     <name>systemTray</name>
     <message>
-        <location filename="../../pulsar.py" line="294"/>
+        <location filename="../../pulsar.py" line="441"/>
+        <location filename="../../pulsar.py" line="510"/>
         <source>Pulsar not connected</source>
         <translation>Pulsar ist nicht verbunden</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="293"/>
+        <location filename="../../pulsar.py" line="440"/>
+        <location filename="../../pulsar.py" line="508"/>
         <source>Pulsar connected</source>
         <translation>Pulsar ist verbunden</translation>
     </message>
@@ -307,22 +334,26 @@
 <context>
     <name>systemTrayMenu</name>
     <message>
-        <location filename="../../pulsar.py" line="378"/>
+        <location filename="../../pulsar.py" line="532"/>
+        <location filename="../../pulsar.py" line="550"/>
         <source>Connect to Nebula</source>
         <translation>Mit Nebula verbinden</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="380"/>
+        <location filename="../../pulsar.py" line="534"/>
+        <location filename="../../pulsar.py" line="550"/>
         <source>Disconnect from Nebula</source>
         <translation>Verbindung mit Nebula schließen</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="383"/>
+        <location filename="../../pulsar.py" line="537"/>
+        <location filename="../../pulsar.py" line="550"/>
         <source>Show Pulsar Window</source>
         <translation>Pulsar Fenster anzeigen</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="388"/>
+        <location filename="../../pulsar.py" line="542"/>
+        <location filename="../../pulsar.py" line="551"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
