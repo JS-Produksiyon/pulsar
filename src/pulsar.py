@@ -18,7 +18,7 @@ __status__ = "Development"
 __languages__ = ['en','de','tr']  # languages the interface has been translated into.
 __nebula__ = '1.8.2'
 __build__ = ''
-__debugState__ = True
+__debugState__ = False
 # ================================================================================
 # Check for python version
 import sys
@@ -216,7 +216,6 @@ class MainWindow(QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
 
         # setup the UI
         self.aboutWin = AboutWindow(self)
@@ -479,11 +478,11 @@ class systemTray(QSystemTrayIcon):
         """
         if not self.connected:
             if not __debugState__:
-                self.nebulaObj.connect()
                 if SETTINGS['use_hosts']:
-                    self.hostsFile.setComment('Hosts added by Pulsar')
                     self.hostsFile.loadFromFile(SETTINGS['hosts_file'])
-            
+                self.nebulaObj.connect()
+                
+
             self.connected = True
             self.connectStatusIcon()
             mainWin.ui.btnDisconnect.show()
@@ -499,9 +498,9 @@ class systemTray(QSystemTrayIcon):
             mainWin.ui.btnDisconnect.hide()
             self.setToolTip(self.disconnToolTip)
             if not __debugState__:
+                self.nebulaObj.disconnect()
                 if SETTINGS['use_hosts']:
                     self.hostsFile.restoreHostsFile()
-                self.nebulaObj.disconnect()
 
     def quitPulsar(self,parent):
         if self.connected and not __debugState__:

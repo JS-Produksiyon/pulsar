@@ -81,8 +81,11 @@ class HostsFile():
         :returns       : boolean denoting success
         """
         if not os.path.exists(fileName):
+            print(f"Hosts file {fileName} not found")
             return False
-        
+
+        print(f"Loading hosts from file: {fileName}")
+
         if self.backup:
             self.backupHostsFile()
 
@@ -116,6 +119,7 @@ class HostsFile():
         :returns: boolean denoting success
         """
         if os.path.exists(self.backupFile):
+            print("Restoring hosts file to original state")
             try: 
                 shutil.copy(self.backupFile, self.file)
                 os.unlink(self.backupFile)

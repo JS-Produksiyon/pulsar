@@ -71,13 +71,13 @@ class Nebula():
 
         if self.validConfig:
             if self.testMode:
-                # elevate()
+                elevate()
                 showShell = False
 
             if self.configPath != '':
                 os.chdir(self.configPath)
 
-            elevate()
+            print(f'Starting Nebula client at {nPath}')
             self.nProcess = subprocess.Popen([nPath, '-config' ,self.configFile])
 
 
@@ -86,12 +86,10 @@ class Nebula():
         stops the nebula binary
         """
         if self.nProcess:
-            if sys.platform == 'win32':
-                self.nProcess.send_signal(signal.CTRL_C_EVENT)
-            elif sys.platform == 'darwin':
-                os.kill(self.nProcess.pid, signal.SIGINT)
-
+            print('Stopping Nebula client...')
+            os.kill(self.nProcess.pid, signal.SIGINT)
             self.nProcess = False
+            print('Nebula client is no longer running.')
 
 
     def setConfig(self, config) -> None:
