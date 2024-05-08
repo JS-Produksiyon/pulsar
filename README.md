@@ -11,6 +11,9 @@ This document was last updated on 2024-05-08.
 ## Nebula Version
 Nebula client binary version 1.8.2
 
+## Rationale for Pulsar
+As nice as the Nebula mesh network is, it takes some technical know-how to implement. Many users are not technically savvy enough to handle the CLI commands
+
 ## Installation
 ### Binary Releases
 ~~You can find binary releases for Pulsar that work on Windows and MacOS by visiting the [Releases](releases/) page.~~ _Not yet; still testing._
@@ -39,10 +42,8 @@ On first run, Pulsar will require you to select the necessary Nebula `.yaml` con
 Closing the Pulsar window will not end the program. You must do this by either clicking the _Quit Pulsar_ button or by right-clicking the Pulsar icon System Tray (Windows) or by clicking on the Pulsar icon in the Menu Bar (MacOS) and selecting Quit. 
 
 
-## Why “Pulsar”?
-The Nebula mesh network tool is named after the heavenly luminous gases that contain many stars. A mesh network is rather amorphous and contains many nodes as well. 
-This application makes it possible for one node to connect to the network, much like one star exists in the nebula. And because it puts out a pulse to connect,
-the image of the pulsar, a magnetized neutron star that pulses at a certain frequency, seemed an apt image. Thus you use Pulsar to connect to the Nebula. Enjoy!
+## Why Is the App Called “Pulsar”?
+The Nebula mesh network tool is named after the heavenly luminous gases that contain many stars. A mesh network is rather amorphous and contains many nodes as well. This application makes it possible for one node to connect to the network, much like one star exists in the nebula. And because it puts out a pulse to connect, the image of the pulsar, a magnetized neutron star that pulses at a certain frequency, seemed an apt image. Thus you use Pulsar to connect to the Nebula. Enjoy!
 
 
 
