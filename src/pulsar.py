@@ -18,7 +18,7 @@ __status__ = "Development"
 __languages__ = ['en','de','tr']  # languages the interface has been translated into.
 __nebula__ = '1.8.2'
 __build__ = ''
-__debugState__ = False
+__debugState__ = True
 # ================================================================================
 # Check for python version
 import sys
@@ -87,6 +87,7 @@ class ConfigHostsWindow(QDialog):
 
         self.ui = Ui_configHostsDialog()
         self.ui.setupUi(self)
+        self.pulsarHostsFile = os.path.dirname(__file__) + os.sep + "pulsarhosts.txt"
 
         self.ui.buttonBox.button(QDialogButtonBox.Reset).released.connect(self.reset)
         self.ui.hostFilePath.setText(SETTINGS['hosts_file'])
@@ -111,6 +112,9 @@ class ConfigHostsWindow(QDialog):
                 return False
             
             SETTINGS['hosts_file'] = nHostsPath
+
+            if nHostsPath != self.pulsarHostsFile and os.path.exists(self.pulsarHostsFile):
+                os.unlink(self.pulsarHostsFile)
 
         elif self.ui.radioUseTextBox.isChecked():
             if not self.loadFromTextBox():
@@ -154,7 +158,6 @@ class ConfigHostsWindow(QDialog):
         """
         pairList = self.ui.txtHostPairs.toPlainText()
         hostsFileTools = HostsFile()
-        pulsarHostsFile = os.path.dirname(__file__) + os.sep + 'pulsarhosts.txt'
         out = ''
 
         for line in pairList.splitlines():
@@ -163,14 +166,14 @@ class ConfigHostsWindow(QDialog):
 
         if out != '' or out == '\n':
             try:
-                with open(pulsarHostsFile, 'w', encoding='utf-8') as file:
+                with open(self.pulsarHostsFile, 'w', encoding='utf-8') as file:
                     file.write(out)
             except Exception as e:
                 print(f'Unable to write Pulsar hosts file: {e}')
                 return False
 
-            self.ui.hostFilePath.setText(pulsarHostsFile )
-            SETTINGS['hosts_file'] = pulsarHostsFile
+            self.ui.hostFilePath.setText(self.pulsarHostsFile )
+            SETTINGS['hosts_file'] = self.pulsarHostsFile
             return True
 
         else:
@@ -392,10 +395,13 @@ class MainWindow(QMainWindow):
             if self.ui.cmbLanguages.currentText() == self.langDict[lang]:
                 SETTINGS['language'] = lang
 
+        if SETTINGS['hosts_file'] == '':
+            self.ui.checkUseHosts.setChecked(False)
+
         SETTINGS['tray_start'] = True if self.ui.checkTrayOnly.isChecked() else False
         SETTINGS['auto_connect'] = True if self.ui.checkAutostart.isChecked() else False
         SETTINGS['use_hosts'] = True if self.ui.checkUseHosts.isChecked() else False
-
+        
         saveSettings(SETTINGS)
         self.loadLanguages(app)
         return True
