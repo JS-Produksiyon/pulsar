@@ -36,6 +36,7 @@ if not __debugState__:
 import os, locale
 from functools import partial
 from nebula import Nebula
+from hostsfile import HostsFile
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize, QLibraryInfo, QCoreApplication
 from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog, QFileDialog

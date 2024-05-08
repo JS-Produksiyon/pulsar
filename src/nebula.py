@@ -1,10 +1,9 @@
-#!/user/bin/env python
 # -*- coding: utf-8 -*-
 # ================================================================================
 """
     File name: nebula.py
     Date Created: 2024-05-03
-    Date Modified: 2024-05-06
+    Date Modified: 2024-05-07
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
