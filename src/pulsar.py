@@ -17,7 +17,7 @@ __email__ = "jmw@hawke-ai.com"
 __status__ = "Development"
 __languages__ = ['en','de','tr']  # languages the interface has been translated into.
 __nebula__ = '1.8.2'
-__build__ = ''
+__build__ = '2024-05-08 14:47'
 __debugState__ = False
 # ================================================================================
 # Check for python version
@@ -49,7 +49,7 @@ from ui.pulsar_about_ui import Ui_AboutDialog
 from ui.pulsar_hosts_ui import Ui_configHostsDialog
 from ui.pulsar_main_ui import Ui_MainWindow
 # from ui.pulsar_status_ui import Ui_ConnStatusWindow
-
+import ui.pulsar_rc
 
 SETTINGS = loadSettings()
 
@@ -445,12 +445,14 @@ class systemTray(QSystemTrayIcon):
         self.disconnToolTip = self.tr('Pulsar not connected')
         self.retranslateUi(self)
 
-        self.iconOn = QIcon(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-16.png', size=QSize(16, 16))
-        self.iconOn.addFile(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-24.png', size=QSize(24, 24))
-        self.iconOn.addFile(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-32.png', size=QSize(32, 32))
-        self.iconOff = QIcon(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-gray-16.png', size=QSize(16, 16))
-        self.iconOff.addFile(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-gray-24.png', size=QSize(24, 24))
-        self.iconOff.addFile(os.path.dirname(__file__) + '/ui/resources/pulsar-icon-gray-32.png', size=QSize(32, 32))
+        self.iconOn = QIcon()
+        self.iconOn.addFile(u':/icon/resources/pulsar-icon-16.png', size=QSize(16, 16))
+        self.iconOn.addFile(u':/icon/resources/pulsar-icon-24.png', size=QSize(24, 24))
+        self.iconOn.addFile(u':/icon/resources/pulsar-icon-32.png', size=QSize(32, 32))
+        self.iconOff = QIcon()
+        self.iconOff.addFile(u':/icon/resources/pulsar-icon-gray-16.png', size=QSize(16, 16))
+        self.iconOff.addFile(u':/icon/resources/pulsar-icon-gray-24.png', size=QSize(24, 24))
+        self.iconOff.addFile(u':/icon/resources/pulsar-icon-gray-32.png', size=QSize(32, 32))
         self.setIcon(self.iconOff)
         self.setToolTip('Pulsar')
         self.setVisible(True)
