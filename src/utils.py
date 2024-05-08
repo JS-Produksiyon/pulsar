@@ -4,7 +4,7 @@
 """
     File name: utils.py
     Date Created: 2024-05-06
-    Date Modified: 2024-05-06
+    Date Modified: 2024-05-08
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -129,6 +129,10 @@ def saveSettings(settings) -> bool:
     :type  settings: dict
     :returns       : boolean denoting validity
     """
+    # we can only use_hosts if we have a valid hosts_file
+    if settings['hosts_file'] == '':
+        settings['use_hosts'] = False
+
     settingsFile = os.path.dirname(__file__) + os.sep + 'settings.yaml'
 
     try:

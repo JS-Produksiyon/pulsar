@@ -4,7 +4,7 @@
 """
     File name: pulsar.py
     Date Created: 2024-05-03
-    Date Modified: 2024-05-06
+    Date Modified: 2024-05-08
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -39,7 +39,7 @@ from nebula import Nebula
 from hostsfile import HostsFile
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize, QLibraryInfo, QCoreApplication
-from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog, QFileDialog
+from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog, QFileDialog, QDialogButtonBox
 from PySide6.QtGui import QIcon, QAction
 from utils import (errModal, infoModal, loadSettings, saveSettings, yesNoModal)
 
@@ -88,6 +88,122 @@ class ConfigHostsWindow(QDialog):
         self.ui = Ui_configHostsDialog()
         self.ui.setupUi(self)
 
+        self.ui.buttonBox.button(QDialogButtonBox.Reset).released.connect(self.reset)
+        self.ui.hostFilePath.setText(SETTINGS['hosts_file'])
+        self.ui.btnSelectFile.released.connect(self.getHostsFile)
+        self.ui.txtHostPairs.textChanged.connect(self.selectTextBoxRadio)
+
+    def accept(self) -> None:
+        """
+        action to be completed on clicking OK
+        """
+        hostsFileTools = HostsFile()
+        nHostsPath = self.ui.hostFilePath.text()
+
+        if nHostsPath == '' and self.ui.txtHostPairs.toPlainText() == '':
+            SETTINGS['hosts_file'] = ''
+            
+        elif self.ui.radioUseFile.isChecked():
+            if not hostsFileTools.validateHostsFile(nHostsPath):
+                errModal(self, QApplication.translate('configHostsDialog', u'The selected file is not a valid hosts file. Please check it and try again.', None))
+                self.ui.hostFilePath.setFocus
+                return False
+            
+            SETTINGS['hosts_file'] = nHostsPath
+
+        elif self.ui.radioUseTextBox.isChecked():
+            if not self.loadFromTextBox():
+                return False
+            
+        # clear stuff and close window
+        self.reject()
+
+
+    def getHostsFile(self) -> None:
+        """
+        opens the hosts file window
+        """
+        hostsFileTools = HostsFile()
+        file = QFileDialog(self)
+        file.setFileMode(QFileDialog.AnyFile)
+        file.setViewMode(QFileDialog.Detail)
+        if file.exec():
+            if not hostsFileTools.validateHostsFile(file.selectedFiles()[0]):
+                errModal(self, QApplication.translate('configHostsDialog', u'The selected file is not a valid hosts file. Please check it and try again.', None))
+                self.ui.hostFilePath.setText('')
+                self.ui.btnSelectFile.setFocus()
+                return False
+
+            self.ui.hostFilePath.setText(file.selectedFiles()[0])
+
+            with open(file.selectedFiles()[0], 'r', encoding='utf-8') as file:
+                self.ui.txtHostPairs.setPlainText(file.read())
+
+            # this has to be here to override the txtHostPairs.textChanged() event listener
+            self.ui.radioUseFile.setChecked(True) 
+
+        self.ui.buttonBox.setFocus()
+
+
+    def loadFromTextBox(self) -> bool:
+        """
+        loads the IP/hostname pairs from the text box
+
+        :returns: boolean denoting success
+        """
+        pairList = self.ui.txtHostPairs.toPlainText()
+        hostsFileTools = HostsFile()
+        pulsarHostsFile = os.path.dirname(__file__) + os.sep + 'pulsarhosts.txt'
+        out = ''
+
+        for line in pairList.splitlines():
+            if hostsFileTools.validateHostsLine(line):
+                out = f'{out}{line}\n'
+
+        if out != '' or out == '\n':
+            try:
+                with open(pulsarHostsFile, 'w', encoding='utf-8') as file:
+                    file.write(out)
+            except Exception as e:
+                print(f'Unable to write Pulsar hosts file: {e}')
+                return False
+
+            self.ui.hostFilePath.setText(pulsarHostsFile )
+            SETTINGS['hosts_file'] = pulsarHostsFile
+            return True
+
+        else:
+            SETTINGS['hosts_file'] = ''
+            errModal(self, QCoreApplication.translate('configHostsDialog', u'No valid IP Address - Hostname pairs were entered. Hosts cannot be used.<br>Please either check the list and try again or point to a valid file containing the list.'))
+            return False
+
+
+    def reject(self) -> None:
+        """
+        action to be completed on Cancel button
+        """
+        self.ui.hostFilePath.setText(SETTINGS['hosts_file'])
+        self.ui.txtHostPairs.clear()
+        self.ui.radioUseFile.setChecked(True)
+        self.hide()
+
+
+    def reset(self) -> None:
+        """
+        action to be completed on Reset button
+        """
+        self.ui.hostFilePath.clear()
+        self.ui.txtHostPairs.clear()
+        self.ui.radioUseFile.setChecked(True)
+        self.ui.hostFilePath.setFocus()
+
+
+    def selectTextBoxRadio(self) -> None:
+        """
+        function to select the pairs radio button
+        """
+        self.ui.radioUseTextBox.setChecked(True)
+
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None, nebula=None):
@@ -95,6 +211,7 @@ class MainWindow(QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
 
         # setup the UI
         self.aboutWin = AboutWindow(self)
@@ -206,7 +323,8 @@ class MainWindow(QMainWindow):
         self.ui.btnConnect.setDisabled(True)
         self.ui.configFilePath.setFocus()
         self.show()
-        infoModal(self, self.tr('No valid Nebula configuration file was found so the connection cannot be made.<br>Please set the path to a valid Nebula configuration file below to continue.'))
+        infoModal(self, 
+                  QCoreApplication.translate('MainWindow', u'No valid Nebula configuration file was found so the connection cannot be made.<br>Please set the path to a valid Nebula configuration file below to continue.', None))
 
 
     def openLicense(self) -> None:
@@ -215,7 +333,7 @@ class MainWindow(QMainWindow):
         """
         url = QtCore.QUrl('https://github.com/JS-Produksiyon/pulsar/blob/main/LICENSE')
         if not QtGui.QDesktopServices.openUrl(url):
-            errModal(self, self.tr('Unable to open link to license.'))
+            errModal(self, QCoreApplication.translate('MainWindow', u'Unable to open link to license.', None))
 
 
     def openManual(self) -> None:
@@ -224,7 +342,7 @@ class MainWindow(QMainWindow):
         """
         url = QtCore.QUrl('https://github.com/JS-Produksiyon/pulsar/blob/main/README.md')
         if not QtGui.QDesktopServices.openUrl(url):
-            errModal(self, self.tr('Unable to open link to user guide.'))
+            errModal(self, QCoreApplication.translate('MainWindow', 'Unable to open link to user guide.', None))
 
 
     def quitPulsar(self, parent) -> None:
@@ -234,7 +352,7 @@ class MainWindow(QMainWindow):
         if not self.st.connected:
             parent.quit()
         else:
-            msg = self.tr("Pulsar is still connected to the Nebula mesh network.<br>Are you sure you want to quit the program?")
+            msg = QCoreApplication.translate("MainWindow", u"Pulsar is still connected to the Nebula mesh network.<br>Are you sure you want to quit the program?", None)
             q = yesNoModal(self, msg)
             
             if q:

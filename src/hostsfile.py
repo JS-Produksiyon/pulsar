@@ -4,7 +4,7 @@
 """
     File name: hostsfile.py
     Date Created: 2024-05-07
-    Date Modified: 2024-05-07
+    Date Modified: 2024-05-08
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -140,6 +140,30 @@ class HostsFile():
             self.comment = txt if txt[0:1] == "#" else "# " + txt
 
 
+    def validateHostsFile(self, fileName) -> bool:
+        """
+        validates a given hosts file
+
+        :param fileName: full path of file to validate
+        :type  fileName: string
+        :returns       : boolean denoting file validity
+        """
+        try:
+            with open(fileName, 'r', encoding='utf-8') as file:
+                line = file.readline()
+                while line:
+                    if not self.validateHostsLine(line):
+                        return False
+                    
+                    line = file.readline()
+
+            return True
+
+        except Exception as e:
+            print(f"Error opening file: {e}")
+            return False
+
+
     def validateHostsLine(self, line) -> bool:
         """
         Validates a line as containing a valid
@@ -147,8 +171,9 @@ class HostsFile():
         # regular expressions to check for proper hosts file lines
         reIpFour = '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)([\s]+)([a-zA-Z0-9]+\.?)[a-zA-Z]{2,6}([\s\t]+)?([#\w\s\,\.\$\@/\-()\*\!\&]+)?$'
         reIpSix  = '^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))([\s]+)([a-zA-Z0-9]+\.?)[a-zA-Z]{2,6}([\s\t]+)?([#\w\s\,\.\$\@/\-()\*\!\&]+)?$'
+        reComment = '^#[\w\s\,\.\$\@/\-()\*\!\&]+$'
 
-        if re.match(reIpFour, line) or re.match(reIpSix, line):
+        if re.match(reIpFour, line) or re.match(reIpSix, line) or re.match(reComment, line) or line == '\n' or line == '\r\n':
             return True
         else:
             return False
@@ -178,8 +203,9 @@ class HostsFile():
 if __name__ == "__main__":
     print('This module is not meant to be run on its own. Please call it using from hostsfile import HostsFile.')
     # elevate()
-    # h = HostsFile()
-    # srcFile = os.path.dirname(__file__) + '\\..\\creds\\hosts'
+    h = HostsFile()
+    srcFile = os.path.dirname(__file__) + '\\..\\creds\\hosts'
+    print(h.validateHostsFile(srcFile))
     # tgtFile = os.path.dirname(__file__) + '\\..\\hosts'
     # h.setComment('Hosts entries added by Pulsar')
 
