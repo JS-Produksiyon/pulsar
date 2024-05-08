@@ -3,7 +3,7 @@
 """
     File name: nebula.py
     Date Created: 2024-05-03
-    Date Modified: 2024-05-07
+    Date Modified: 2024-05-08
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -13,9 +13,8 @@ __license__ = "GNU GPL v3.0"
 __version__ = "1.0.0"
 __maintainer__ = ["Josh Wibberley"]
 __email__ = "jmw@hawke-ai.com"
-__status__ = "Development"
+__status__ = "Production"
 __languages__ = ['en','de','tr']  # languages the interface has been translated into.
-__build__ = ''
 # ================================================================================
 # Check for python version
 import sys

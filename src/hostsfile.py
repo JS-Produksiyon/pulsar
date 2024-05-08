@@ -14,10 +14,9 @@ __license__ = "GNU GPL v3.0"
 __version__ = "1.0.0"
 __maintainer__ = ["Josh Wibberley"]
 __email__ = "jmw@hawke-ai.com"
-__status__ = "Development"
+__status__ = "Production"
 __languages__ = ['en','de','tr']  # languages the interface has been translated into.
 __nebula__ = '1.8.2'
-__build__ = ''
 # ================================================================================
 # Check for python version
 import sys, os, re, shutil
