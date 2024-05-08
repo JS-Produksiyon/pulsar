@@ -166,3 +166,4 @@ output/
 creds/
 *.yaml
 pulsarhosts.txt
+!src/bin/windows/dist
