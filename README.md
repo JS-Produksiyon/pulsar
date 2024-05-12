@@ -6,9 +6,9 @@ Read the Documentation in the Wiki
 
 Pulsar is developed and maintained by JS Prodüksiyon Ltd. Şti. and is presented under the GNU GPL v3.0.
 
-This document is also available in ~~[German (Deutsch)](README_de.md) and~~ [Turkish (Türkçe)](README_tr.md).
+This document is also available in [German (Deutsch)](README_de.md) and[Turkish (Türkçe)](README_tr.md).
 
-This document was last updated on 2024-05-11.
+This document was last updated on 2024-05-12.
 
 
 ## Nebula Version
@@ -20,7 +20,7 @@ As nice as the Nebula mesh network is, it takes some technical know-how to imple
 
 ## Operating System Compatibility
 
-| OS                 | Source   | Binary        |
+| OS                 | Source   | Compiled      |
 | ----------         | -------- | ------------- |
 | Windows 11         | Works    | Works         |
 | Windows 10         | Untested | Works         |
@@ -32,12 +32,12 @@ Technically speaking Pulsar should run on any OS that can handle Python 3.11 and
 * **Windows:** 11, 10
 * **macOS:** Sonoma 14, Ventura 13, Monterey 12, Big Sur 11
 
-Since we don't need this application to run on Linux, we did not add that functionality. However, if you want to fork it and make it work there, be our Guest
+Since we don't need this application to run on Linux, we did not add that functionality. However, if you want to fork it and make it work there, be our Guest.
 
 
 ## Installation
-### Binary Releases
-~~You can find binary releases for Pulsar that work on Windows and MacOS by visiting the [Releases](releases/) page.~~ _Not yet; still testing._
+### Compiled Releases
+~~You can find compiled releases for Pulsar that work on Windows and MacOS by visiting the [Releases](releases/) page.~~ _Not yet; still testing._
 
 Download the latest release, unzip the file in a location of your choosing and run the enclosed executable. Pulsar does not need to be installed to be used.
 
