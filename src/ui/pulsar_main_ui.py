@@ -8,6 +8,7 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
+import sys
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -111,7 +112,8 @@ class Ui_MainWindow(object):
         self.btnConnect.setObjectName(u"btnConnect")
         self.btnConnect.setEnabled(True)
         self.btnConnect.setGeometry(QRect(150, 340, 340, 51))
-        font.setPointSize(14)
+        if sys.platform == 'macos': # size is not correct on Mac
+                font.setPointSize(14)
         self.btnConnect.setFont(font)
         self.btnConnect.setStyleSheet(u"QPushButton#btnConnect {\n"
 "	color: white;\n"
