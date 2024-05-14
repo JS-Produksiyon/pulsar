@@ -215,7 +215,7 @@ class SettingsErrorWindow(QMainWindow):
     def __init__(self, parent=None):
         super(SettingsErrorWindow, self).__init__()
 
-        self.ui = Ui_SettingsErrWin
+        self.ui = Ui_SettingsErrWin()
         self.ui.setupUi(self)
         
         self.parent = parent
