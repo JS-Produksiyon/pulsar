@@ -48,6 +48,7 @@ from utils import (errModal, infoModal, loadSettings, saveSettings, yesNoModal)
 from ui.pulsar_about_ui import Ui_AboutDialog
 from ui.pulsar_hosts_ui import Ui_configHostsDialog
 from ui.pulsar_main_ui import Ui_MainWindow
+from ui.pulsar_settings_error_ui import Ui_SettingsErrWin
 # from ui.pulsar_status_ui import Ui_ConnStatusWindow
 import ui.pulsar_rc
 
@@ -208,6 +209,19 @@ class ConfigHostsWindow(QDialog):
         function to select the pairs radio button
         """
         self.ui.radioUseTextBox.setChecked(True)
+
+
+class SettingsErrorWindow(QMainWindow):
+    def __init__(self, parent=None):
+        super(SettingsErrorWindow, self).__init__()
+
+        self.ui = Ui_SettingsErrWin
+        self.ui.setupUi(self)
+        
+        self.parent = parent
+
+    def close(self):
+        self.parent.quit()
 
 
 class MainWindow(QMainWindow):
@@ -571,21 +585,23 @@ if __name__ == '__main__':
     app.setQuitOnLastWindowClosed(False)
 
     if SETTINGS == False:
-        errModal(app, 'Settings file is corrupt. Delete <code>settings.yaml</code> to make the application work again!')
-
-    # connWin = ConnStatusWindow()
-    mainWin = MainWindow(app, nebulaObj)
+        settingsError = SettingsErrorWindow(app)
+        settingsError.show()
     
-    if not os.path.exists(SETTINGS['config']):
-        mainWin.noConfig()
     else:
-        nebulaObj.setConfig(SETTINGS['config'])
-    
-    if not SETTINGS['tray_start']:
-        mainWin.show()
+        # connWin = ConnStatusWindow()
+        mainWin = MainWindow(app, nebulaObj)
+        
+        if not os.path.exists(SETTINGS['config']):
+            mainWin.noConfig()
+        else:
+            nebulaObj.setConfig(SETTINGS['config'])
+        
+        if not SETTINGS['tray_start']:
+            mainWin.show()
 
-    if SETTINGS['auto_connect']:
-        mainWin.st.nebulaConnect()
+        if SETTINGS['auto_connect']:
+            mainWin.st.nebulaConnect()
 
     sys.exit(app.exec())
     

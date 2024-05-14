@@ -167,3 +167,4 @@ creds/
 *.yaml
 pulsarhosts.txt
 !src/bin/windows/dist
+pulsar_auto-py-to-exe_config.json
