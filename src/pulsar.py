@@ -4,7 +4,7 @@
 """
     File name: pulsar.py
     Date Created: 2024-05-03
-    Date Modified: 2024-05-08
+    Date Modified: 2024-05-14
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -17,7 +17,7 @@ __email__ = "jmw@hawke-ai.com"
 __status__ = "Development"
 __languages__ = ['en','de','tr']  # languages the interface has been translated into.
 __nebula__ = '1.8.2'
-__build__ = '2024-05-08 14:47'
+__build__ = '2024-05-14 16:33'
 __debugState__ = False
 # ================================================================================
 # Check for python version
