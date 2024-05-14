@@ -6,7 +6,7 @@ Wiki'deki belgeleri okuyun
 
 Pulsar, JS Prodüksiyon Ltd. Şti. ve GNU GPL v3.0 lisansı altında sunulmaktadır.
 
-Bu belge şu dillerde de mevcuttur: ~~[Almanca (Deutsch)](README_de.md)~~ ve [İngilizce (English)](README.md)
+Bu belge şu dillerde de mevcuttur: [Almanca (Deutsch)](README_de.md) ve [İngilizce (English)](README.md)
 
 Bu belge en son 2024-05-11 tarihinde güncellenmiştir.
 
@@ -25,7 +25,7 @@ Nebula örgüsel ağ ne kadar güzel olursa olsun, uygulanması bayağı bir tek
 | Windows 11         | Çalışıyor     | Çalışıyor     |
 | Windows 10         | Denenmedi     | Çalışıyor     |
 | Windows 7          | Denenmedi     | Çalışmıyor    |
-| macOS 13.6 (Intel) | Test ediliyor | Hazır değil |
+| macOS 13.6 (Intel) | Çalışıyor     | Çalışıyor     |
 
 Teknolojik bakış açısından, Pulsar, Python 3.11 ve Nebula istemcisini sürdürebilen herhangi bir işletim sisteminde çalışmalıdır. Python 3.11, PyQT 6.7 ve Nebula sistem gereksinimlerine bakarak tüm platformları test etme olanağımız olmasa da, bu uygulama aşağıdaki işletim sistemlerinde çalışacaktır:
 
