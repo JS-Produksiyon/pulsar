@@ -112,8 +112,8 @@ class Ui_MainWindow(object):
         self.btnConnect.setObjectName(u"btnConnect")
         self.btnConnect.setEnabled(True)
         self.btnConnect.setGeometry(QRect(150, 340, 340, 51))
-        if sys.platform == 'macos': # size is not correct on Mac
-                font.setPointSize(14)
+        if sys.platform == 'darwin': # size is not correct on Mac
+                font.setPointSize(15)
         self.btnConnect.setFont(font)
         self.btnConnect.setStyleSheet(u"QPushButton#btnConnect {\n"
 "	color: white;\n"
