@@ -8,7 +8,7 @@ Pulsar is developed and maintained by JS Prodüksiyon Ltd. Şti. and is presente
 
 This document is also available in [German (Deutsch)](README_de.md) and[Turkish (Türkçe)](README_tr.md).
 
-This document was last updated on 2024-05-14.
+This document was last updated on 2024-05-15.
 
 
 ## Nebula Version
@@ -20,12 +20,14 @@ As nice as the Nebula mesh network is, it takes some technical know-how to imple
 
 ## Operating System Compatibility
 
-| OS                 | Source   | Compiled      |
-| ----------         | -------- | ------------- |
-| Windows 11         | Works    | Works         |
-| Windows 10         | Untested | Works         |
-| Windows 7          | Untested | Does not work |
-| MacOS 13.6 (Intel) | Works    | Works         |
+| OS                 | Source          | Compiled        |
+| ----------         | --------------- | --------------- |
+| Windows 11         | Works           | Works           |
+| Windows 10         | Untested        | Works           |
+| Windows 7          | Untested        | Does not work   |
+| MacOS 13.6 (Intel) | Works           | Works           |
+| MacOS 14.2 (M1)    | Works partially | Works partially |
+
 
 Technically speaking Pulsar should run on any OS that can handle Python 3.11 and the Nebula client. While we don't have the ability to test all platforms, looking at Python 3.11, PyQT 6.7, and Nebula system requirements, this application will run on the following operating systems:
 
@@ -33,6 +35,8 @@ Technically speaking Pulsar should run on any OS that can handle Python 3.11 and
 * **macOS:** Sonoma 14, Ventura 13, Monterey 12, Big Sur 11
 
 Since we don't need this application to run on Linux, we did not add that functionality. However, if you want to fork it and make it work there, be our Guest.
+
+PyQT 6 and Mac M1 chipset incompatibilities cause opening of the system file picker dialog and pasting into text boxes to fail. However, the application works if required information is typed in by hand. [See the Wiki for details](https://github.com/JS-Produksiyon/pulsar/wiki/Usage#issues-with-pulsar-on-macos-on-m-series-chips).
 
 
 ## Installation
