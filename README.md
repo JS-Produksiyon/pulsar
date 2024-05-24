@@ -8,7 +8,7 @@ Pulsar is developed and maintained by JS Prodüksiyon Ltd. Şti. and is presente
 
 This document is also available in [German (Deutsch)](README_de.md) and[Turkish (Türkçe)](README_tr.md).
 
-This document was last updated on 2024-05-15.
+This document was last updated on 2024-05-24.
 
 
 ## Nebula Version
