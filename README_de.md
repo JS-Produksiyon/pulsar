@@ -11,7 +11,7 @@ Dieses Dokument ist auch in [Englisch (English)](README.md) und [Türkisch (Tür
 Dieses Dokument wurde zuletzt am 2024-05-24 aktualisiert.
 
 
-## Nebel-Version
+## Nebula-Version
 Nebula-Client-Binärversion 1.8.2
 
 ## Begründung für Pulsar
