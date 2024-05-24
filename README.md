@@ -41,7 +41,7 @@ PyQT 6 and Mac M1 chipset incompatibilities cause opening of the system file pic
 
 ## Installation
 ### Compiled Releases
-~~You can find compiled releases for Pulsar that work on Windows and MacOS by visiting the [Releases](releases/) page.~~ _Not yet; still testing._
+You can find compiled releases for Pulsar that work on Windows and MacOS by visiting the [Releases](releases/) page.
 
 Download the latest release, unzip the file in a location of your choosing and run the enclosed executable. Pulsar does not need to be installed to be used.
 
