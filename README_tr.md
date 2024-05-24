@@ -8,7 +8,7 @@ Pulsar, JS Prodüksiyon Ltd. Şti. ve GNU GPL v3.0 lisansı altında sunulmaktad
 
 Bu belge şu dillerde de mevcuttur: [Almanca (Deutsch)](README_de.md) ve [İngilizce (English)](README.md)
 
-Bu belge en son 2024-05-15 tarihinde güncellenmiştir.
+Bu belge en son 2024-05-24 tarihinde güncellenmiştir.
 
 
 ## Nebula Sürümü
@@ -40,7 +40,7 @@ PyQT 6 ve Mac M1 yonga seti uyumsuzlukları, sistem dosyası seçici iletişim k
 
 ## Kurulum
 ### Hazır Sürümler
-~~Pulsar için Windows ve MacOS'ta çalışan ikili sürümleri [Releases](releases/) sayfasını ziyaret ederek bulabilirsiniz.~~ _Hazır değil; hâlâ test aşamasındayız._
+Pulsar için Windows ve MacOS'ta çalışan ikili sürümleri [Releases](releases/) sayfasını ziyaret ederek bulabilirsiniz.
 
 En son sürümü indirin, sıkışdırılımısş dosyayı seçtiğiniz bir konuma ayıklayın ve içindeki yazılımı çalıştırın. Pulsar'ın kullanılması için kurulmasına gerek yoktur.
 
