@@ -8,7 +8,7 @@ Pulsar wird von JS Prodüksiyon Ltd. Şti entwickelt und gewartet. und wird unte
 
 Dieses Dokument ist auch in [Englisch (English)](README.md) und [Türkisch (Türkçe)](README_tr.md) verfügbar.
 
-Dieses Dokument wurde zuletzt am 2024-05-15 aktualisiert.
+Dieses Dokument wurde zuletzt am 2024-05-24 aktualisiert.
 
 
 ## Nebel-Version
@@ -41,7 +41,7 @@ PyQT 6- und Mac M1-Chipsatz-Inkompatibilitäten führen dazu, dass das Öffnen d
 
 ## Installation
 ### Compilierte Releases
-~~Sie können compilierte Versionen für Pulsar, die unter Windows und MacOS funktionieren, finden, indem Sie die Seite [Releases](releases/) besuchen.~~ _Noch nicht; in Testphase._
+Sie können compilierte Versionen für Pulsar, die unter Windows und MacOS funktionieren, finden, indem Sie die Seite [Releases](releases/) besuchen.
 
 Laden Sie die neueste Version herunter, entpacken Sie die Datei an einem Ort Ihrer Wahl und führen Sie die ausführbare Datei aus. Pulsar muss nicht installiert werden, um verwendet zu werden.
 
