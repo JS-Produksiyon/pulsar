@@ -92,6 +92,15 @@ class Nebula():
             print('Nebula client is no longer running.')
 
 
+    def restartConnection(self) -> None:
+        """
+        Disconnects, then reconnects the connection after waiting 1.5 sec
+        """
+        self.disconnect()
+        sleep(1.5)
+        self.connect()
+
+
     def setConfig(self, config) -> None:
         """
         sets a new configuration file
