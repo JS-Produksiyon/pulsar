@@ -23,7 +23,7 @@ MIN_PYTHON = (3,11)
 if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
-import os, subprocess, yaml, signal
+import os, subprocess, yaml, signal, re
 from elevate import elevate
 from time import sleep
 
@@ -155,6 +155,97 @@ class Nebula():
 
 
 
+class StayConnected():
+    """
+    Keeps the connection to the nebula network alive
+
+    :param ips     : IP v4 or v6 addresses to ping to check for live connection
+    :type  ips     : list
+    :param task    : function to trigger when disconnection is detected
+    :type  task    : reference to function
+    :param interval: how often to ping in seconds (default: 300s = 5 min)
+    :type  interval: integer
+    """
+
+    def __init__(self, ips, task, interval=300) -> None:
+        self.active = False
+        self.ipList = []
+        self.pingInterval = interval if type(interval) == int else 300
+        self.reconnectFunction = task
+
+        # load and validate IPs
+        if type(ips) == str:
+            if self.__validateIp(ips): 
+                self.ipList.append(ips)
+        elif type(ips) == list:
+            for ip in ips:
+                if self.__validateIp(ip):
+                    self.ipList.append(ip)
+
+
+    def __validateIp(self, ip) -> bool:
+        """
+        private function to validate an IP address.
+
+        :param ip: IP address to validate
+        :type  ip: string
+        :returns : boolean denoting validity
+        """
+        reIpFour = '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+        reIpSix  = '^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$'
+
+        if type(ip) == str:
+            if re.match(reIpFour, ip) or re.match(reIpSix, ip):
+                return True
+            else:
+                return False
+
+        return False
+        
+
+    def disable(self) -> None:
+        """
+        Disables keeping the connection up on disconnect
+        """
+        self.active = False
+
+
+    def enable(self) -> bool:
+        """
+        Enables keeping the connection up on disconnect
+
+        :returns : boolean to denote whether activated or not
+        """
+        # make sure we have valid ip addresses to process
+        if len(self.ipList) < 1:
+            self.active = False
+            return False
+
+
+    def ping(self, ip, count=3, verbose=False) -> dict:
+        """
+        Executes the actual ping function
+
+        :param ip     : IP address to ping
+        :type  ip     : string
+        :param count  : how many pings to send (default is 3)
+        :type  count  : integer
+        :param verbose: whether or not to return all replies
+        :type  verbose: boolean
+        :returns      : dictionary as follows {result: bool, output: [list]}
+        """
+        data = []
+        result = False
+        p = subprocess.Popen(f"ping {ip} -n {count}", stdout=subprocess.PIPE, encoding='utf-8')
+
+        for line in p.stdout:
+            if 'TTL' in line:
+                result = True
+                data.append(line)
+
+        return { 'result': result, 'output': data } if verbose else { 'result': result }
+
+
 
 if __name__ == '__main__':
     print("This module is not meant to be called by itself unless testing. Please import using from nebula import Nebula.")
@@ -166,8 +257,16 @@ if __name__ == '__main__':
             cf = 'C:\\Users\\wolfh\\Repositories\\pulsar\\creds\\joshw-config.yaml'
 
         n = Nebula(cf, test=True)
-        n.connect()
-        sleep(10)
-        n.disconnect()
+        # n.connect()
+        # sleep(10)
+        # n.disconnect()
+
+        ips = ['192.168.3.1']
+
+        p = StayConnected(ips=ips, task=n.connect)
+        print(p.ping(ips[0], verbose=True))
+
     except SystemExit:
         pass
+
+
