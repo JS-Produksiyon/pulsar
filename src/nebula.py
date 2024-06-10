@@ -3,7 +3,7 @@
 """
     File name: nebula.py
     Date Created: 2024-05-03
-    Date Modified: 2024-06-07
+    Date Modified: 2024-06-10
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -51,7 +51,7 @@ class Nebula():
     :type  test      : boolean
     """
 
-    def __init__(self, config='', keep_alive=True, log_file='nebula.log', log_level='debug', test=False) -> None:
+    def __init__(self, config='', keep_alive=True, log_file='nebula.log', log_level='info', test=False) -> None:
         """ Class initialization """
         # status variables
         self.validConfig = False
@@ -72,7 +72,9 @@ class Nebula():
         
         # set up logging
         self.logger = logging.getLogger(__name__)
-        logging.basicConfig(filename=self.logFile, encoding='utf-8', format='[%(asctime)s] %(levelname)s :: %(message)s', level=LOGLEVELS[self.logLevel])
+        loggerString = '{"level": "%(levelname)s", "msg": "%(message)s", "time":"%(asctime)s"}'  # JSON-based
+        # loggerString = '[%(asctime)s] %(levelname)s :: %(message)s'                             # Text-based
+        logging.basicConfig(filename=self.logFile, encoding='utf-8', format=loggerString, level=LOGLEVELS[self.logLevel])
 
 
     def __checkConnect(self) -> None:
@@ -105,9 +107,10 @@ class Nebula():
                 ip = self.pingTargets[random.randint(0,(len(self.pingTargets)-1))]
                 self.logger.debug(f'Checking connection status by pinging {ip}')
                 p = self.ping(ip)
-                if not p.result:
-                    self.logger.info(f'Nebula network ping check to {ip} failed. Restarting connection.')
+                if not p['result']:
+                    self.logger.warning(f'Nebula network ping check to {ip} failed. Restarting nebula connection.')
                     self.restartConnection()
+                self.logger.debug('Ping complete. Result: {}'.format('Ping received' if p['result'] else 'Ping failed'))
 
             # eventually we will put code here that will log the actual output of self.nProcess.stdout to a log file
 
@@ -204,7 +207,10 @@ class Nebula():
         if self.nProcess:
             self.connected = False
             self.threadEvent.set()
-            os.kill(self.nProcess.pid, signal.SIGINT)
+            try:
+                os.kill(self.nProcess.pid, signal.SIGINT)
+            except Exception as e:
+                self.logger.info(f'Unable to kill nebula process: {e}; Continuing with regular disconnect.')
             self.nProcess = False
 
 
