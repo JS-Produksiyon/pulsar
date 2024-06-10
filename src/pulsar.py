@@ -17,7 +17,7 @@ __email__ = "jmw@hawke-ai.com"
 __status__ = "Development"
 __languages__ = ['en','de','tr']  # languages the interface has been translated into.
 __nebula__ = '1.8.2'
-__build__ = '2024-05-14 16:33'
+__build__ = '2024-06-10 12:10'
 __debugState__ = False
 # ================================================================================
 # Check for python version
