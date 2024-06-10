@@ -4,14 +4,14 @@
 """
     File name: pulsar.py
     Date Created: 2024-05-03
-    Date Modified: 2024-05-14
+    Date Modified: 2024-06-10
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
 __copyright__ = "Copyright © 2024 JS Prodüksiyon"
 __credits__ = ["Josh Wibberley"]
 __license__ = "GNU GPL v3.0"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __maintainer__ = ["Josh Wibberley"]
 __email__ = "jmw@hawke-ai.com"
 __status__ = "Development"
@@ -43,6 +43,8 @@ from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow,
 from PySide6.QtGui import QIcon, QAction
 from utils import (errModal, infoModal, loadSettings, saveSettings, yesNoModal)
 
+# resize screen automatically
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 
 # windows
 from ui.pulsar_about_ui import Ui_AboutDialog
@@ -577,7 +579,7 @@ class systemTrayMenu(QMenu):
 
 
 if __name__ == '__main__':
-    nebulaObj = Nebula()
+    nebulaObj = Nebula(keep_alive=SETTINGS['keep_alive'], log_level=SETTINGS['log_level'])
     __nebula__ = nebulaObj.version()
 
     app = QApplication(sys.argv)
@@ -596,6 +598,8 @@ if __name__ == '__main__':
             mainWin.noConfig()
         else:
             nebulaObj.setConfig(SETTINGS['config'])
+            nebulaObj.usePing = SETTINGS['use_ping']
+            nebulaObj.pingInterval = int(SETTINGS['ping_interval'])
         
         if not SETTINGS['tray_start']:
             mainWin.show()

@@ -4,14 +4,14 @@
 """
     File name: utils.py
     Date Created: 2024-05-06
-    Date Modified: 2024-05-08
+    Date Modified: 2024-06-10
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
 __copyright__ = "Copyright © 2024 JS Prodüksiyon"
 __credits__ = ["Josh Wibberley"]
 __license__ = "GNU GPL v3.0"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __maintainer__ = ["Josh Wibberley"]
 __email__ = "jmw@hawke-ai.com"
 __status__ = "Production"
@@ -115,7 +115,8 @@ def loadSettings() -> dict:
         
     else:
         settings = {'config': '', 'language': locale.languageToCode(locale.language()),
-             'tray_start': True, 'auto_connect': False, 'use_hosts': False, 'hosts_file': ''}
+             'tray_start': True, 'auto_connect': False, 'keep_alive': True, 'use_hosts': False, 'hosts_file': '', 
+             'use_ping': True, 'ping_interval': 300, 'log_level': 'info'}
         saveSettings(settings)
         return settings
 
@@ -150,7 +151,8 @@ def validateSettings(settings) -> bool:
     :type  settings: dict
     :returns       : boolean denoting validity
     """
-    scaffold = {'config': str, 'language': str, 'tray_start': bool, 'auto_connect': bool, 'use_hosts': bool, 'hosts_file': str}
+    scaffold = {'config': str, 'language': str, 'tray_start': bool, 'auto_connect': bool, 'keep_alive': bool, 
+                'use_hosts': bool, 'hosts_file': str, 'ping_interval': int, 'use_ping': bool, 'log_level': str}
 
     if type(settings) != dict:
         return False

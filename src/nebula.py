@@ -75,6 +75,7 @@ class Nebula():
         loggerString = '{"level": "%(levelname)s", "msg": "%(message)s", "time":"%(asctime)s"}'  # JSON-based
         # loggerString = '[%(asctime)s] %(levelname)s :: %(message)s'                             # Text-based
         logging.basicConfig(filename=self.logFile, encoding='utf-8', format=loggerString, level=LOGLEVELS[self.logLevel])
+        logging.debug(f'Keep alive: {self.keepAlive}, Use ping: {self.usePing}, pingInterval: {str(self.pingInterval)}, pingTargets: {str(self.pingTargets)}')
 
 
     def __checkConnect(self) -> None:
@@ -96,6 +97,13 @@ class Nebula():
             # make sure that the process is still running
             self.logger.debug(f'Expected connection status: {self.connected}; Actual process status: {self.nProcess}')
             if self.connected and not self.nProcess:
+                self.logger.info('Nebula connection was interrupted. keepAlive thread is active. Restarting nebula.')
+                self.restartConnection()
+
+            # also try by accessing the pid
+            try: 
+                self.logger.debug(f'Nebula PID: {self.nProcess.pid}')
+            except:
                 self.logger.info('Nebula connection was interrupted. keepAlive thread is active. Restarting nebula.')
                 self.restartConnection()
 
