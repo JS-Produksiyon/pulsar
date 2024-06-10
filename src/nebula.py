@@ -75,7 +75,6 @@ class Nebula():
         loggerString = '{"level": "%(levelname)s", "msg": "%(message)s", "time":"%(asctime)s"}'  # JSON-based
         # loggerString = '[%(asctime)s] %(levelname)s :: %(message)s'                             # Text-based
         logging.basicConfig(filename=self.logFile, encoding='utf-8', format=loggerString, level=LOGLEVELS[self.logLevel])
-        logging.debug(f'Keep alive: {self.keepAlive}, Use ping: {self.usePing}, pingInterval: {str(self.pingInterval)}, pingTargets: {str(self.pingTargets)}')
 
 
     def __checkConnect(self) -> None:
@@ -90,7 +89,7 @@ class Nebula():
             sleep(3)
             # this needs to be first so it triggers before any checks if user shuts down the connection
             if self.threadEvent.is_set():
-                self.logger.debug('User has terminated Nebula connection. Ending keepAlive thread.')
+                self.logger.debug('Nebula connection is terminated by thread event. Ending keepAlive thread.')
                 self.threadEvent.clear()
                 break
 
@@ -174,14 +173,15 @@ class Nebula():
         :type  configFile: string
         """
         self.logger.info('Starting Nebula connection.')
+        self.logger.debug(f'Keep alive: {self.keepAlive}, Use ping: {self.usePing}, pingInterval: {str(self.pingInterval)}, pingTargets: {str(self.pingTargets)}')
         nPathBase = os.path.dirname(__file__) + os.sep + 'bin' + os.sep + '{os}' + os.sep + '{exe}'
         showShell = True
 
         # load proper binary
         if sys.platform == 'darwin':
-            nPath = nPathBase.format(os='macos', exe='nebula')
+            self.nPath = nPathBase.format(os='macos', exe='nebula')
         elif sys.platform == 'win32':
-            nPath = nPathBase.format(os='windows', exe='nebula.exe')
+            self.nPath = nPathBase.format(os='windows', exe='nebula.exe')
         else:
             return 
             # because this application does not work with Linux!
@@ -194,7 +194,7 @@ class Nebula():
                 showShell = False
         
             # start Nebula connection
-            exeThread = threading.Thread(target=self.__nebulaStart, kwargs={'exe': nPath, 'cFile': self.configFile, 'cPath': self.configPath})
+            exeThread = threading.Thread(target=self.__nebulaStart, kwargs={'exe': self.nPath, 'cFile': self.configFile, 'cPath': self.configPath})
             exeThread.start()
 
             # start connection checker
@@ -202,7 +202,7 @@ class Nebula():
             checkThread.daemon = True
             checkThread.start()
             
-            self.logger.info(f'Nebula connection started with following credentials: executable={nPath}, configFile={self.configFile}')
+            self.logger.info(f'Nebula connection started with following credentials: executable={self.nPath}, configFile={self.configFile}')
 
         else:
             self.logger.error(f'Passed configuration file {self.configFile} was invalid.')
@@ -238,7 +238,7 @@ class Nebula():
         result = False
 
         if self.__validateIp(ip):
-            p = subprocess.Popen(f"ping {ip} -n {count}", stdout=subprocess.PIPE, encoding='utf-8')
+            p = subprocess.Popen(f"ping {ip} -n {count}", stdout=subprocess.PIPE, encoding='utf-8', shell=True)
 
             for line in p.stdout:
                 if 'TTL' in line:
@@ -252,9 +252,23 @@ class Nebula():
         """
         Disconnects, then reconnects the connection after waiting 1.5 sec
         """
-        self.disconnect()
-        sleep(1.5)
-        self.connect()
+        if self.connected:
+            self.logger.debug('Restarting Nebula connection.')
+
+            # kill Nebula process
+            try:
+                os.kill(self.nProcess.pid, signal.SIGINT)
+            except Exception as e:
+                self.logger.info(f'Unable to kill nebula process: {e}; Continuing with regular restart.')
+            self.nProcess = False
+            
+            # wait for reconnection
+            sleep(1.5)
+
+            # start Nebula process
+            if self.validConfig:
+                exeThread = threading.Thread(target=self.__nebulaStart, kwargs={'exe': self.nPath, 'cFile': self.configFile, 'cPath': self.configPath})
+                exeThread.start()
 
 
     def setConfig(self, config) -> None:
