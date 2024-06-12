@@ -162,6 +162,9 @@ cython_debug/
 #auto-py-to-exe
 output/
 
+# MacOS
+.DS_Store
+
 # pulsar specific
 creds/
 *.yaml
