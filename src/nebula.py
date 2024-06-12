@@ -3,7 +3,7 @@
 """
     File name: nebula.py
     Date Created: 2024-05-03
-    Date Modified: 2024-06-10
+    Date Modified: 2024-06-12
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -237,11 +237,16 @@ class Nebula():
         data = []
         result = False
 
+        if sys.platform == 'win32':
+            pingCommand = f"ping {ip} -n {count}"
+        else:
+            pingCommand = f"ping {ip} -c {count}"
+
         if self.__validateIp(ip):
-            p = subprocess.Popen(f"ping {ip} -n {count}", stdout=subprocess.PIPE, encoding='utf-8', shell=True)
+            p = subprocess.Popen(pingCommand, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
 
             for line in p.stdout:
-                if 'TTL' in line:
+                if 'TTL' in line or 'ttl' in line:  # Windows uses upper case; MacOS uses lowercase
                     result = True
                     data.append(line)
 
@@ -397,15 +402,14 @@ if __name__ == '__main__':
             cf = 'C:\\Users\\wolfh\\pulsar\\joshw\\joshw-config.yaml'
 
         n = Nebula(cf, test=True)
-        n.connect()
-        sleep(10)
-        n.disconnect()
-        sleep(3)
-        exit()
-#        ips = ['192.168.3.1']
+        # n.connect()
+        # sleep(10)
+        # n.disconnect()
+        # sleep(3)
+        # exit()
+        ips = ['192.168.37.1']
 
-        # p = StayConnected(ips=ips, task=n.connect)
-        # print(p.ping(ips[0], verbose=True))
+        print(n.ping(ips[0], verbose=True))
 
     except SystemExit:
         pass
