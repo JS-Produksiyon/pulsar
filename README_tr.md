@@ -8,7 +8,7 @@ Pulsar, JS Prodüksiyon Ltd. Şti. ve GNU GPL v3.0 lisansı altında sunulmaktad
 
 Bu belge şu dillerde de mevcuttur: [Almanca (Deutsch)](README_de.md) ve [İngilizce (English)](README.md)
 
-Bu belge en son 2024-05-24 tarihinde güncellenmiştir.
+Bu belge en son 2024-06-12 tarihinde güncellenmiştir.
 
 
 ## Nebula Sürümü
@@ -36,6 +36,8 @@ Teknolojik bakış açısından, Pulsar, Python 3.11 ve Nebula istemcisini sürd
 Linux üzerinde çalışmak için bu uygulamaya ihtiyacımız olmadığından, bu işlevselliği eklemedik. Ancak, yazılımı indirip Linux için kendiniz geliştirmek isterseniz buyurun.
 
 PyQT 6 ve Mac M1 yonga seti uyumsuzlukları, sistem dosyası seçici iletişim kutusunun açılmasına ve metin kutularına içerik yapıştırılmasının başarısız olmasına neden olur. Ancak, gerekli bilgiler elle yazılırsa uygulama çalışır. [Ayrıntılar için Wiki'ye bakın](https://github.com/JS-Produksiyon/pulsar/wiki/Usage#issues-with-pulsar-on-macos-on-m-series-chips).
+
+> Bu aralar kendi ihtiyaçlarımızdan dolayı Windows yazılımına odaklandığımızdan dolayı Pulsar’ın _Mac OS sürümüne çok az ilgi vermekteyiz_. Haberiniz olsun.
 
 
 ## Kurulum

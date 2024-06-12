@@ -8,7 +8,7 @@ Pulsar wird von JS Prodüksiyon Ltd. Şti entwickelt und gewartet. und wird unte
 
 Dieses Dokument ist auch in [Englisch (English)](README.md) und [Türkisch (Türkçe)](README_tr.md) verfügbar.
 
-Dieses Dokument wurde zuletzt am 2024-05-24 aktualisiert.
+Dieses Dokument wurde zuletzt am 2024-06-12 aktualisiert.
 
 
 ## Nebula-Version
@@ -37,6 +37,7 @@ Da wir diese Anwendung nicht unter Linux gebrauchen werden, haben wir diese Funk
 
 PyQT 6- und Mac M1-Chipsatz-Inkompatibilitäten führen dazu, dass das Öffnen des Systemdateiauswahldialogs und das Einfügen in Textfelder fehlschlägt. Die Anwendung funktioniert jedoch, wenn die erforderlichen Informationen von Hand eingegeben werden. [Detaillierte Informationen befinden sich im Wiki](https://github.com/JS-Produksiyon/pulsar/wiki/Usage#issues-with-pulsar-on-macos-on-m-series-chips).
 
+> Bitte beachten Sie, dass wir zurzeit _der MacOS-Version_ von Pulsar _nur die allernötigste Zeit widmen_, da eine völlig Funktionsfähige Windows-Version für unseren internen Gebrauch wichtiger ist.
 
 
 ## Installation

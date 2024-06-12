@@ -8,7 +8,7 @@ Pulsar is developed and maintained by JS Prodüksiyon Ltd. Şti. and is presente
 
 This document is also available in [German (Deutsch)](README_de.md) and[Turkish (Türkçe)](README_tr.md).
 
-This document was last updated on 2024-05-24.
+This document was last updated on 2024-06-12.
 
 
 ## Nebula Version
@@ -37,6 +37,8 @@ Technically speaking Pulsar should run on any OS that can handle Python 3.11 and
 Since we don't need this application to run on Linux, we did not add that functionality. However, if you want to fork it and make it work there, be our Guest.
 
 PyQT 6 and Mac M1 chipset incompatibilities cause opening of the system file picker dialog and pasting into text boxes to fail. However, the application works if required information is typed in by hand. [See the Wiki for details](https://github.com/JS-Produksiyon/pulsar/wiki/Usage#issues-with-pulsar-on-macos-on-m-series-chips).
+
+> Please note that _we are currently only giving minimal support to the MacOS version_ of Pulsar, as our company needs are focused on a working Windows client.
 
 
 ## Installation
