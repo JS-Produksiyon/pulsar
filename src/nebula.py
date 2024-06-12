@@ -397,19 +397,19 @@ if __name__ == '__main__':
 
     try:
         if sys.platform == 'darwin':
-            cf = '/Users/wolfhawke/Repositories/pulsar/creds/joshw-config.yaml'
+            cf = '/Users/wolfhawke/joshw/joshw-config.yaml'
         elif sys.platform == 'win32':
             cf = 'C:\\Users\\wolfh\\pulsar\\joshw\\joshw-config.yaml'
 
         n = Nebula(cf, test=True)
-        # n.connect()
-        # sleep(10)
-        # n.disconnect()
-        # sleep(3)
-        # exit()
-        ips = ['192.168.37.1']
+        n.connect()
+        sleep(10)
+        n.disconnect()
+        sleep(3)
+        exit()
+        # ips = ['192.168.3.1']
 
-        print(n.ping(ips[0], verbose=True))
+        # print(n.ping(ips[0], verbose=True))
 
     except SystemExit:
         pass
