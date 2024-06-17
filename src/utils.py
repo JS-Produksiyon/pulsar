@@ -94,6 +94,22 @@ def yesNoModal(parent, msg) -> bool:
     else:
         return False
 
+# General functions
+def timestamp() -> str:
+    """
+    creates a timestamp of right now in YYYY-mm-ddThh:mm:ssZ±hh:00 format
+    """
+    import time, pytz
+    from datetime import datetime
+    from tzlocal import get_localzone
+    
+    localTz = get_localzone()
+    timeStamp = time.time()
+    utc_now = datetime.fromtimestamp(timeStamp)
+    local_now = utc_now.replace(tzinfo=pytz.utc).astimezone(localTz)
+    return local_now.strftime('%Y-%m-%dT%H:%M:%SZ%z')
+
+
 # Settings functions
 def loadSettings() -> dict:
     """
@@ -101,7 +117,12 @@ def loadSettings() -> dict:
 
     :returns: dict
     """
-    settingsFile = os.path.dirname(__file__) + os.sep + 'settings.yaml'
+    if sys.platform == 'darwin':
+        settingsFile = '/Library/Application Support/Pulsar/settings.yaml'
+        logFile = '/Library/Application Support/Pulsar/nebula.log'
+    else:
+        settingsFile = os.path.dirname(__file__) + os.sep + 'settings.yaml'
+        logFile = './nebula.log'
     locale = QLocale()
 
     if os.path.exists(settingsFile):
@@ -109,16 +130,17 @@ def loadSettings() -> dict:
             settings = yaml.safe_load(file)
 
         if validateSettings(settings):
+            # here we return the valid settings object
             return settings
-        else:
-            return False
-        
-    else:
-        settings = {'config': '', 'language': locale.languageToCode(locale.language()),
-             'tray_start': True, 'auto_connect': False, 'keep_alive': True, 'use_hosts': False, 'hosts_file': '', 
-             'use_ping': True, 'ping_interval': 300, 'log_level': 'info'}
-        saveSettings(settings)
-        return settings
+
+    # we ALWAYS return a clean settings object, even if there is an error in the file, which will automatically
+    # overwrite the corrupt settings.yaml file (if possible). This way Pulsar should always start, simply 
+    # displaying a "set up your settings file" dialog if necessary.
+    settings = {'settings_version': __version__,'config': '', 'language': locale.languageToCode(locale.language()),
+            'tray_start': True, 'auto_connect': False, 'keep_alive': True, 'use_hosts': False, 'hosts_file': '', 
+            'use_ping': True, 'ping_interval': 300, 'log_level': 'info', 'timestamp': '', 'nebula_log': logFile}
+    saveSettings(settings)
+    return settings
 
 
 def saveSettings(settings) -> bool:
@@ -129,13 +151,24 @@ def saveSettings(settings) -> bool:
     :type  settings: dict
     :returns       : boolean denoting validity
     """
+    settings['timestamp'] = timestamp()
+
+
     # we can only use_hosts if we have a valid hosts_file
     if settings['hosts_file'] == '':
         settings['use_hosts'] = False
 
-    settingsFile = os.path.dirname(__file__) + os.sep + 'settings.yaml'
+    if sys.platform == 'darwin':
+        settingsFile = '/Library/Application Support/Pulsar/settings.yaml'
+    else:
+        settingsFile = os.path.dirname(__file__) + os.sep + 'settings.yaml'
 
     try:
+        # Make sure Application Support file exists
+        if sys.platform == 'darwin':
+            if not os.path.exists('/Library/Application Support/Pulsar'):
+                os.mkdir('/Library/Application Support/Pulsar')
+    
         with open(settingsFile, 'w', encoding='utf-8') as file:
             yaml.dump(settings, file)
         return True
@@ -151,8 +184,8 @@ def validateSettings(settings) -> bool:
     :type  settings: dict
     :returns       : boolean denoting validity
     """
-    scaffold = {'config': str, 'language': str, 'tray_start': bool, 'auto_connect': bool, 'keep_alive': bool, 
-                'use_hosts': bool, 'hosts_file': str, 'ping_interval': int, 'use_ping': bool, 'log_level': str}
+    scaffold = {'settings_version': str, 'config': str, 'language': str, 'tray_start': bool, 'auto_connect': bool, 'keep_alive': bool, 
+                'use_hosts': bool, 'hosts_file': str, 'ping_interval': int, 'use_ping': bool, 'log_level': str, 'timestamp': str, 'nebula_log': str}
 
     if type(settings) != dict:
         return False
@@ -175,5 +208,4 @@ def validateSettings(settings) -> bool:
 
 if __name__ == '__main__':
     print('This module is not meant to be used in a standalone manner. Please call it using import utils.')
-    settings = loadSettings()
-    print(settings)
+    print(timestamp())

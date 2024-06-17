@@ -579,18 +579,17 @@ class systemTrayMenu(QMenu):
 
 
 if __name__ == '__main__':
-    nebulaObj = Nebula(keep_alive=SETTINGS['keep_alive'], log_level=SETTINGS['log_level'])
-    __nebula__ = nebulaObj.version()
-
     app = QApplication(sys.argv)
     app.setStyle('fusion')
-    app.setQuitOnLastWindowClosed(False)
 
     if SETTINGS == False:
         settingsError = SettingsErrorWindow(app)
         settingsError.show()
     
     else:
+        app.setQuitOnLastWindowClosed(False)
+        nebulaObj = Nebula(keep_alive=SETTINGS['keep_alive'], log_file=SETTINGS['nebula_log'], log_level=SETTINGS['log_level'])
+        __nebula__ = nebulaObj.version()
         # connWin = ConnStatusWindow()
         mainWin = MainWindow(app, nebulaObj)
         
