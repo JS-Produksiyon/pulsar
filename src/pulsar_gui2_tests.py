@@ -7,4 +7,4 @@ from PySide6.QtGui import QGuiApplication
 
 app = QApplication([])  # Initialize the application
 style_hints = QGuiApplication.styleHints()  # Get the style hints
-print(f"Current style theme: {style_hints.colorScheme()}")
+print(f"Current style theme: {style_hints.colorScheme().name}; value: {style_hints.colorScheme().value}")
