@@ -8,7 +8,7 @@ Pulsar wird von JS Prodüksiyon Ltd. Şti entwickelt und gewartet. und wird unte
 
 Dieses Dokument ist auch in [Englisch (English)](README.md) und [Türkisch (Türkçe)](README_tr.md) verfügbar.
 
-Dieses Dokument wurde zuletzt am 2024-06-12 aktualisiert.
+Dieses Dokument wurde zuletzt am 2024-06-28 aktualisiert.
 
 
 ## Nebula-Version
@@ -26,7 +26,7 @@ So schön das Nebula-Mesh-Netzwerk auch ist, es erfordert einiges an technischem
 | Windows 10         | Nicht getestet | Funktioniert       |
 | Windows 7          | Nicht getestet | Funktioniert nicht |
 | MacOS 13.6 (Intel) | Funktioniert   | Funktioniert       |
-| MacOS 14.2 (M1)    | Funktioniert teilweise | Funktioniert teilweise |
+| MacOS 14.2 (M1)    | Funktioniert   | Funktioniert       |
 
 Technisch gesehen sollte Pulsar in jedem Betriebssystem funktionieren, auf dem Python 3.11 und dem Nebula-Client laufen. Obwohl wir nicht in der Lage sind, alle Plattformen zu testen, kann diese Anwendung unter Berücksichtigung der Systemanforderungen von Python 3.11, PyQT 6.7 und Nebula auf den folgenden Betriebssystemen ausgeführt werden:
 
