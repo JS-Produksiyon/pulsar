@@ -4,14 +4,14 @@
 """
     File name: utils.py
     Date Created: 2024-05-06
-    Date Modified: 2024-06-10
+    Date Modified: 2024-06-27
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
 __copyright__ = "Copyright © 2024 JS Prodüksiyon"
 __credits__ = ["Josh Wibberley"]
 __license__ = "GNU GPL v3.0"
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __maintainer__ = ["Josh Wibberley"]
 __email__ = "jmw@hawke-ai.com"
 __status__ = "Production"
@@ -25,6 +25,7 @@ if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
 import os, yaml
+from pathlib import Path
 from PySide6.QtCore import QCoreApplication, QLocale, QTranslator, QLibraryInfo
 from PySide6.QtWidgets import QMessageBox, QApplication
 
@@ -118,8 +119,10 @@ def loadSettings() -> dict:
     :returns: dict
     """
     if sys.platform == 'darwin':
-        settingsFile = '/Library/Application Support/Pulsar/settings.yaml'
-        logFile = '/Library/Application Support/Pulsar/nebula.log'
+        settingsFile = os.environ.get('HOME') + '/Library/Application Support/Pulsar/settings.yaml'
+        logFile = os.environ.get('HOME') + '/Library/Application Support/Pulsar/nebula.log'
+        touch(os.environ.get('HOME') + '/Library/Application Support/Pulsar', dir=True)
+        touch(logFile)
     else:
         settingsFile = os.path.dirname(__file__) + os.sep + 'settings.yaml'
         logFile = './nebula.log'
@@ -130,6 +133,9 @@ def loadSettings() -> dict:
             settings = yaml.safe_load(file)
 
         if validateSettings(settings):
+            # make sure we don't have macos_elevate as True if we're not running MacOS
+            if not sys.platform.startswith('darwin'):
+                settings['macos_elevate'] = False            
             # here we return the valid settings object
             return settings
 
@@ -138,7 +144,8 @@ def loadSettings() -> dict:
     # displaying a "set up your settings file" dialog if necessary.
     settings = {'settings_version': __version__,'config': '', 'language': locale.languageToCode(locale.language()),
             'tray_start': True, 'auto_connect': False, 'keep_alive': True, 'use_hosts': False, 'hosts_file': '', 
-            'use_ping': True, 'ping_interval': 300, 'log_level': 'info', 'timestamp': '', 'nebula_log': logFile}
+            'use_ping': True, 'ping_interval': 300, 'log_level': 'info', 'timestamp': '', 'nebula_log': logFile, 
+            'macos_elevate': False}
     saveSettings(settings)
     return settings
 
@@ -159,22 +166,47 @@ def saveSettings(settings) -> bool:
         settings['use_hosts'] = False
 
     if sys.platform == 'darwin':
-        settingsFile = '/Library/Application Support/Pulsar/settings.yaml'
+        settingsFile = os.environ.get('HOME') + '/Library/Application Support/Pulsar/settings.yaml'
     else:
         settingsFile = os.path.dirname(__file__) + os.sep + 'settings.yaml'
 
     try:
-        # Make sure Application Support file exists
-        if sys.platform == 'darwin':
-            if not os.path.exists('/Library/Application Support/Pulsar'):
-                os.mkdir('/Library/Application Support/Pulsar')
-    
         with open(settingsFile, 'w', encoding='utf-8') as file:
             yaml.dump(settings, file)
         return True
     except:
         return False
 
+
+def touch(filename, dir=False) -> bool:
+    """
+    Checks to see if the passed filename or directory exists. 
+    If not, creates the file as an empty file or attempts to make the directory.
+    
+    :param filename: Name of file to check
+    :type  filename: string
+    :param dir     : whether we are touching a directory
+    :type  dir     : boolean
+    :returns       : boolean denoting success
+    """
+    if dir == True:
+        try:
+            if not os.path.exists(filename):
+                os.mkdir(filename)
+        except Exception as e:
+            print(f'Unable to create directory {filename}: {e}')
+            return False
+
+    else:
+        if not os.path.exists(filename):
+            try:
+                with open(filename, 'w', encoding='utf-8') as f:
+                    pass
+            except Exception as e:
+                print(f'Unable to create file {filename}: {e}')
+                return False
+    
+    return True
 
 def validateSettings(settings) -> bool:
     """
@@ -184,8 +216,9 @@ def validateSettings(settings) -> bool:
     :type  settings: dict
     :returns       : boolean denoting validity
     """
-    scaffold = {'settings_version': str, 'config': str, 'language': str, 'tray_start': bool, 'auto_connect': bool, 'keep_alive': bool, 
-                'use_hosts': bool, 'hosts_file': str, 'ping_interval': int, 'use_ping': bool, 'log_level': str, 'timestamp': str, 'nebula_log': str}
+    scaffold = {'settings_version': str, 'config': str, 'language': str, 'tray_start': bool, 'auto_connect': bool, 
+                'keep_alive': bool, 'use_hosts': bool, 'hosts_file': str, 'ping_interval': int, 'use_ping': bool, 
+                'log_level': str, 'timestamp': str, 'nebula_log': str, 'macos_elevate': bool}
 
     if type(settings) != dict:
         return False

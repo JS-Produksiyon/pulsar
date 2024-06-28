@@ -4,14 +4,14 @@
 """
     File name: pulsar.py
     Date Created: 2024-05-03
-    Date Modified: 2024-06-10
+    Date Modified: 2024-06-27
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
 __copyright__ = "Copyright © 2024 JS Prodüksiyon"
 __credits__ = ["Josh Wibberley"]
 __license__ = "GNU GPL v3.0"
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __maintainer__ = ["Josh Wibberley"]
 __email__ = "jmw@hawke-ai.com"
 __status__ = "Development"
@@ -27,10 +27,6 @@ MIN_PYTHON = (3,11)
 if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
-# start application in Administrator mode
-if not __debugState__:
-    from elevate import elevate
-    elevate()
 
 # Now run the actual application
 import os, locale
@@ -43,6 +39,15 @@ from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow,
 from PySide6.QtGui import QIcon, QAction
 from utils import (errModal, infoModal, loadSettings, saveSettings, yesNoModal)
 
+
+SETTINGS = loadSettings()
+
+# start application in Administrator mode
+if not __debugState__:
+    from elevate import elevate
+    if sys.platform.startswith('win32') or (sys.platform.startswith('darwin') and SETTINGS['macos_elevate']):
+        elevate()
+
 # resize screen automatically
 os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 
@@ -53,9 +58,6 @@ from ui.pulsar_main_ui import Ui_MainWindow
 from ui.pulsar_settings_error_ui import Ui_SettingsErrWin
 # from ui.pulsar_status_ui import Ui_ConnStatusWindow
 import ui.pulsar_rc
-
-SETTINGS = loadSettings()
-
 
 ### Window Objects ###
 class AboutWindow(QDialog):
@@ -271,9 +273,9 @@ class MainWindow(QMainWindow):
         self.ui.btnConnect.released.connect(self.st.nebulaConnect)
         self.ui.btnDisconnect.released.connect(self.st.nebulaDisconnect)
         # self.ui.btnStatus.released.connect(self.showStatusWin)
-        self.ui.btnConfigFileSelect.released.connect(self.getConfigFile)
-        self.ui.btnConfigureHosts.released.connect(self.configHostsWin.show)
-        self.ui.btnSaveSettings.released.connect(self.saveSettingsBtn)
+        self.ui.btnConfigFileSelect.released.connect(partial(self.getConfigFile, parent))
+        self.ui.btnConfigureHosts.released.connect(partial(self.openHostsConfig, parent))
+        self.ui.btnSaveSettings.released.connect(partial(self.saveSettingsBtn, parent))
         self.ui.btnQuit.released.connect(partial(self.quitPulsar, parent))
 
         # set focus
@@ -282,17 +284,21 @@ class MainWindow(QMainWindow):
         else:
             self.ui.btnConnect.setFocus()
 
-    def getConfigFile(self) -> None:
+    def getConfigFile(self, parent) -> None:
         """
         Opens a dialog that allows you to pick a config file and places the content into 
         the file path box
         """
-        file = QFileDialog(self)
-        file.setFileMode(QFileDialog.AnyFile)
-        file.setNameFilter(self.tr('Nebula Config File (*.yml *.yaml)'))
-        file.setViewMode(QFileDialog.Detail)
-        if file.exec():
-            self.ui.configFilePath.setText(file.selectedFiles()[0])
+        if SETTINGS['macos_elevate']:
+            self.macMessages(parent, 'settingsEdit')
+            
+        else:            
+            file = QFileDialog(self)
+            file.setFileMode(QFileDialog.AnyFile)
+            file.setNameFilter(self.tr('Nebula Config File (*.yml *.yaml)'))
+            file.setViewMode(QFileDialog.Detail)
+            if file.exec():
+                self.ui.configFilePath.setText(file.selectedFiles()[0])
 
 
     def loadLanguages(self, parent=None):
@@ -337,6 +343,38 @@ class MainWindow(QMainWindow):
         self.ui.cmbLanguages.setCurrentText(self.langDict[SETTINGS['language']])
 
 
+    def macMessages(self, parent, msgId='') -> None:
+        """
+        Message windows to pop up MacOS specific messages
+        
+        :param parent: reference to parent
+        :type  parent: class
+        :param msgId : which message to pop up: settingsEdit, settingsSaved 
+        :type  msgId : string
+        """
+        msg = ''
+        elevate = True
+        
+        if msgId == 'settingsEdit':        
+            msg = self.tr('In order to edit these settings on MacOS, Pulsar must be running with regular user privileges (i.e. without administrative privileges). Do you wish to exit Pulsar now so you can restart it with regular privileges?')
+            msg = QCoreApplication.translate('MainWindow', u'In order to edit these settings on MacOS, Pulsar must be running with regular user privileges (i.e. without administrative privileges). Do you wish to exit Pulsar now so you can restart it with regular privileges?', None)
+            elevate = False
+        
+        elif msgId == 'settingsSaved':
+            msg = self.tr('The settings have been saved successfully. Because you are running on MacOS, Pulsar must be restarted to apply the settings. Do you wish to restart Pulsar now?')
+            msg = QCoreApplication.translate('MainWindow', u'The settings have been saved successfully. Because you are running on MacOS, Pulsar must be restarted to apply the settings. Do you wish to exit Pulsar now?', None)
+            elevate = True
+
+        if msg != '':
+            q = yesNoModal(self, msg)
+            
+            if q:
+                SETTINGS['macos_elevate'] = elevate
+                saveSettings(SETTINGS)
+                self.st.nebulaDisconnect()
+                parent.quit()
+                
+
     def noConfig(self) -> None:
         """
         Set up display for instance when no valid config file is found
@@ -347,6 +385,16 @@ class MainWindow(QMainWindow):
         modalTxt = self.tr('No valid Nebula configuration file was found so the connection cannot be made.<br>Please set the path to a valid Nebula configuration file below to continue.')
         infoModal(self, 
                   QCoreApplication.translate('MainWindow', u'No valid Nebula configuration file was found so the connection cannot be made.<br>Please set the path to a valid Nebula configuration file below to continue.', None))
+
+
+    def openHostsConfig(self, parent) -> None:
+        """ 
+        Opens the hosts configuration window
+        """
+        if SETTINGS['macos_elevate']:
+            self.macMessages(parent, 'settingsEdit')
+        else:
+            self.configHostsWin.show()
 
 
     def openLicense(self) -> None:
@@ -385,7 +433,7 @@ class MainWindow(QMainWindow):
                 parent.quit()
 
 
-    def saveSettingsBtn(self) -> bool:
+    def saveSettingsBtn(self, parent) -> bool:
         """
         Saves the settings when clicking on the button
         """
@@ -398,8 +446,9 @@ class MainWindow(QMainWindow):
         nebulaObj.setConfig(configFile)
         if nebulaObj.validConfig:
             SETTINGS['config'] = configFile
-            if self.ui.btnConnect.isEnabled() == False:
-                self.ui.btnConnect.setEnabled(True)
+            if not sys.platform.startswith('darwin'):
+                if self.ui.btnConnect.isEnabled() == False:
+                    self.ui.btnConnect.setEnabled(True)
         else:
             if self.ui.btnConnect.isEnabled() == True:
                 self.ui.btnConnect.setEnabled(False)
@@ -419,6 +468,10 @@ class MainWindow(QMainWindow):
         
         saveSettings(SETTINGS)
         self.loadLanguages(app)
+        
+        if sys.platform.startswith('darwin') and not SETTINGS['macos_elevate']:
+            self.macMessages(parent, 'settingsSaved')
+        
         return True
 
     def switchLanguage(self, app, language='en') -> bool:

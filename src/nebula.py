@@ -3,14 +3,14 @@
 """
     File name: nebula.py
     Date Created: 2024-05-03
-    Date Modified: 2024-06-12
+    Date Modified: 2024-06-27
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
 __copyright__ = "Copyright © 2024 JS Prodüksiyon"
 __credits__ = ["Josh Wibberley"]
 __license__ = "GNU GPL v3.0"
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 __maintainer__ = ["Josh Wibberley"]
 __email__ = "jmw@hawke-ai.com"
 __status__ = "Development"
@@ -153,7 +153,7 @@ class Nebula():
         :type  ip: string
         :returns : boolean denoting validity
         """
-        reIpFour = '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+        reIpFour = '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
         reIpSix  = '^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$'
 
         if type(ip) == str:
@@ -178,9 +178,9 @@ class Nebula():
         showShell = True
 
         # load proper binary
-        if sys.platform == 'darwin':
+        if sys.platform.startswith('darwin'):
             self.nPath = nPathBase.format(os='macos', exe='nebula')
-        elif sys.platform == 'win32':
+        elif sys.platform.startswith('win32'):
             self.nPath = nPathBase.format(os='windows', exe='nebula.exe')
         else:
             return 
@@ -237,7 +237,7 @@ class Nebula():
         data = []
         result = False
 
-        if sys.platform == 'win32':
+        if sys.platform.startswith('win32'):
             pingCommand = f"ping {ip} -n {count}"
         else:
             pingCommand = f"ping {ip} -c {count}"
@@ -324,9 +324,9 @@ class Nebula():
         # load proper binary
         nPathBase = os.path.dirname(__file__) + os.sep + 'bin' + os.sep + '{os}' + os.sep + '{binary}'
 
-        if sys.platform == 'darwin':
+        if sys.platform.startswith('darwin'):
             nPath = nPathBase.format(os='macos', binary='nebula')
-        elif sys.platform == 'win32':
+        elif sys.platform.startswith('win32'):
             nPath = nPathBase.format(os='windows', binary='nebula.exe')
         else:
             return False 
@@ -396,10 +396,10 @@ if __name__ == '__main__':
     print("This module is not meant to be called by itself unless testing. Please import using from nebula import Nebula.")
 
     try:
-        if sys.platform == 'darwin':
-            cf = '/Users/wolfhawke/joshw/joshw-config.yaml'
-        elif sys.platform == 'win32':
-            cf = 'C:\\Users\\wolfh\\pulsar\\joshw\\joshw-config.yaml'
+        if sys.platform.startswith('darwin'):
+            cf = ''
+        elif sys.platform.startswith('win32'):
+            cf = ''
 
         n = Nebula(cf, test=True)
         n.connect()
