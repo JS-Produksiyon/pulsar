@@ -56,12 +56,12 @@
 <context>
     <name>ConfigHostsWindow</name>
     <message>
-        <location filename="../../pulsar.py" line="111"/>
+        <location filename="../../pulsar.py" line="118"/>
         <source>The selected file is not a valid hosts file. Please check it and try again.</source>
         <translation>Seçilen dosya geçerli sağlayıcı bilgileri içermiyor. Dosyayı kontrol edip tekrar deneyiniz.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="183"/>
+        <location filename="../../pulsar.py" line="190"/>
         <source>No valid IP Address - Hostname pairs were entered. Hosts cannot be used.&lt;br&gt;Please either check the list and try again or point to a valid file containing the list.</source>
         <translation>Geçerli IP addres - sağlayıcı çiftleri girilmedi. Bu liste kullanılamaz.&lt;br&gt;Lütfen listeyi düzeltin veya geçerli bir sağlayıcı listesi içeren bir dosya sağlayın.</translation>
     </message>
@@ -92,42 +92,52 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../pulsar.py" line="290"/>
+        <location filename="../../pulsar.py" line="301"/>
         <source>Nebula Config File (*.yml *.yaml)</source>
         <translation>Nebula Ayar Dosyası (*.yml *.yaml)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="324"/>
+        <location filename="../../pulsar.py" line="335"/>
         <source>Deutsch (German)</source>
         <translation>Deutsch (Almanca)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="324"/>
+        <location filename="../../pulsar.py" line="335"/>
         <source>English</source>
         <translation>English (İngilizce)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="326"/>
+        <location filename="../../pulsar.py" line="337"/>
         <source>Türkçe (Turkish)</source>
         <translation>Türkçe</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="346"/>
+        <location filename="../../pulsar.py" line="363"/>
+        <source>In order to edit these settings on MacOS, Pulsar must be running with regular user privileges (i.e. without administrative privileges). Do you wish to exit Pulsar now so you can restart it with regular privileges?</source>
+        <translation>MacOS ortamında Pulsar&apos;ın bu ayarları yapabilmesi için normal kullanıcı haklarına (yani yönetici hakları olmayan bir şekilde) başlatılmalıdır. Pulsar&apos;ı normal kullanıcı haklarla çalıştırmak üzere kapatılsın mı?</translation>
+    </message>
+    <message>
+        <location filename="../../pulsar.py" line="368"/>
+        <source>The settings have been saved successfully. Because you are running on MacOS, Pulsar must be restarted to apply the settings. Do you wish to restart Pulsar now?</source>
+        <translation>Ayarlar başarıyla kaydedildi. Cihazınız MacOS sürdüğünden dolayı ayarların faaliyete geçebilmesi için Pulsar&apos;ın yeniden başlatılması gerek. Yazılım yeniden başlatmak üzere kapansın mı?</translation>
+    </message>
+    <message>
+        <location filename="../../pulsar.py" line="389"/>
         <source>No valid Nebula configuration file was found so the connection cannot be made.&lt;br&gt;Please set the path to a valid Nebula configuration file below to continue.</source>
         <translation>Geçerli bir Nebula ayar dosyası bulunamadı. Bundan dolayı bağlantı kurulamadı.&lt;br&gt;Devam etmek için lütfen geçerli bir Nebula ayar dosyasına yolu giriniz.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="357"/>
+        <location filename="../../pulsar.py" line="410"/>
         <source>Unable to open link to license.</source>
         <translation>Lisans dosyasına bağlantı açılamadı.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="367"/>
+        <location filename="../../pulsar.py" line="420"/>
         <source>Unable to open link to user guide.</source>
         <translation>Kullanıcı kılavuzuna bağlantı açılamadı.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="378"/>
+        <location filename="../../pulsar.py" line="431"/>
         <source>Pulsar is still connected to the Nebula mesh network.&lt;br&gt;Are you sure you want to quit the program?</source>
         <translation>Pulsar hâlâ Nebula ağına bağlıdır.&lt;br&gt;Yazılımı kapatmak istediğinizden emin misiniz?</translation>
     </message>
@@ -336,14 +346,14 @@
 <context>
     <name>systemTray</name>
     <message>
-        <location filename="../../pulsar.py" line="460"/>
-        <location filename="../../pulsar.py" line="531"/>
+        <location filename="../../pulsar.py" line="518"/>
+        <location filename="../../pulsar.py" line="589"/>
         <source>Pulsar not connected</source>
         <translation>Pulsar bağlı değil</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="459"/>
-        <location filename="../../pulsar.py" line="529"/>
+        <location filename="../../pulsar.py" line="517"/>
+        <location filename="../../pulsar.py" line="587"/>
         <source>Pulsar connected</source>
         <translation>Pulsar bağlıdır</translation>
     </message>
@@ -351,26 +361,26 @@
 <context>
     <name>systemTrayMenu</name>
     <message>
-        <location filename="../../pulsar.py" line="553"/>
-        <location filename="../../pulsar.py" line="571"/>
+        <location filename="../../pulsar.py" line="611"/>
+        <location filename="../../pulsar.py" line="629"/>
         <source>Connect to Nebula</source>
         <translation>Nebula’ya bağlan</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="555"/>
-        <location filename="../../pulsar.py" line="571"/>
+        <location filename="../../pulsar.py" line="613"/>
+        <location filename="../../pulsar.py" line="629"/>
         <source>Disconnect from Nebula</source>
         <translation>Nebula Ağına bağlantıyı kapat</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="558"/>
-        <location filename="../../pulsar.py" line="571"/>
+        <location filename="../../pulsar.py" line="616"/>
+        <location filename="../../pulsar.py" line="629"/>
         <source>Show Pulsar Window</source>
         <translation>Pulsar penceresini aç</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="563"/>
-        <location filename="../../pulsar.py" line="572"/>
+        <location filename="../../pulsar.py" line="621"/>
+        <location filename="../../pulsar.py" line="630"/>
         <source>Quit</source>
         <translation>Kapat</translation>
     </message>

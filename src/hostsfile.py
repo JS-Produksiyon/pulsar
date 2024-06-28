@@ -4,7 +4,7 @@
 """
     File name: hostsfile.py
     Date Created: 2024-05-07
-    Date Modified: 2024-05-08
+    Date Modified: 2024-06-28
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -205,13 +205,3 @@ class HostsFile():
 
 if __name__ == "__main__":
     print('This module is not meant to be run on its own. Please call it using from hostsfile import HostsFile.')
-    # elevate()
-    h = HostsFile()
-    srcFile = os.path.dirname(__file__) + '\\..\\creds\\hosts'
-    print(h.validateHostsFile(srcFile))
-    # tgtFile = os.path.dirname(__file__) + '\\..\\hosts'
-    # h.setComment('Hosts entries added by Pulsar')
-
-    # #print("Loaded hosts file: " + h.loadFromFile(srcFile))
-    # print("Restored hosts file: " + h.restoreHostsFile())
-    # input('Press Enter to continue')

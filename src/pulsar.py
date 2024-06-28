@@ -4,7 +4,7 @@
 """
     File name: pulsar.py
     Date Created: 2024-05-03
-    Date Modified: 2024-06-27
+    Date Modified: 2024-06-28
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -34,7 +34,7 @@ from functools import partial
 from nebula import Nebula
 from hostsfile import HostsFile
 from PySide6 import QtCore, QtGui
-from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize, QLibraryInfo, QCoreApplication
+from PySide6.QtCore import QTranslator, QLocale, QTranslator, QSize, QLibraryInfo, QCoreApplication, QLocale
 from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QMainWindow, QDialog, QFileDialog, QDialogButtonBox
 from PySide6.QtGui import QIcon, QAction
 from utils import (errModal, infoModal, loadSettings, saveSettings, yesNoModal)
@@ -92,7 +92,10 @@ class ConfigHostsWindow(QDialog):
 
         self.ui = Ui_configHostsDialog()
         self.ui.setupUi(self)
-        self.pulsarHostsFile = os.path.dirname(__file__) + os.sep + "pulsarhosts.txt"
+        if sys.platform.startswith('darwin'):
+            self.pulsarHostsFile = os.environ.get('HOME') + '/Library/Application Support/Pulsar/pulsarhosts.txt'
+        else:
+            self.pulsarHostsFile = os.path.dirname(__file__) + os.sep + "pulsarhosts.txt"
 
         self.ui.buttonBox.button(QDialogButtonBox.Reset).released.connect(self.reset)
         self.ui.hostFilePath.setText(SETTINGS['hosts_file'])
@@ -481,7 +484,7 @@ class MainWindow(QMainWindow):
         """
         if type(app) == QApplication:
             translator = QTranslator(app)
-            translator.load(language, 'qtbase', '_', QLibraryInfo.path(QLibraryInfo.TranslationsPath))
+            translator.load(QLocale(language), 'qtbase', '_', QLibraryInfo.path(QLibraryInfo.TranslationsPath))
             app.installTranslator(translator)
             translator = QTranslator(app)
             app.removeTranslator(translator)
