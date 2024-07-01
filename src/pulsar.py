@@ -4,14 +4,14 @@
 """
     File name: pulsar.py
     Date Created: 2024-05-03
-    Date Modified: 2024-06-28
+    Date Modified: 2024-07-01
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
 __copyright__ = "Copyright © 2024 JS Prodüksiyon"
 __credits__ = ["Josh Wibberley"]
 __license__ = "GNU GPL v3.0"
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 __maintainer__ = ["Josh Wibberley"]
 __email__ = "jmw@hawke-ai.com"
 __status__ = "Development"
@@ -29,8 +29,9 @@ if sys.version_info < MIN_PYTHON:
 
 
 # Now run the actual application
-import os, locale
+import os, locale, threading, random
 from functools import partial
+from time import sleep
 from nebula import Nebula
 from hostsfile import HostsFile
 from PySide6 import QtCore, QtGui
@@ -45,8 +46,17 @@ SETTINGS = loadSettings()
 # start application in Administrator mode
 if not __debugState__:
     from elevate import elevate
-    if sys.platform.startswith('win32') or (sys.platform.startswith('darwin') and SETTINGS['macos_elevate']):
+    # check for non-standard Windows characters in path
+    if sys.platform.startswith('win32'):
+        try:
+            sys.executable.encode('cp1252')
+            pathOk = True
+        except UnicodeEncodeError:
+            pathOk = False
+
+    if pathOk and (sys.platform.startswith('win32') or (sys.platform.startswith('darwin') and SETTINGS['macos_elevate'])):
         elevate()
+
 
 # resize screen automatically
 os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
@@ -287,6 +297,18 @@ class MainWindow(QMainWindow):
         else:
             self.ui.btnConnect.setFocus()
 
+
+    def elevateWinPathError(self) -> None:
+        """
+        Opens a dialog stating the error that we cannot elevate Pulsar due
+        to the Windows path containing non-standard characters
+        """
+        msg = self.tr('<p>Pulsar requires Administrator access to connect to the Nebula network.</p><p>The executable was called from the following path:</p><p><code>{path}</code></p> <p>Unfortunately, because there are non-standard characters in the path, the application cannot be granted the Administrator privileges. Please move the Pulsar executable to a location that only contains standard Windows characters and try again.</p>')
+        msg = QApplication.translate('MainWindow', u'<p>Pulsar requires Administrator access to connect to the Nebula network.</p><p>The executable was called from the following path:</p><p><code>{path}</code></p> <p>Unfortunately, because there are non-standard characters in the path, the application cannot be granted Administrator privileges. Please move the Pulsar executable to a location that only contains standard Windows characters and try again.</p>', None)
+        errModal(parent=self, msg=msg.format(path=sys.executable))
+        self.quitPulsar()
+
+
     def getConfigFile(self, parent) -> None:
         """
         Opens a dialog that allows you to pick a config file and places the content into 
@@ -390,6 +412,15 @@ class MainWindow(QMainWindow):
                   QCoreApplication.translate('MainWindow', u'No valid Nebula configuration file was found so the connection cannot be made.<br>Please set the path to a valid Nebula configuration file below to continue.', None))
 
 
+    def noConnectionWarning(self) -> None:
+        """
+        Display a warning that no connection could be established.
+        """
+        msg = self.tr('Pulsar could not confirm a connection to the Nebula network. Please make sure your credentials are valid. Pulsar will now disconnect.')
+        msg = QApplication.translate('MainWin', u'Pulsar could not confirm a connection to the Nebula network. Please make sure your credentials are valid. Pulsar has  disconnected.', None)
+        errModal(parent=self, msg=msg)
+
+
     def openHostsConfig(self, parent) -> None:
         """ 
         Opens the hosts configuration window
@@ -471,7 +502,8 @@ class MainWindow(QMainWindow):
         
         saveSettings(SETTINGS)
         self.loadLanguages(app)
-        
+        self.st.connectionError = False
+
         if sys.platform.startswith('darwin') and not SETTINGS['macos_elevate']:
             self.macMessages(parent, 'settingsSaved')
         
@@ -494,13 +526,6 @@ class MainWindow(QMainWindow):
         else:
             return False
 
-    # def showStatusWin(self) -> None:
-    #     """
-    #     shows the status window
-    #     """
-    #     connWin.show()
-
-
 
 # Primary driver is the System Tray Icon
 class systemTray(QSystemTrayIcon):
@@ -513,6 +538,7 @@ class systemTray(QSystemTrayIcon):
         self.hostsFile = HostsFile()
 
         self.connected = False
+        self.connectionError = False
         self.connToolTip = self.tr('Pulsar connected')
         self.disconnToolTip = self.tr('Pulsar not connected')
         self.retranslateUi(self)
@@ -533,9 +559,31 @@ class systemTray(QSystemTrayIcon):
         self.menu.connItem.triggered.connect(self.nebulaConnect)
         self.menu.disconnItem.triggered.connect(self.nebulaDisconnect)
         self.menu.settingsWin.triggered.connect(self.showMainWin)
-        # self.menu.statusWin.triggered.connect(self.showStatusWin)
         self.setContextMenu(self.menu)
         self.nebulaObj = nebula
+
+
+    def __checkOnConnect(self) -> None:
+        """
+        Pings a lighthouse on initial connection to make sure that we're actually connected.
+        Pops up an error method, if not.
+        """
+        print('Checking connection in 5 sec')
+        pings = []
+        sleep(5)
+        for ip in self.nebulaObj.pingTargets:
+            print(f'Pinging {ip}')
+            p = self.nebulaObj.ping(ip)
+            pings.append(p['result'])
+
+        if True not in pings:
+            print('CONNECTION ERROR! No lighthouses found. Check config file.')
+            self.nebulaDisconnect()
+            self.connectionError = True
+
+        else:
+            print('Connection confirmed')
+
 
     def connectStatusIcon(self) -> None:
         """
@@ -546,21 +594,29 @@ class systemTray(QSystemTrayIcon):
         elif not self.connected:
             self.setIcon(self.iconOff)
 
+
     def nebulaConnect(self) -> None:
         """
         Enable connection 
         """
         if not self.connected:
+            if self.connectionError:
+                mainWin.noConnectionWarning()
+                return
+
             if not __debugState__:
                 if SETTINGS['use_hosts']:
                     self.hostsFile.loadFromFile(SETTINGS['hosts_file'])
                 self.nebulaObj.connect()
-                
-
+    
             self.connected = True
             self.connectStatusIcon()
             mainWin.ui.btnDisconnect.show()
             self.setToolTip(self.connToolTip)
+            # make sure we're actually connected
+            checkConnect = threading.Thread(target=self.__checkOnConnect)
+            checkConnect.start()
+
 
     def nebulaDisconnect(self) -> None:
         """
@@ -576,11 +632,13 @@ class systemTray(QSystemTrayIcon):
                 if SETTINGS['use_hosts']:
                     self.hostsFile.restoreHostsFile()
 
+
     def quitPulsar(self,parent):
         if self.connected and not __debugState__:
             self.nebulaDisconnect()
 
         parent.quit()
+
 
     def retranslateUi(self, systemTray):
         self.connToolTip = self.tr('Pulsar connected')
@@ -588,17 +646,13 @@ class systemTray(QSystemTrayIcon):
         self.disconnToolTip = self.tr('Pulsar not connected')
         self.disconnToolTip = QCoreApplication.translate('systemTray', u'Pulsar not connected', None)
 
+
     def showMainWin(self) -> None:
         """
         Display main window
         """
         mainWin.show()
 
-    # def showStatusWin(self) -> None:
-    #     """
-    #     Display Connection Status window
-    #     """
-    #     connWin.show()
 
 class systemTrayMenu(QMenu):
     """
@@ -638,29 +692,27 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle('fusion')
 
-    if SETTINGS == False:
-        settingsError = SettingsErrorWindow(app)
-        settingsError.show()
-    
-    else:
-        app.setQuitOnLastWindowClosed(False)
-        nebulaObj = Nebula(keep_alive=SETTINGS['keep_alive'], log_file=SETTINGS['nebula_log'], log_level=SETTINGS['log_level'])
-        __nebula__ = nebulaObj.version()
-        # connWin = ConnStatusWindow()
-        mainWin = MainWindow(app, nebulaObj)
-        
-        if not os.path.exists(SETTINGS['config']):
-            mainWin.noConfig()
-        else:
-            nebulaObj.setConfig(SETTINGS['config'])
-            nebulaObj.usePing = SETTINGS['use_ping']
-            nebulaObj.pingInterval = int(SETTINGS['ping_interval'])
-        
-        if not SETTINGS['tray_start']:
-            mainWin.show()
+    app.setQuitOnLastWindowClosed(False)
+    nebulaObj = Nebula(keep_alive=SETTINGS['keep_alive'], log_file=SETTINGS['nebula_log'], log_level=SETTINGS['log_level'])
+    __nebula__ = nebulaObj.version()
+    # connWin = ConnStatusWindow()
+    mainWin = MainWindow(app, nebulaObj)
 
-        if SETTINGS['auto_connect']:
-            mainWin.st.nebulaConnect()
+    if not pathOk:
+        mainWin.elevateWinPathError()
+
+    if not os.path.exists(SETTINGS['config']):
+        mainWin.noConfig()
+    else:
+        nebulaObj.setConfig(SETTINGS['config'])
+        nebulaObj.usePing = SETTINGS['use_ping']
+        nebulaObj.pingInterval = int(SETTINGS['ping_interval'])
+    
+    if not SETTINGS['tray_start']:
+        mainWin.show()
+
+    if SETTINGS['auto_connect']:
+        mainWin.st.nebulaConnect()
 
     sys.exit(app.exec())
     

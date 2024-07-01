@@ -15,7 +15,7 @@
     <message>
         <location filename="../../ui/pulsar_about.ui" line="81"/>
         <source>A Graphical User Interface for the Nebula Mesh Network</source>
-        <translation>Nebula Mesh Ağı için grafik arabirim</translation>
+        <translation>Nebula Örgü Ağı için grafik arabirim</translation>
     </message>
     <message>
         <location filename="../../ui/pulsar_about.ui" line="100"/>
@@ -56,12 +56,12 @@
 <context>
     <name>ConfigHostsWindow</name>
     <message>
-        <location filename="../../pulsar.py" line="118"/>
+        <location filename="../../pulsar.py" line="127"/>
         <source>The selected file is not a valid hosts file. Please check it and try again.</source>
         <translation>Seçilen dosya geçerli sağlayıcı bilgileri içermiyor. Dosyayı kontrol edip tekrar deneyiniz.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="190"/>
+        <location filename="../../pulsar.py" line="199"/>
         <source>No valid IP Address - Hostname pairs were entered. Hosts cannot be used.&lt;br&gt;Please either check the list and try again or point to a valid file containing the list.</source>
         <translation>Geçerli IP addres - sağlayıcı çiftleri girilmedi. Bu liste kullanılamaz.&lt;br&gt;Lütfen listeyi düzeltin veya geçerli bir sağlayıcı listesi içeren bir dosya sağlayın.</translation>
     </message>
@@ -76,7 +76,7 @@
     <message>
         <location filename="../../ui/pulsar_status.ui" line="31"/>
         <source>Connected to Nebula Mesh Network</source>
-        <translation>Nebula Mesh Ağıyla bağlanıldı</translation>
+        <translation>Nebula Örgü Ağına bağlanıldı</translation>
     </message>
     <message>
         <location filename="../../ui/pulsar_status.ui" line="44"/>
@@ -92,64 +92,69 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../pulsar.py" line="301"/>
+        <location filename="../../pulsar.py" line="306"/>
+        <source>&lt;p&gt;Pulsar requires Administrator access to connect to the Nebula network.&lt;/p&gt;&lt;p&gt;The executable was called from the following path:&lt;/p&gt;&lt;p&gt;&lt;code&gt;{path}&lt;/code&gt;&lt;/p&gt; &lt;p&gt;Unfortunately, because there are non-standard characters in the path, the application cannot be granted the Administrator privileges. Please move the Pulsar executable to a location that only contains standard Windows characters and try again.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Nebula ağına bağlanabilmes için Pulsar’ın Yönetici haklarına ihtiyacı vardır&lt;/p&gt;&lt;p&gt;Yazılım şu yolu kullanarak sürdürüldü:&lt;/p&gt;&lt;p&gt;&lt;code&gt;{path}&lt;/code&gt;&lt;/p&gt;&lt;p&gt;Yolun içinde standart olmayan Windows karaktarleri bulunduğundan dolayı Pulsar’a maalesef Yönetici hakları tanımlanamayacaktır. Yazılımı sadece standart karakter içeren bir yola taşıyıp tekrar deneyin.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../pulsar.py" line="322"/>
         <source>Nebula Config File (*.yml *.yaml)</source>
         <translation>Nebula Ayar Dosyası (*.yml *.yaml)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="335"/>
+        <location filename="../../pulsar.py" line="356"/>
         <source>Deutsch (German)</source>
         <translation>Deutsch (Almanca)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="335"/>
+        <location filename="../../pulsar.py" line="356"/>
         <source>English</source>
         <translation>English (İngilizce)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="337"/>
+        <location filename="../../pulsar.py" line="358"/>
         <source>Türkçe (Turkish)</source>
         <translation>Türkçe</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="363"/>
+        <location filename="../../pulsar.py" line="384"/>
         <source>In order to edit these settings on MacOS, Pulsar must be running with regular user privileges (i.e. without administrative privileges). Do you wish to exit Pulsar now so you can restart it with regular privileges?</source>
         <translation>MacOS ortamında Pulsar&apos;ın bu ayarları yapabilmesi için normal kullanıcı haklarına (yani yönetici hakları olmayan bir şekilde) başlatılmalıdır. Pulsar&apos;ı normal kullanıcı haklarla çalıştırmak üzere kapatılsın mı?</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="368"/>
+        <location filename="../../pulsar.py" line="389"/>
         <source>The settings have been saved successfully. Because you are running on MacOS, Pulsar must be restarted to apply the settings. Do you wish to restart Pulsar now?</source>
         <translation>Ayarlar başarıyla kaydedildi. Cihazınız MacOS sürdüğünden dolayı ayarların faaliyete geçebilmesi için Pulsar&apos;ın yeniden başlatılması gerek. Yazılım yeniden başlatmak üzere kapansın mı?</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="389"/>
+        <location filename="../../pulsar.py" line="410"/>
         <source>No valid Nebula configuration file was found so the connection cannot be made.&lt;br&gt;Please set the path to a valid Nebula configuration file below to continue.</source>
         <translation>Geçerli bir Nebula ayar dosyası bulunamadı. Bundan dolayı bağlantı kurulamadı.&lt;br&gt;Devam etmek için lütfen geçerli bir Nebula ayar dosyasına yolu giriniz.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="410"/>
+        <location filename="../../pulsar.py" line="431"/>
         <source>Unable to open link to license.</source>
         <translation>Lisans dosyasına bağlantı açılamadı.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="420"/>
+        <location filename="../../pulsar.py" line="441"/>
         <source>Unable to open link to user guide.</source>
         <translation>Kullanıcı kılavuzuna bağlantı açılamadı.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="431"/>
+        <location filename="../../pulsar.py" line="452"/>
         <source>Pulsar is still connected to the Nebula mesh network.&lt;br&gt;Are you sure you want to quit the program?</source>
         <translation>Pulsar hâlâ Nebula ağına bağlıdır.&lt;br&gt;Yazılımı kapatmak istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../ui/pulsar_main.ui" line="15"/>
         <source>Pulsar :: Nebula Mesh Network GUI</source>
-        <translation>Pulsar :: Nebula Mesh Ağı İçin Grafik Arabirimi</translation>
+        <translation>Pulsar :: Nebula Örgü Ağı İçin Grafik Arabirimi</translation>
     </message>
     <message>
         <location filename="../../ui/pulsar_main.ui" line="32"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pulsar&lt;/span&gt; is a GUI client that makes it possible for Windows or MacOS computers to connect to a Nebula mesh network. For Pulsar to work, a valid Nebula configuration &lt;code&gt;.yaml&lt;/code&gt; file location must be supplied in the box below. The Nebula CA file, and the client key and certificate files must either be saved relative to the configuration file, or else be defined with a full path. The client will only connect to the Nebula Mesh Network if all files are present.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pulsar&lt;/span&gt;, Windows veya MacOS bilgisayarların bir Nebula mesh ağına bağlanmasını mümkün kılan bir grafik arabirmi istemcisidir. Pulsar&apos;ın çalışması için aşağıdaki kutuda geçerli bir Nebula ayar &lt;code&gt;.yaml&lt;/code&gt; dosya konumu sağlanmalıdır. Nebula CA dosyası, istemci anahtarı ve sertifika dosyaları ya yapılandırma dosyasına göre kaydedilmelidir ya da tam bir yol ile tanımlanmalıdır. İstemci, yalnızca tüm dosyalar mevcutsa Nebula Mesh Ağı&apos;na bağlanacaktır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pulsar&lt;/span&gt;, Windows veya MacOS bilgisayarların bir Nebula örgü ağına bağlanmasını mümkün kılan bir grafik arabirmi istemcisidir. Pulsar&apos;ın çalışması için aşağıdaki kutuda geçerli bir Nebula ayar &lt;code&gt;.yaml&lt;/code&gt; dosya konumu sağlanmalıdır. Nebula CA dosyası, istemci anahtarı ve sertifika dosyaları ya yapılandırma dosyasına göre kaydedilmelidir ya da tam bir yol ile tanımlanmalıdır. İstemci, yalnızca tüm dosyalar mevcutsa Nebula Mesh Ağı&apos;na bağlanacaktır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/pulsar_main.ui" line="88"/>
@@ -199,7 +204,7 @@
     <message>
         <location filename="../../ui/pulsar_main.ui" line="258"/>
         <source>Connect to Nebula Mesh Network</source>
-        <translation>Nebula Mesh Ağı ile Bağlan</translation>
+        <translation>Nebula Örtü Ağına Bağlan</translation>
     </message>
     <message>
         <location filename="../../ui/pulsar_main.ui" line="288"/>
@@ -346,14 +351,14 @@
 <context>
     <name>systemTray</name>
     <message>
-        <location filename="../../pulsar.py" line="518"/>
-        <location filename="../../pulsar.py" line="589"/>
+        <location filename="../../pulsar.py" line="539"/>
+        <location filename="../../pulsar.py" line="610"/>
         <source>Pulsar not connected</source>
         <translation>Pulsar bağlı değil</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="517"/>
-        <location filename="../../pulsar.py" line="587"/>
+        <location filename="../../pulsar.py" line="538"/>
+        <location filename="../../pulsar.py" line="608"/>
         <source>Pulsar connected</source>
         <translation>Pulsar bağlıdır</translation>
     </message>
@@ -361,26 +366,26 @@
 <context>
     <name>systemTrayMenu</name>
     <message>
-        <location filename="../../pulsar.py" line="611"/>
-        <location filename="../../pulsar.py" line="629"/>
+        <location filename="../../pulsar.py" line="632"/>
+        <location filename="../../pulsar.py" line="650"/>
         <source>Connect to Nebula</source>
         <translation>Nebula’ya bağlan</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="613"/>
-        <location filename="../../pulsar.py" line="629"/>
+        <location filename="../../pulsar.py" line="634"/>
+        <location filename="../../pulsar.py" line="650"/>
         <source>Disconnect from Nebula</source>
         <translation>Nebula Ağına bağlantıyı kapat</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="616"/>
-        <location filename="../../pulsar.py" line="629"/>
+        <location filename="../../pulsar.py" line="637"/>
+        <location filename="../../pulsar.py" line="650"/>
         <source>Show Pulsar Window</source>
         <translation>Pulsar penceresini aç</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="621"/>
-        <location filename="../../pulsar.py" line="630"/>
+        <location filename="../../pulsar.py" line="642"/>
+        <location filename="../../pulsar.py" line="651"/>
         <source>Quit</source>
         <translation>Kapat</translation>
     </message>

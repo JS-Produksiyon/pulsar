@@ -3,7 +3,7 @@
 """
     File name: nebula.py
     Date Created: 2024-05-03
-    Date Modified: 2024-06-27
+    Date Modified: 2024-07-01
     Python version: 3.11+
 """
 __author__ = "Josh Wibberley (JMW)"
@@ -337,59 +337,6 @@ class Nebula():
             while p.poll() is None:
                 out.append(p.stdout.read())
             return out[0].decode('utf-8')[9:-1]
-
-
-
-class StayConnected():
-    """
-    Keeps the connection to the nebula network alive
-
-    :param ips     : IP v4 or v6 addresses to ping to check for live connection
-    :type  ips     : list
-    :param task    : function to trigger when disconnection is detected
-    :type  task    : reference to function
-    :param interval: how often to ping in seconds (default: 300s = 5 min)
-    :type  interval: integer
-    """
-
-    def __init__(self, ips, task, interval=300) -> None:
-        self.active = False
-        self.ipList = []
-        self.pingInterval = interval if type(interval) == int else 300
-        self.reconnectFunction = task
-
-        # load and validate IPs
-        if type(ips) == str:
-            if self.__validateIp(ips): 
-                self.ipList.append(ips)
-        elif type(ips) == list:
-            for ip in ips:
-                if self.__validateIp(ip):
-                    self.ipList.append(ip)
-
-
-        
-
-    def disable(self) -> None:
-        """
-        Disables keeping the connection up on disconnect
-        """
-        self.active = False
-
-
-    def enable(self) -> bool:
-        """
-        Enables keeping the connection up on disconnect
-
-        :returns : boolean to denote whether activated or not
-        """
-        # make sure we have valid ip addresses to process
-        if len(self.ipList) < 1:
-            self.active = False
-            return False
-
-
-
 
 
 if __name__ == '__main__':

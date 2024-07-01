@@ -56,12 +56,12 @@
 <context>
     <name>ConfigHostsWindow</name>
     <message>
-        <location filename="../../pulsar.py" line="118"/>
+        <location filename="../../pulsar.py" line="127"/>
         <source>The selected file is not a valid hosts file. Please check it and try again.</source>
         <translation>The selected file is not a valid hosts file. Please check it and try again.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="190"/>
+        <location filename="../../pulsar.py" line="199"/>
         <source>No valid IP Address - Hostname pairs were entered. Hosts cannot be used.&lt;br&gt;Please either check the list and try again or point to a valid file containing the list.</source>
         <translation>No valid IP Address - Hostname pairs were entered. Hosts cannot be used.&lt;br&gt;Please either check the list and try again or point to a valid file containing the list.</translation>
     </message>
@@ -92,52 +92,57 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../pulsar.py" line="301"/>
+        <location filename="../../pulsar.py" line="306"/>
+        <source>&lt;p&gt;Pulsar requires Administrator access to connect to the Nebula network.&lt;/p&gt;&lt;p&gt;The executable was called from the following path:&lt;/p&gt;&lt;p&gt;&lt;code&gt;{path}&lt;/code&gt;&lt;/p&gt; &lt;p&gt;Unfortunately, because there are non-standard characters in the path, the application cannot be granted the Administrator privileges. Please move the Pulsar executable to a location that only contains standard Windows characters and try again.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Pulsar requires Administrator access to connect to the Nebula network.&lt;/p&gt;&lt;p&gt;The executable was called from the following path:&lt;/p&gt;&lt;p&gt;&lt;code&gt;{path}&lt;/code&gt;&lt;/p&gt;&lt;p&gt;Unfortunately, because there are non-standard characters in the path, the application cannot be granted the Administrator privileges. Please move the Pulsar executable to a location that only contains standard Windows characters and try again.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../pulsar.py" line="322"/>
         <source>Nebula Config File (*.yml *.yaml)</source>
         <translation>Nebula Configuration File (*.yml *.yaml)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="335"/>
+        <location filename="../../pulsar.py" line="356"/>
         <source>Deutsch (German)</source>
         <translation>Deutsch (German)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="335"/>
+        <location filename="../../pulsar.py" line="356"/>
         <source>English</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="337"/>
+        <location filename="../../pulsar.py" line="358"/>
         <source>Türkçe (Turkish)</source>
         <translation>Türkçe (Turkish)</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="363"/>
+        <location filename="../../pulsar.py" line="384"/>
         <source>In order to edit these settings on MacOS, Pulsar must be running with regular user privileges (i.e. without administrative privileges). Do you wish to exit Pulsar now so you can restart it with regular privileges?</source>
         <translation>In order to edit these settings on MacOS, Pulsar must be running with regular user privileges (i.e. without administrative privileges). Do you wish to exit Pulsar now so you can restart it with regular privileges?</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="368"/>
+        <location filename="../../pulsar.py" line="389"/>
         <source>The settings have been saved successfully. Because you are running on MacOS, Pulsar must be restarted to apply the settings. Do you wish to restart Pulsar now?</source>
         <translation>The settings have been saved successfully. Because you are running on MacOS, Pulsar must be restarted to apply the settings. Do you wish to close Pulsar now so you can restart it?</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="389"/>
+        <location filename="../../pulsar.py" line="410"/>
         <source>No valid Nebula configuration file was found so the connection cannot be made.&lt;br&gt;Please set the path to a valid Nebula configuration file below to continue.</source>
         <translation>No valid Nebula configuration file was found so the connection cannot be made.&lt;br&gt;Please set the path to a valid Nebula configuration file to continue.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="410"/>
+        <location filename="../../pulsar.py" line="431"/>
         <source>Unable to open link to license.</source>
         <translation>Unable to open link to license.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="420"/>
+        <location filename="../../pulsar.py" line="441"/>
         <source>Unable to open link to user guide.</source>
         <translation>Unable to open link to user guide.</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="431"/>
+        <location filename="../../pulsar.py" line="452"/>
         <source>Pulsar is still connected to the Nebula mesh network.&lt;br&gt;Are you sure you want to quit the program?</source>
         <translation>Pulsar is still connected to the Nebula mesh network.&lt;br&gt;Are you sure you want to quit the program?</translation>
     </message>
@@ -346,14 +351,14 @@
 <context>
     <name>systemTray</name>
     <message>
-        <location filename="../../pulsar.py" line="518"/>
-        <location filename="../../pulsar.py" line="589"/>
+        <location filename="../../pulsar.py" line="539"/>
+        <location filename="../../pulsar.py" line="610"/>
         <source>Pulsar not connected</source>
         <translation>Pulsar not connected</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="517"/>
-        <location filename="../../pulsar.py" line="587"/>
+        <location filename="../../pulsar.py" line="538"/>
+        <location filename="../../pulsar.py" line="608"/>
         <source>Pulsar connected</source>
         <translation>Pulsar connected</translation>
     </message>
@@ -361,26 +366,26 @@
 <context>
     <name>systemTrayMenu</name>
     <message>
-        <location filename="../../pulsar.py" line="611"/>
-        <location filename="../../pulsar.py" line="629"/>
+        <location filename="../../pulsar.py" line="632"/>
+        <location filename="../../pulsar.py" line="650"/>
         <source>Connect to Nebula</source>
         <translation>Connect to Nebula</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="613"/>
-        <location filename="../../pulsar.py" line="629"/>
+        <location filename="../../pulsar.py" line="634"/>
+        <location filename="../../pulsar.py" line="650"/>
         <source>Disconnect from Nebula</source>
         <translation>Disconnect from Nebula</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="616"/>
-        <location filename="../../pulsar.py" line="629"/>
+        <location filename="../../pulsar.py" line="637"/>
+        <location filename="../../pulsar.py" line="650"/>
         <source>Show Pulsar Window</source>
         <translation>Show Pulsar Window</translation>
     </message>
     <message>
-        <location filename="../../pulsar.py" line="621"/>
-        <location filename="../../pulsar.py" line="630"/>
+        <location filename="../../pulsar.py" line="642"/>
+        <location filename="../../pulsar.py" line="651"/>
         <source>Quit</source>
         <translation>Quit</translation>
     </message>
