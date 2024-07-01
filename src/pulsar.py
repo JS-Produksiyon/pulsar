@@ -17,7 +17,7 @@ __email__ = "jmw@hawke-ai.com"
 __status__ = "Development"
 __languages__ = ['en','de','tr']  # languages the interface has been translated into.
 __nebula__ = '1.8.2'
-__build__ = '2024-06-28 15:12'
+__build__ = '2024-07-01 17:53'
 __debugState__ = False
 # ================================================================================
 # Check for python version
@@ -568,21 +568,23 @@ class systemTray(QSystemTrayIcon):
         Pings a lighthouse on initial connection to make sure that we're actually connected.
         Pops up an error method, if not.
         """
-        print('Checking connection in 5 sec')
+        self.nebulaObj.logger.debug('Checking connection in 5 sec')
         pings = []
         sleep(5)
         for ip in self.nebulaObj.pingTargets:
-            print(f'Pinging {ip}')
+            self.nebulaObj.logger.debug(f'Checking connection. Pinging {ip}')
             p = self.nebulaObj.ping(ip)
+            debugStatus = 'successful' if p['result'] else 'unsuccessful'
+            self.nebulaObj.logger.debug(f'{ip} ping {debugStatus}')
             pings.append(p['result'])
 
         if True not in pings:
-            print('CONNECTION ERROR! No lighthouses found. Check config file.')
+            self.nebulaObj.logger.error('CONNECTION ERROR! No lighthouses found. Check config file.')
             self.nebulaDisconnect()
             self.connectionError = True
 
         else:
-            print('Connection confirmed')
+            self.nebulaObj.logger.info('Nebula connection confirmed')
 
 
     def connectStatusIcon(self) -> None:
