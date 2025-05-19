@@ -16,6 +16,14 @@
 
 > These will be kept track of using the GitHub issues.
 
+
+## Optional new features
+
+* Privilege elevation should only be triggered when nebula attempts to connect *unless* autostart is enabled, then the application itself should auto-elevate.
+
+* Hide the console window and integrate into the interface.
+
+
 ## Process
 
 | Step | Description                                  | Complete   |
@@ -40,10 +48,10 @@
 * pywebview.api for backend connectivity
 * JQuery for object manipulation
 * Bootstrap for design and layout
-* FontAwesome SVG+JavaScript for icons
+* FontAwesome SVG+JavaScript for icons -> though this needs to be tested for speed
 * jinja2 + pybabel for base page rendering
 * ui/js/gui.js for interactions 
 
 
 ---
-Last Updated: 2025-05-18
+Last Updated: 2025-05-19
