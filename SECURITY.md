@@ -6,7 +6,8 @@ JS Produksiyon currently supports the following versions of Pulsar
 
 | Version | Supported          | Level               |
 | ------- | ------------------ |-------------------- |
-| 1.0.x   | :white_check_mark: | Active Development  |
+| 1.0.x   | :beetle: | Bugfixes and security patches  only       |
+| 1.1.x   | :white_check_mark: | Active Development  |
 
 ## Reporting a Vulnerability
 

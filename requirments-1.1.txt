@@ -1,0 +1,12 @@
+# GUI components
+pywebview=5.4.*
+pysystray=0.19.*
+jinja2=3.1.*
+
+# I18n
+babel=2.17.*
+
+# backend
+pytz==2024.1
+PyYAML==6.0.*
+tzlocal==5.2.*

@@ -28,16 +28,16 @@
 
 | Step | Description                                  | Complete   |
 | ---: | -------------------------------------------- | :--------: |
-|   1. | Redesign icons for system tray               |            |
+|   1. | Redesign icons for system tray               |     ✓      |
 |   2. | Design various interfaces 3-6                |            |
-|   2. | Implement **main GUI** interface             |            |
-|   3. | Implement **settings** interface             |            |
-|   4. | Implement **profiles** interface             |            |
-|   5. | Implement **first run** interface            |            |
-|   6. | Implement system tray icon                   |            |
-|   7. | Implement Nebula back-end check              |            |
-|   8. | Create check for valid Nebula `.yaml` files  |            |
-|   9. | Create backend for each interface            |            |
+|   3. | Implement **main GUI** interface             |            |
+|   4. | Implement **settings** interface             |            |
+|   5. | Implement **profiles** interface             |            |
+|   6. | Implement **first run** interface            |            |
+|   7. | Implement system tray icon                   |            |
+|   8. | Implement Nebula back-end check              |            |
+|   9. | Create check for valid Nebula `.yaml` files  |            |
+|  10. | Create backend for each interface            |            |
 
 
 ## Descriptions
@@ -53,5 +53,95 @@
 * ui/js/gui.js for interactions 
 
 
+### Nebula settings in Profile management interface
+
+* pki
+    - pki.ca -> file or filled-in field
+    - pki.cert -> file
+    - pki.key -> file
+    - pki.blocklist -> table of individual fields that can be added 
+    - pki.disconnect_invalid -> checkbox
+
+* static_host_map -> table of field pairs that can be added to
+
+* static_map -> on same screen as static_host_map
+    - network -> dropdown with *ip4*, *ip6*, or *ip4 and ip6*
+    - cadence -> number input
+    - lookup_timeout -> number input
+
+* lighthouse
+    - Do not expose: am_lighthouse, serve_dns, dns and subkeys, calculated_remotes
+    - interval -> number input
+    - hosts -> table of fields that can be added to
+    - remote_allow_list, local_allow_list, advertised_addrs -> go under advanced and are textarea boxes that are filled in.
+
+* ~~listen~~ -> not needed for clients
+
+* punchy
+    - punch -> checkbox
+    - delay -> number input
+    - respond -> checkbox
+    - respond_delay number input
+
+* cipher -> on advanced page; dropdown with `default`, `aes`, or `chachapoly`
+
+* preferred_ranges -> on general page; table of individual fields that can be added
+
+* relay -> on lighthouse page
+    - relays -> table where rows can be added with dropdown of lighthouse IPs
+    - ~~am_relay~~ -> cannot be set; must be false
+    - use_relays -> checkbox
+
+* ~~tun~~ -> managed by Pulsar
+
+* ~~sshd~~ -> not needed by Pulsar
+
+* logging -> on general page
+    - level -> dropdown with levels
+    - format -> Pulsar defaults to json
+
+* firewall
+    - outbound -> table where rows can be added with these fields via modal:
+        + port -> text field that is either numerical or range
+        + proto -> dropdown = `any`, `tcp`, `udp`, `icmp`
+        + host -> text field with button that makes it `any`
+        + group/groups -> table with text fields where groups can be added and a button to set to `any`
+        + Under Advanced:
+            + cidr -> text field
+            + local_cidr -> text field
+            + ca_name -> text field
+            + ca_sha -> text field
+        
+    - inbound -> same as above
+
+    - ~~default_local_cidr_any~~ -> not necessary
+
+    - conntrack
+        + tcp_timeout -> number input
+        + udp_timeout -> number input
+        + default_timeout -> number input
+    
+    - ~~outbound_action~~, ~~inbound_action~~ -> not needed
+
+* ~~routines~~ -> not needed by Pulsar
+
+* ~~stats~~ -> not needed by Pulsar
+
+* handshakes -> under lighthouse page
+    - try_intervals -> number input
+    - retries -> number input
+    - trigger_buffer -> number input
+
+* local_range/preferred_ranges -> under advanced page -> table with rows that can be added with text input
+
+| Tab         | Items |
+| ----------- | ----- |
+| General     | Enable/disable profile, import profile from file, auto connect, keep alive, logging
+| Credentials | pki
+| Networking  | static_host_map, static_map, lighthouse, punchy, handshakes
+| Firewall    | firewall
+| Advanced    | cipher, preferred_range, local_range/preferred_ranges, 
+
+
 ---
-Last Updated: 2025-05-19
+Last Updated: 2025-05-23
