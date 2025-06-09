@@ -166,6 +166,9 @@ output/
 # MacOS
 .DS_Store
 
+# Vendors we can't redistribute
+vendors/fontawesome
+
 # pulsar specific
 creds/
 *.yaml

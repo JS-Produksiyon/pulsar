@@ -1,0 +1,86 @@
+/// pulsar UI modifications for bootstrap 5.3.6
+/// @author: JMW
+/// @version: 1.1
+/// Requires Bootstrap 5.3.6 to be installed at ../../../../../vendors/bootstrap-5.3.6
+
+/// Define custom colors
+$pulsar-teal-light: #40dfcf;
+$pulsar-teal-dark:  #41b2a7;
+$pulsar-purple-light: #a13a6c;
+$pulsar-purple-dark: #30123a;
+$pulsar-gray-light: #b3b3b3;
+$pulsar-gray-dark: #666666;
+
+/// Required base Bootstrap styles
+@import "../../../../vendors/bootstrap-5.3.6/scss/functions";
+@import "../../../../vendors/bootstrap-5.3.6/scss/variables";
+
+/// modify root font size
+$font-size-root: 18px;
+
+/// modify colors
+$primary: $pulsar-teal-light;
+$secondary: $pulsar-purple-light;
+
+$theme-colors: (
+    "primary":    $pulsar-teal-light,
+    "primary-dark": $pulsar-teal-dark,
+    "secondary":  $pulsar-purple-light,
+    "secondary-dark": $pulsar-purple-dark,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark,
+    "black":      #000000,
+);
+
+/// modify link colors
+$link-color: $pulsar-teal-dark;
+$link-hover-color: darken($pulsar-teal-dark, 10%);
+
+/// set fonts
+$font-family-base: "Segoe UI", -apple-system, "Noto Sans", sans-serif;
+
+/// More bootstrap imports
+@import "../../../../vendors/bootstrap-5.3.6/scss/mixins";
+@import "../../../../vendors/bootstrap-5.3.6/scss/maps";
+@import "../../../../vendors/bootstrap-5.3.6/scss/root";
+@import "../../../../vendors/bootstrap-5.3.6/scss/utilities";
+
+/// Bootstrap components
+@import "../../../../vendors/bootstrap-5.3.6/scss/reboot";
+@import "../../../../vendors/bootstrap-5.3.6/scss/type";
+@import "../../../../vendors/bootstrap-5.3.6/scss/images";
+@import "../../../../vendors/bootstrap-5.3.6/scss/containers";
+@import "../../../../vendors/bootstrap-5.3.6/scss/grid";
+@import "../../../../vendors/bootstrap-5.3.6/scss/tables";
+@import "../../../../vendors/bootstrap-5.3.6/scss/forms";
+@import "../../../../vendors/bootstrap-5.3.6/scss/buttons";
+@import "../../../../vendors/bootstrap-5.3.6/scss/dropdown";
+@import "../../../../vendors/bootstrap-5.3.6/scss/button-group";
+@import "../../../../vendors/bootstrap-5.3.6/scss/nav";
+@import "../../../../vendors/bootstrap-5.3.6/scss/navbar";
+@import "../../../../vendors/bootstrap-5.3.6/scss/breadcrumb";
+@import "../../../../vendors/bootstrap-5.3.6/scss/card";
+@import "../../../../vendors/bootstrap-5.3.6/scss/accordion";
+@import "../../../../vendors/bootstrap-5.3.6/scss/pagination";
+@import "../../../../vendors/bootstrap-5.3.6/scss/badge";
+@import "../../../../vendors/bootstrap-5.3.6/scss/modal";
+@import "../../../../vendors/bootstrap-5.3.6/scss/tooltip";
+@import "../../../../vendors/bootstrap-5.3.6/scss/transitions";
+@import "../../../../vendors/bootstrap-5.3.6/scss/close";
+@import "../../../../vendors/bootstrap-5.3.6/scss/progress";
+@import "../../../../vendors/bootstrap-5.3.6/scss/alert";
+@import "../../../../vendors/bootstrap-5.3.6/scss/spinners";
+@import "../../../../vendors/bootstrap-5.3.6/scss/offcanvas";
+
+/// Bootstrap Helpers
+@import "../../../../vendors/bootstrap-5.3.6/scss/helpers";
+
+/// Bootstrap utilities
+@import "../../../../vendors/bootstrap-5.3.6/scss/utilities/api";
+
+
+

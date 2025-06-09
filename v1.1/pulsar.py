@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 # ================================================================================
 """
-    File name: pulsar_gui2.py
+    File name: pulsar.py
     Date Created: 2025-05-18
-    Date Modified: 2025-05-18
+    Date Modified: 2025-06-05
     Python version: 3.11+
 """
 __description__ = """
-    This is the redesigned main GUI for the Pulsar application based on
+    This is the redesigned main process for the Pulsar application based on
     pywebview2 and pysystray.
 """
 __author__ = "Josh Wibberley (JMW)"
