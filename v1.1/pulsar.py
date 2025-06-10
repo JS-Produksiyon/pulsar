@@ -4,7 +4,7 @@
 """
     File name: pulsar.py
     Date Created: 2025-05-18
-    Date Modified: 2025-06-05
+    Date Modified: 2025-06-10
     Python version: 3.11+
 """
 __description__ = """
@@ -32,4 +32,7 @@ if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 
 from lib.utils import dark_mode
+from ui.pulsar_ui import run_gui
 
+if __name__ == "__main__":
+    run_gui()

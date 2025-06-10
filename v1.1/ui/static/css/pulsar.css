@@ -11381,4 +11381,9 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+img.top-logo {
+  width: 30px;
+  height: 30px;
+  vertical-align: text-bottom;
 }/*# sourceMappingURL=pulsar.css.map */

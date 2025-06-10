@@ -83,4 +83,8 @@ $font-family-base: "Segoe UI", -apple-system, "Noto Sans", sans-serif;
 @import "../../../../vendors/bootstrap-5.3.6/scss/utilities/api";
 
 
-
+img.top-logo  {
+    width: 30px;
+    height: 30px;
+    vertical-align: text-bottom;
+}

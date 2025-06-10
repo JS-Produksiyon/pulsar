@@ -7,3 +7,13 @@
  * @license GNU General Public License v3.0
 */
 
+$(document).ready(function() {
+
+    if ($("#btn_exit_pulsar").length > 0) {
+        $("#btn_exit_pulsar").on("click", function() {
+            console.log("Exit Pulsar button clicked");
+            window.pywebview.api.exitApp();
+        });
+    }
+
+});

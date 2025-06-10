@@ -1,0 +1,28 @@
+{% extends "base.html.jinja" %}
+{% block content %}
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-4 pb-3">
+            <img src="{{ url_for('static', filename='img/pulsar-icon-1.1.png') }}" class="top-logo" alt="Pulsar Logo">
+            <span class="h2">Pulsar</span>
+        </div>
+        <div class="col-8 text-end pe-3">
+            <button class="btn btn-sm btn-outline-{{ mode }}" id="btn_reconnect" title="{{ _('Reconnect') }}">
+                <i class="fa-regular fa-arrows-rotate"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-{{ mode }}" id="btn_settings" title="{{ _('Settings') }}">
+                <i class="fa-regular fa-sliders"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-{{ mode }}" id="btn_about_pulsar" title="{{ _('About Pulsar') }}">
+                <i class="fa-regular fa-circle-info"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-{{ mode }}" id="btn_help" title="{{ _('Help')}}">
+                <i class="fa-regular fa-circle-question"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" id="btn_exit_pulsar" title="{{ _('Close Window or Exit') }}">
+                <i class="fa-regular fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
