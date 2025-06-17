@@ -4,7 +4,7 @@
 """
     File name: pulsar_gui2.py
     Date Created: 2025-05-22
-    Date Modified: 2025-05-22
+    Date Modified: 2025-06-17
     Python version: 3.11+
 """
 __description__ = """
@@ -14,7 +14,7 @@ __author__ = "Josh Wibberley (JMW)"
 __copyright__ = "Copyright © 2024 JS Prodüksiyon"
 __credits__ = ["Josh Wibberley"]
 __license__ = "GNU GPL v3.0"
-__version__ = "1.0.3"
+__version__ = "1.1.0"
 __maintainer__ = ["Josh Wibberley"]
 __email__ = "jmw@hawke-ai.com"
 __status__ = "Development"
@@ -30,6 +30,9 @@ if sys.version_info < MIN_PYTHON:
 # ================================================================================
 import sys, os, yaml, locale
 
+# global variables
+root_dir = os.path.dirname(os.path.dirname(__file__))
+
 # Settings functions
 def loadSettings() -> dict:
     """
@@ -43,8 +46,8 @@ def loadSettings() -> dict:
         touch(os.environ.get('HOME') + '/Library/Application Support/Pulsar', dir=True)
         touch(logFile)
     else:
-        settingsFile = os.path.dirname(__file__) + os.sep + 'settings.yaml'
-        logFile = os.path.dirname(__file__) + os.sep + 'nebula.log'
+        settingsFile = root_dir + os.sep + 'settings.yaml'
+        logFile = root_dir + os.sep + 'nebula.log'
     osLocale = locale.getdefaultlocale()
 
     if os.path.exists(settingsFile):
@@ -61,10 +64,30 @@ def loadSettings() -> dict:
     # we ALWAYS return a clean settings object, even if there is an error in the file, which will automatically
     # overwrite the corrupt settings.yaml file (if possible). This way Pulsar should always start, simply 
     # displaying a "set up your settings file" dialog if necessary.
-    settings = {'settings_version': __version__,'config': '', 'language': osLocale[0],
-            'tray_start': True, 'auto_connect': False, 'keep_alive': True, 'use_hosts': False, 'hosts_file': '', 
-            'use_ping': True, 'ping_interval': 300, 'log_level': 'info', 'timestamp': '', 'nebula_log': logFile, 
-            'macos_elevate': False}
+    settings = {'settings_version': __version__, 
+                'language': osLocale[0],    # language code, e.g. 'en', 'fr', 'de'
+                'tray_start': True,         # whether to start Pulsar in the system tray
+                'keep_alive': True,         # whether to keep Nebula connection alive
+                'use_ping': True,           # whether to use ping method to check Nebula connection; this is hard-coded for now
+                'ping_interval': 300,       # ping interval in seconds
+                'log_level': 'info',        # log level for Nebula (debug, info, warning, error, critical)
+                'timestamp': '',            # timestamp of when the settings were last saved
+                'nebula_log': logFile,      # path to the Nebula log file
+                'display_mode': 'system',   # display mode for the GUI (system, light or dark)
+                'profiles': [{              # list of Nebula profiles; for now max is 5
+                                                # each profile is stored in a directory corresponding to the 
+                                                # index of the profile in the list under the `profiles` directory
+                    'name': 'Profile 1',        # profile name
+                    'active': True,             # whether this profile is active
+                    'remote_hosts': '',         # either hosts file or standard list of remote hosts in hosts format
+                    'uses_hosts': False,        # whether this profile uses a hosts file
+                    'auto_connect': False,      # whether to auto-connect this upon Pulsar start
+                }], 
+                'flask_settings': {         # Flask settings for the GUI web server 
+                    'token': '',            # token for the Flask web server; empty for now
+                },        
+                'gui_port': 5000,            # port for the Flask web server to listen on
+            }
     saveSettings(settings)
     return settings
 
@@ -87,7 +110,7 @@ def saveSettings(settings) -> bool:
     if sys.platform == 'darwin':
         settingsFile = os.environ.get('HOME') + '/Library/Application Support/Pulsar/settings.yaml'
     else:
-        settingsFile = os.path.dirname(__file__) + os.sep + 'settings.yaml'
+        settingsFile = root_dir + os.sep + 'settings.yaml'
 
     try:
         with open(settingsFile, 'w', encoding='utf-8') as file:
@@ -105,9 +128,14 @@ def validateSettings(settings) -> bool:
     :type  settings: dict
     :returns       : boolean denoting validity
     """
-    scaffold = {'settings_version': str, 'config': str, 'language': str, 'tray_start': bool, 'auto_connect': bool, 
-                'keep_alive': bool, 'use_hosts': bool, 'hosts_file': str, 'ping_interval': int, 'use_ping': bool, 
-                'log_level': str, 'timestamp': str, 'nebula_log': str, 'macos_elevate': bool}
+    scaffold = {'settings_version': str, 'language': str, 'tray_start': bool,  
+                'keep_alive': bool, 'use_ping': bool, 'ping_interval': int, 
+                'log_level': str, 'timestamp': str, 'nebula_log': str, 'display_mode': str, 
+                'profiles': list, 'flask_settings': dict, 'gui_port': int}
+
+    profile_scaffold = {'name': str, 'active': bool, 'remote_hosts': str,  
+                        'uses_hosts': bool, 'auto_connect': bool}
+    flask_scaffold = {'token': str}
 
     if type(settings) != dict:
         return False
@@ -119,11 +147,29 @@ def validateSettings(settings) -> bool:
         if k not in scaffold.keys() or type(settings[k]) != scaffold[k]:
             return False
 
-    if len(settings['config']) > 0 and not os.path.exists(settings['config']):
-        return False
-
     if len(settings['language']) > 3:
         return False
+
+    # check the profiles
+    if len(settings['profiles'] > 0) and len(settings['profiles']) < 6:
+        for profile in settings['profiles']:
+            if type(profile) != dict:
+                return False
+            if len(profile.keys()) != len(profile_scaffold.keys()):
+                return False
+            for pk in profile.keys():
+                if pk not in profile_scaffold.keys() or type(profile[pk]) != profile_scaffold[pk]:
+                    return False
+    else:
+        return False
+    
+    # check the flask settings
+    if len(settings['flask_settings'].keys()) != len(flask_scaffold.keys()):
+        return False
+
+    for fk in settings['flask_settings'].keys():
+        if fk not in flask_scaffold.keys() or type(settings['flask_settings'][fk]) != flask_scaffold[fk]:
+            return False
 
     return True
 
