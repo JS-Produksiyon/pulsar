@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 # ================================================================================
 """
-    File name: pulsar_gui2.py
+    File name: utils.py
     Date Created: 2025-05-22
-    Date Modified: 2025-06-17
+    Date Modified: 2025-06-20
     Python version: 3.11+
 """
 __description__ = """
@@ -28,6 +28,7 @@ MIN_PYTHON = (3,11)
 if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
 # ================================================================================
+
 import sys, os, yaml, locale
 
 # global variables
@@ -66,7 +67,7 @@ def loadSettings() -> dict:
     # displaying a "set up your settings file" dialog if necessary.
     settings = {'settings_version': __version__, 
                 'language': osLocale[0],    # language code, e.g. 'en', 'fr', 'de'
-                'tray_start': True,         # whether to start Pulsar in the system tray
+                'tray_start': False,         # whether to start Pulsar in the system tray
                 'keep_alive': True,         # whether to keep Nebula connection alive
                 'use_ping': True,           # whether to use ping method to check Nebula connection; this is hard-coded for now
                 'ping_interval': 300,       # ping interval in seconds
@@ -102,10 +103,6 @@ def saveSettings(settings) -> bool:
     """
     settings['timestamp'] = timestamp()
 
-
-    # we can only use_hosts if we have a valid hosts_file
-    if settings['hosts_file'] == '':
-        settings['use_hosts'] = False
 
     if sys.platform == 'darwin':
         settingsFile = os.environ.get('HOME') + '/Library/Application Support/Pulsar/settings.yaml'
@@ -219,6 +216,23 @@ def dark_mode():
         dark_mode = True
 
     return dark_mode
+
+
+def random_string(length: int = 16) -> str:
+    """
+    Generates a random string of the specified length using letters and digits.
+    
+    :param length: Length of the random string to generate (default is 16).
+    :type  length: int
+    :returns       : A random string of the specified length.
+    """
+    import secrets
+    import string
+
+    safe_specials = '-_.,?=+!@#$%&*()'
+    
+    characters = string.ascii_letters + string.digits +safe_specials
+    return ''.join(secrets.choice(characters) for _ in range(length))
 
 
 def timestamp() -> str:
