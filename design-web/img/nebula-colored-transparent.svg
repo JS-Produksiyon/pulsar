@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="0.43361in" height="0.43361in" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 83.77 83.77"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#B3B3B3;stroke-width:1.34;stroke-miterlimit:2.61313}
+    .fil0 {fill:none}
+   ]]>
+  </style>
+   <clipPath id="id0">
+    <path d="M11.31 0.67l61.16 0c5.85,0 10.64,4.79 10.64,10.64l0 61.16c0,5.85 -4.79,10.64 -10.64,10.64l-61.16 0c-5.85,0 -10.64,-4.79 -10.64,-10.64l0 -61.16c0,-5.85 4.79,-10.64 10.64,-10.64z"/>
+   </clipPath>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g>
+  </g>
+  <g style="clip-path:url(#id0)">
+   <g id="_2142682629120">
+    <image x="0.67" y="0.67" width="82.43" height="82.43" xlink:href="nebula-colored-transparent_Images\nebula-colored-transparent_ImgID1.png"/>
+   </g>
+  </g>
+  <path class="fil0 str0" d="M11.31 0.67l61.16 0c5.85,0 10.64,4.79 10.64,10.64l0 61.16c0,5.85 -4.79,10.64 -10.64,10.64l-61.16 0c-5.85,0 -10.64,-4.79 -10.64,-10.64l0 -61.16c0,-5.85 4.79,-10.64 10.64,-10.64z"/>
+ </g>
+</svg>

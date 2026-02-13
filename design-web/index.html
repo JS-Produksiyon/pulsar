@@ -1,9 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" src="css/all.min.css"> <!-- FontAwesome -->
+    <link rel="stylesheet" href="./css/fontawesome/css/all.min.css"> <!-- FontAwesome 7.1.0 -->
+    <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
 </head>
-<body>
-    <i class="fa-regular fa-cloud-check"></i>
+<body class="main-ui dark">
+    <div class="pulsar-main ">
+        <header>
+            <!-- drag bar -->
+            <div id="drag-bar"></div>
+            <!-- title bar -->
+            <nav class="row" id="title-bar">
+                <div class="col h3 fw-bold"><img src="./img/pulsar-logo-blue.svg" alt="Pulsar logo"> Pulsar</div>
+                <div class="col text-end">
+                    <button class="btn btn-menu" title ="Reconnect"><i class="fa-regular fa-rotate"></i></button>
+                    <button class="btn btn-menu" title ="Settings"><i class="fa-regular fa-sliders"></i></button>
+                    <button class="btn btn-menu" title ="About Pulsar"><i class="fa-regular fa-circle-info"></i></button>
+                    <button class="btn btn-menu" title ="Help"><i class="fa-regular fa-circle-question"></i></button>
+                    <button class="btn btn-menu red" title="Close Window"><i class="fa-regular fa-xmark"></i></button>
+                </div>
+            </nav>
+        </header>
+        <!-- main window area -->
+        <div class="row text-center h3 mt-5">
+            <div class="col">
+                <span id="auto-connect-status" class="me-2"><i class="fa-regular fa-cloud-check"></i></span>
+                <span id="connection-name">Connection Profile Name</span>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col text-end">
+                <div class="connect-icon pulsar">
+                    <div id="icon-pulsar-not-connected">
+                        <img src="./img/pulsar-logo-black-transparent.svg" alt="Pulsar Not Connected" class="connect-icon-img icon-light">
+                        <img src="./img/pulsar-logo-white-transparent.svg" alt="Pulsar Not Connected" class="connect-icon-img icon-dark">
+                    </div>
+                    <img src="./img/pulsar-logo-blue.svg" alt="Pulsar Connected" id="icon-pulsar-connected" class="icon-connected">
+                </div>
+            </div>
+            <div class="col">
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="progress connect-progress text-bg-accent" role="progressbar" id="nebula-to-pulsar">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="progress connect-progress" role="progressbar" id="pulsar-to-nebula">
+                            <div class="progress-bar text-bg-primary"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="connect-icon nebula">
+                    <div id="icon-nebula-not-connected">
+                        <img src="./img/nebula-black-transparent.svg" alt="Nebula Not Connected" class="connect-icon-img icon-light">
+                        <img src="./img/nebula-white-transparent.svg" alt="Nebula Not Connected" class="connect-icon-img icon-dark">
+                    </div>
+                    <img src="./img/nebula-colored-transparent.png" alt="Nebula Connected" id="icon-nebula-connected" class="icon-connected">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <button id="connect-connect" class="btn btn-pulsar-teal btn-connect" role="button">
+                    <span class="h2">Connect</span>
+                </button>
+                <button id="connect-cancel" class="btn btn-pulsar-gray btn-connect" role="button">
+                    <span class="h2">Cancel</span>
+                </button>
+                <button id="connect-disconnect" class="btn btn-pulsar-purple btn-connect" role="button">
+                    <span class="h2">Disconnect</span>
+                </button>
+            </div>
+        </div>
+    
+        <!-- footer -->
+         <footer>
+                A Nebula mesh network connection GUI by JS Prodüksiyon © 2024-2026 JS Prodüksiyon Ltd. Şti.
+         </footer>
+    </div>
+    <!-- JavaScript libraries -->
+    <script src="./js/jquery.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/connectionAnimation.js"></script>
+    <script>
+        connectAnimations = new ConnectionAnimationClass();
+    </script>
+    
 </body>
 </html>
