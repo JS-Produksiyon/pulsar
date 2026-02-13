@@ -45,6 +45,10 @@ class ConnectionAnimationClass {
       ...config
     };
 
+    // track the connection status of the animation class so reconnection
+    // only is possible if we were once connected.
+    this.connected = false;
+
     // Bind event handlers to maintain 'this' context
     this.handleConnectClick = this.handleConnectClick.bind(this);
     this.handleCancelClick = this.handleCancelClick.bind(this);
@@ -103,6 +107,8 @@ class ConnectionAnimationClass {
     $(`#${this.config.cancelButtonId}`).hide();
     $(`#${this.config.disconnectButtonId}`).show();
 
+    this.connected = true;
+
     return true;
   }
 
@@ -112,6 +118,9 @@ class ConnectionAnimationClass {
    * @returns {boolean} True when animation is complete
    */
   startReconnection() {
+    // only trigger if we are connected
+    if (!this.connected) { return false; }
+
     // Set Nebula-to-Pulsar progress bar to 100%
     $(`#${this.config.nebulaProgressId} .progress-bar`)
       .animate({ width: '100%' }, this.config.fadeDuration);
@@ -135,6 +144,9 @@ class ConnectionAnimationClass {
    * @returns {boolean} True when animation is complete
    */
   completeReconnection(yes) {
+    // only trigger if we're connected
+    if (!this.connected) { return false; }
+
     // failure is not the default
     if (typeof yes != "boolean") { yes = true; }
 
@@ -202,6 +214,10 @@ class ConnectionAnimationClass {
   performDisconnectionAnimation(cancel) {
     // the default is that we are not canceling!
     if (typeof cancel != 'boolean') { cancel = false; }
+
+    // connection is terminated
+    this.connected = false;
+
     // Always reset Pulsar side progress bar
     $(`#${this.config.pulsarProgressId} .progress-bar`)
         .animate({ width: '0%' }, this.config.fadeDuration);
@@ -212,18 +228,20 @@ class ConnectionAnimationClass {
             .animate({ width: '100%' }, this.config.fadeDuration);
     }
 
-    // Cross-fade Pulsar icon back to default
-    $(`#${this.config.pulsarConnectedIconId}`).hide();
-    $(`#${this.config.pulsarNotConnectedIconId}`).show();
+    setTimeout(() => {
+        // Cross-fade Pulsar icon back to default
+        $(`#${this.config.pulsarConnectedIconId}`).hide();
+        $(`#${this.config.pulsarNotConnectedIconId}`).show();
 
-    // Cross-fade Nebula icon back to default
-    $(`#${this.config.nebulaConnectedIconId}`).hide();
-    $(`#${this.config.nebulaNotConnectedIconId}`).show();
+        // Cross-fade Nebula icon back to default
+        $(`#${this.config.nebulaConnectedIconId}`).hide();
+        $(`#${this.config.nebulaNotConnectedIconId}`).show();
 
-    // Hide disconnect and/or cancel button and show connect button
-    $(`#${this.config.disconnectButtonId}`).hide();
-    $(`#${this.config.cancelButtonId}`).hide();
-    $(`#${this.config.connectButtonId}`).show();
+        // Hide disconnect and/or cancel button and show connect button
+        $(`#${this.config.disconnectButtonId}`).hide();
+        $(`#${this.config.cancelButtonId}`).hide();
+        $(`#${this.config.connectButtonId}`).show();
+    }, (this.config.fadeDuration*2));
   }
 
   /**
