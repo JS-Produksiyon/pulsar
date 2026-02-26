@@ -12192,6 +12192,12 @@ body.light {
   width: 250px;
 }
 
+#pulsar-multi-connection .btn-connect {
+  width: 100%;
+  height: 32px;
+  line-height: 0%;
+}
+
 .btn-menu {
   border-width: 0.15em;
   width: 32px;
@@ -12286,7 +12292,7 @@ body.light {
   display: none;
 }
 
-#connect-disconnect, #connect-cancel {
+.btn-connect-disconnect, .btn-connect-cancel {
   display: none;
 }
 
@@ -12300,6 +12306,30 @@ body.light {
 
 .light #pulsar-to-nebula, .light #nebula-to-pulsar .progress-bar {
   background-color: #FFFFFF;
+}
+
+.connect-status {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+.dark .connect-status {
+  border-color: white;
+}
+
+.light .connect-status {
+  border-color: black;
+}
+
+.connect-status.connecting {
+  background-image: linear-gradient(90deg, #30123A 0%, #A13A6C 50%, #30123A 100%);
+}
+
+.connect-status.connected {
+  background-image: linear-gradient(90deg, #40E0D0 0%, #32B3A6 50%, #40E0D0 100%);
 }
 
 footer {

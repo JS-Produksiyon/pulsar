@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head data-bs-theme="dark">
     <link rel="stylesheet" href="./css/fontawesome/css/all.min.css"> <!-- FontAwesome 7.1.0 -->
     <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
 </head>
 <body class="main-ui dark">
-    <div class="pulsar-main ">
+    <div class="pulsar-main">
         <header>
             <!-- drag bar -->
             <div id="drag-bar"></div>
@@ -21,61 +21,187 @@
                 </div>
             </nav>
         </header>
-        <!-- main window area -->
-        <div class="row text-center h3 mt-5">
-            <div class="col">
-                <span id="auto-connect-status" class="me-2"><i class="fa-regular fa-cloud-check"></i></span>
-                <span id="connection-name">Connection Profile Name</span>
-            </div>
-        </div>
-        <div class="row mt-5 mb-5">
-            <div class="col text-end">
-                <div class="connect-icon pulsar">
-                    <div id="icon-pulsar-not-connected">
-                        <img src="./img/pulsar-logo-black-transparent.svg" alt="Pulsar Not Connected" class="connect-icon-img icon-light">
-                        <img src="./img/pulsar-logo-white-transparent.svg" alt="Pulsar Not Connected" class="connect-icon-img icon-dark">
-                    </div>
-                    <img src="./img/pulsar-logo-blue.svg" alt="Pulsar Connected" id="icon-pulsar-connected" class="icon-connected">
+        <!-- main window area for single connection -->
+        <div id="pulsar-single-connection" class="d-none">
+            <div class="row text-center h3 mt-5">
+                <div class="col">
+                    <span id="auto-connect-status" class="me-2" title="Automatically connect"><i class="fa-regular fa-cloud-check"></i></span>
+                    <span id="connection-name">Connection Profile Name</span>
                 </div>
             </div>
-            <div class="col">
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="progress connect-progress text-bg-accent" role="progressbar" id="nebula-to-pulsar">
-                            <div class="progress-bar" style="width: 100%"></div>
+            <div class="row mt-5 mb-5">
+                <div class="col text-end">
+                    <div class="connect-icon pulsar">
+                        <div id="icon-pulsar-not-connected">
+                            <img src="./img/pulsar-logo-black-transparent.svg" alt="Pulsar Not Connected" class="connect-icon-img icon-light">
+                            <img src="./img/pulsar-logo-white-transparent.svg" alt="Pulsar Not Connected" class="connect-icon-img icon-dark">
+                        </div>
+                        <img src="./img/pulsar-logo-blue.svg" alt="Pulsar Connected" id="icon-pulsar-connected" class="icon-connected">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="progress connect-progress text-bg-accent" role="progressbar" id="nebula-to-pulsar">
+                                <div class="progress-bar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="progress connect-progress" role="progressbar" id="pulsar-to-nebula">
+                                <div class="progress-bar text-bg-primary"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="progress connect-progress" role="progressbar" id="pulsar-to-nebula">
-                            <div class="progress-bar text-bg-primary"></div>
+                <div class="col">
+                    <div class="connect-icon nebula">
+                        <div id="icon-nebula-not-connected">
+                            <img src="./img/nebula-black-transparent.svg" alt="Nebula Not Connected" class="connect-icon-img icon-light">
+                            <img src="./img/nebula-white-transparent.svg" alt="Nebula Not Connected" class="connect-icon-img icon-dark">
                         </div>
+                        <img src="./img/nebula-colored-transparent.png" alt="Nebula Connected" id="icon-nebula-connected" class="icon-connected">
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="connect-icon nebula">
-                    <div id="icon-nebula-not-connected">
-                        <img src="./img/nebula-black-transparent.svg" alt="Nebula Not Connected" class="connect-icon-img icon-light">
-                        <img src="./img/nebula-white-transparent.svg" alt="Nebula Not Connected" class="connect-icon-img icon-dark">
-                    </div>
-                    <img src="./img/nebula-colored-transparent.png" alt="Nebula Connected" id="icon-nebula-connected" class="icon-connected">
+            <div class="row">
+                <div class="col text-center">
+                    <button id="connect-connect" class="btn btn-pulsar-teal btn-connect" role="button">
+                        <span class="h2">Connect</span>
+                    </button>
+                    <button id="connect-cancel" class="btn btn-pulsar-gray btn-connect btn-connect-cancel" role="button">
+                        <span class="h2">Cancel</span>
+                    </button>
+                    <button id="connect-disconnect" class="btn btn-pulsar-purple btn-connect btn-connect-disconnect" role="button">
+                        <span class="h2">Disconnect</span>
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col text-center">
-                <button id="connect-connect" class="btn btn-pulsar-teal btn-connect" role="button">
-                    <span class="h2">Connect</span>
-                </button>
-                <button id="connect-cancel" class="btn btn-pulsar-gray btn-connect" role="button">
-                    <span class="h2">Cancel</span>
-                </button>
-                <button id="connect-disconnect" class="btn btn-pulsar-purple btn-connect" role="button">
-                    <span class="h2">Disconnect</span>
-                </button>
+
+        <!-- main window area for multiple connections -->
+        <div id="pulsar-multi-connection" class="mt-5 pt-1">
+            <!-- Connection A -->
+            <div class="row align-items-center ms-1 me-1 mb-3 mt-4" id="connect-profile-a">
+                <div class="col-1">
+                    <div id="connect-status-a" class="connect-status disconnected" title="Connection Status: Disconnected"></div>
+                </div>
+                <div class="col-1">
+                    <span id="autoconnect-status-a" class="me-2" title="Automatically connect"><i class="fa-regular fa-cloud-check"></i></span>
+                </div>
+                <div class="col-6" id="profile-name-a">
+                    Profile Name
+                </div>
+                <div class="col-4">
+                    <button id="connect-connect-a" class="btn btn-pulsar-teal btn-connect" role="button">
+                        <span>Connect</span>
+                    </button>
+                    <button id="connect-cancel-a" class="btn btn-pulsar-gray btn-connect btn-connect-cancel" role="button">
+                        Cancel
+                    </button>
+                    <button id="connect-disconnect-a" class="btn btn-pulsar-purple btn-connect btn-connect-disconnect" role="button">
+                        Disconnect
+                    </button>
+                </div>
             </div>
+
+            <!-- Connection B -->
+            <div class="row align-items-center ms-1 me-1 mb-3" id="connect-profile-b">
+                <div class="col-1">
+                    <div id="connect-status-b" class="connect-status disconnected" title="Connection Status: Disconnected"></div>
+                </div>
+                <div class="col-1">
+                    <span id="autoconnect-status-b" class="me-2 " title="Automatically connect"><i class="fa-regular fa-cloud-check"></i></span>
+                </div>
+                <div class="col-6" id="profile-name-b">
+                    Profile Name
+                </div>
+                <div class="col-4">
+                    <button id="connect-connect-b" class="btn btn-pulsar-teal btn-connect" role="button">
+                        <span>Connect</span>
+                    </button>
+                    <button id="connect-cancel-b" class="btn btn-pulsar-gray btn-connect btn-connect-cancel" role="button">
+                        Cancel
+                    </button>
+                    <button id="connect-disconnect-b" class="btn btn-pulsar-purple btn-connect btn-connect-disconnect" role="button">
+                        Disconnect
+                    </button>
+                </div>
+            </div>
+
+            <!-- Connection C -->
+            <div class="row align-items-center ms-1 me-1 mb-3" id="connect-profile-c">
+                <div class="col-1">
+                    <div id="connect-status-c" class="connect-status disconnected" title="Connection Status: Disconnected"></div>
+                </div>
+                <div class="col-1">
+                    <span id="autoconnect-status-c" class="me-2 " title="Automatically connect"><i class="fa-regular fa-cloud-check"></i></span>
+                </div>
+                <div class="col-6" id="profile-name-c">
+                    Profile Name
+                </div>
+                <div class="col-4">
+                    <button id="connect-connect-c" class="btn btn-pulsar-teal btn-connect" role="button">
+                        <span>Connect</span>
+                    </button>
+                    <button id="connect-cancel-c" class="btn btn-pulsar-gray btn-connect btn-connect-cancel" role="button">
+                        Cancel
+                    </button>
+                    <button id="connect-disconnect-c" class="btn btn-pulsar-purple btn-connect btn-connect-disconnect" role="button">
+                        Disconnect
+                    </button>
+                </div>
+            </div>
+
+            <!-- Connection D -->
+            <div class="row align-items-center ms-1 me-1 mb-3" id="connect-profile-d">
+                <div class="col-1">
+                    <div id="connect-status-d" class="connect-status disconnected" title="Connection Status: Disconnected"></div>
+                </div>
+                <div class="col-1">
+                    <span id="autoconnect-status-d" class="me-2 " title="Automatically connect"><i class="fa-regular fa-cloud-check"></i></span>
+                </div>
+                <div class="col-6" id="profile-name-d">
+                    Profile Name
+                </div>
+                <div class="col-4">
+                    <button id="connect-connect-d" class="btn btn-pulsar-teal btn-connect" role="button">
+                        <span>Connect</span>
+                    </button>
+                    <button id="connect-cancel-d" class="btn btn-pulsar-gray btn-connect btn-connect-cancel" role="button">
+                        Cancel
+                    </button>
+                    <button id="connect-disconnect-d" class="btn btn-pulsar-purple btn-connect btn-connect-disconnect" role="button">
+                        Disconnect
+                    </button>
+                </div>
+            </div>
+
+            <!-- Connection E -->
+            <div class="row align-items-center ms-1 me-1 mb-3" id="connect-profile-e">
+                <div class="col-1">
+                    <div id="connect-status-e" class="connect-status disconnected" title="Connection Status: Disconnected"></div>
+                </div>
+                <div class="col-1">
+                    <span id="autoconnect-status-e" class="me-2" title="Automatically connect"><i class="fa-regular fa-cloud-check"></i></span>
+                </div>
+                <div class="col-6" id="profile-name-e">
+                    Profile Name
+                </div>
+                <div class="col-4">
+                    <button id="connect-connect-e" class="btn btn-pulsar-teal btn-connect" role="button">
+                        <span>Connect</span>
+                    </button>
+                    <button id="connect-cancel-e" class="btn btn-pulsar-gray btn-connect btn-connect-cancel" role="button">
+                        Cancel
+                    </button>
+                    <button id="connect-disconnect-e" class="btn btn-pulsar-purple btn-connect btn-connect-disconnect" role="button">
+                        Disconnect
+                    </button>
+                </div>
+            </div>
+
         </div>
     
         <!-- footer -->
