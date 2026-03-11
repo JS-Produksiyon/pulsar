@@ -1,0 +1,74 @@
+<!-- 
+    Updated: 2026-03-11 
+-->
+<html lang="en" data-bs-theme="light">
+<head >
+    <link rel="stylesheet" href="./css/fontawesome/css/all.min.css"> <!-- FontAwesome 7.1.0 -->
+    <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
+</head>
+<body class="light">
+    <div class="container-fluid vh-100 overflow-hidden">
+        <header>
+            <!-- drag bar -->
+            <div id="drag-bar"></div>
+            <nav class="row mt-2 mb-2" id="title-bar">
+                <div class="col h3"><img src="./img/pulsar-logo-blue.svg" alt="Pulsar logo"> <strong>Pulsar</strong> :: Settings</div>
+                <div class="col text-end">
+                    <button class="btn btn-menu red" title="Close Window"><i class="fa-regular fa-xmark"></i></button>
+                </div>
+            </nav>
+        </header>
+        <!-- main screen -->
+        <div id="too-small"></div>
+        <div id="settings" class="row border-top border-tertiary align-items-stretch settings-height">
+            <div id="settings-menu-collapsed" class="settings-menu col-3 h4 border-end border-tertiary pt-3 d-none">
+                <p class="settings-link" data-pulsar-link="generalSettings" title="General Settings">
+                    <i class="fa-regular fa-sliders"></i> 
+                </p>
+                <p class="settings-link" data-pulsar-link="connectionProfiles" title="Connection Profiles">
+                    <i class="fa-regular fa-cloud"></i> 
+                </p>
+                <p class="settings-link" data-pulsar-link="nebulaLocation" title="Nebula Location">
+                    <img src="img/nebula-white-transparent.svg" alt="Nebula white icon" class="settings-nebula-icon-white">  
+                    <img src="img/nebula-black-transparent.svg" alt="Nebula black icon" class="settings-nebula-icon-black">
+                </p>
+                <div class="settings-menu-collapse-link">
+                    <p class="settings-link" data-pulsar-link="expandMenu" title="Expand Menu">
+                       <i class="fa-regular fa-circle-chevron-right"></i>
+                    </p>
+                </div>                
+            </div>
+            <div id="settings-menu-expanded" class="settings-menu col-3 h4 border-end border-tertiary pt-3">
+                <p class="settings-link" data-pulsar-link="generalSettings">
+                    <i class="fa-regular fa-sliders"></i> 
+                    General Settings
+                </p>
+                <p class="settings-link" data-pulsar-link="connectionProfiles">
+                    <i class="fa-regular fa-cloud"></i> 
+                    Connection Profiles
+                </p>
+                <p class="settings-link" data-pulsar-link="nebulaLocation">
+                    <img src="img/nebula-white-transparent.svg" alt="Nebula white icon" class="settings-nebula-icon-white">  
+                    <img src="img/nebula-black-transparent.svg" alt="Nebula black icon" class="settings-nebula-icon-black">
+                    Nebula Location
+                </p>
+                <div class="settings-menu-collapse-link">
+                    <p class="settings-link" data-pulsar-link="collapseMenu">
+                       <i class="fa-regular fa-circle-chevron-left"></i> Collapse Menu
+                    </p>
+                </div>
+            </div>
+            <div class="col-9">
+                This is where the settings will be
+            </div>
+        </div>
+        <footer class="border-top border-tertiary">
+            A Nebula mesh network connection GUI by JS Prodüksiyon © 2024-2026 JS Prodüksiyon Ltd. Şti.
+        </footer>    
+    </div>
+    <!-- JavaScript libraries -->
+    <script src="./js/jquery.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/settingsMenu.js"></script>
+</body>
+</html>

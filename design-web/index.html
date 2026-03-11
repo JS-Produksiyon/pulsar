@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head data-bs-theme="dark">
+<!-- 
+    Updated: 2026-03-11 
+-->
+<html lang="en" data-bs-theme="dark">
+<head>
     <link rel="stylesheet" href="./css/fontawesome/css/all.min.css"> <!-- FontAwesome 7.1.0 -->
     <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
 </head>
-<body class="main-ui dark">
+<body class="main-ui light">
     <div class="pulsar-main">
         <header>
             <!-- drag bar -->
@@ -22,7 +25,7 @@
             </nav>
         </header>
         <!-- main window area for single connection -->
-        <div id="pulsar-single-connection" class="d-none">
+        <div id="pulsar-single-connection">
             <div class="row text-center h3 mt-5">
                 <div class="col">
                     <span id="auto-connect-status" class="me-2" title="Automatically connect"><i class="fa-regular fa-cloud-check"></i></span>
@@ -81,7 +84,7 @@
         </div>
 
         <!-- main window area for multiple connections -->
-        <div id="pulsar-multi-connection" class="mt-5 pt-1">
+        <div id="pulsar-multi-connection" class="mt-5">
             <!-- Connection A -->
             <div class="row align-items-center ms-1 me-1 mb-3 mt-4" id="connect-profile-a">
                 <div class="col-1">

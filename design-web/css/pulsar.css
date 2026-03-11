@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* SCSS file to generate Pulsar UI styling */
-/* Updated: 2026-02-13 */
+/* Updated: 2026-03-11 */
 /* set colors */
 /* Fonts */
 /* Using Segoe UI as the base font for a modern and clean look, with fallbacks for cross-platform compatibility */
@@ -12308,6 +12308,10 @@ body.light {
   background-color: #FFFFFF;
 }
 
+#pulsar-multi-connection {
+  display: none;
+}
+
 .connect-status {
   width: 20px;
   height: 20px;
@@ -12334,10 +12338,76 @@ body.light {
 
 footer {
   font-size: 0.7em;
-  width: 100%;
+  width: 99%;
   height: 1em;
   padding: 0.2em;
   position: absolute;
   bottom: 1em;
   left: 0.5em;
+}
+
+.settings-nebula-icon-black, .settings-nebula-icon-white {
+  height: 24px;
+  width: auto;
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+
+.settings-menu {
+  overflow: hidden;
+  min-width: 45px !important;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+}
+.settings-menu p.settings-link {
+  padding: 0.2em;
+  cursor: pointer;
+}
+.settings-menu p.settings-link:hover {
+  background-color: #32B3A6;
+  color: white !important;
+}
+.settings-menu p.settings-link:hover .settings-nebula-icon-black {
+  display: none;
+}
+.settings-menu p.settings-link:hover .settings-nebula-icon-white {
+  display: initial;
+}
+.settings-menu .settings-menu-collapse-link {
+  margin-top: auto;
+}
+.settings-menu a:link, .settings-menu a:visited {
+  color: var(--bs-body-color);
+  text-decoration: none;
+}
+.settings-menu a:hover, .settings-menu a:active {
+  color: white !important;
+}
+
+.dark .settings-nebula-icon-black {
+  display: none;
+}
+.dark .settings-nebula-icon-white {
+  display: initial;
+}
+
+.light .settings-nebula-icon-black {
+  display: initial;
+}
+.light .settings-nebula-icon-white {
+  display: none;
+}
+
+.settings-height {
+  height: calc(100vh - 51px - 1.4em);
+}
+
+#settings-menu-collapsed {
+  width: 65px;
+  text-align: center;
+}
+
+.pulsar-d-none {
+  display: none;
 }/*# sourceMappingURL=pulsar.css.map */

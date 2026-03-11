@@ -1,5 +1,5 @@
 /* SCSS file to generate Pulsar UI styling */
-/* Updated: 2026-02-13 */
+/* Updated: 2026-03-11 */
 
 
 $pulsar_teal_light: #40E0D0;
@@ -270,6 +270,10 @@ body.light {
 }
 
 // Multiple Connection Layers
+#pulsar-multi-connection {
+  display: none;
+}
+
 // Connection status icon
 .connect-status {
   width: 20px;
@@ -294,10 +298,78 @@ body.light {
 // footer
 footer {
   font-size: 0.7em;
-  width: 100%;
+  width: 99%;
   height: 1em;
   padding: 0.2em;
   position: absolute;
   bottom: 1em;
   left: 0.5em;
+}
+
+// settings page
+.settings-nebula-icon-black, .settings-nebula-icon-white {
+  height: 24px;
+  width: auto;
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+.settings-menu {
+  overflow: hidden;
+  min-width: 45px !important;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+
+  p.settings-link {
+    padding: 0.2em;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $pulsar_teal_dark;
+      color: white !important;
+      .settings-nebula-icon-black {
+        display: none;
+      }
+      .settings-nebula-icon-white {
+        display: initial;
+      }
+    }
+  }
+  .settings-menu-collapse-link {
+    margin-top: auto;
+  }
+  a:link, a:visited {
+    color: var(--bs-body-color);
+    text-decoration: none;
+  }
+  a:hover, a:active {
+    color: white !important;
+  }
+}
+.dark {
+  .settings-nebula-icon-black {
+    display: none;
+  }
+  .settings-nebula-icon-white {
+    display: initial;
+  }
+}
+.light {
+  .settings-nebula-icon-black {
+    display: initial;
+  }
+  .settings-nebula-icon-white {
+    display: none;
+  }
+}
+.settings-height {
+  height: calc(100vh - 51px - 1.4em);
+}
+#settings-menu-collapsed {
+  width: 65px;
+  text-align: center;
+}
+// most important mods that need to be universal
+.pulsar-d-none {
+  display: none;
 }
