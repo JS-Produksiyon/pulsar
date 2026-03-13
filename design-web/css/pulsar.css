@@ -2149,7 +2149,7 @@ progress {
 .form-control:focus {
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
-  border-color: #32B3A6;
+  border-color: #32b3a6;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
@@ -12351,6 +12351,7 @@ footer {
   width: auto;
   vertical-align: middle;
   margin-bottom: 5px;
+  margin-right: 0.3em;
 }
 
 .settings-menu {
@@ -12377,13 +12378,6 @@ footer {
 .settings-menu .settings-menu-collapse-link {
   margin-top: auto;
 }
-.settings-menu a:link, .settings-menu a:visited {
-  color: var(--bs-body-color);
-  text-decoration: none;
-}
-.settings-menu a:hover, .settings-menu a:active {
-  color: white !important;
-}
 
 .dark .settings-nebula-icon-black {
   display: none;
@@ -12406,6 +12400,20 @@ footer {
 #settings-menu-collapsed {
   width: 65px;
   text-align: center;
+}
+
+.form-select:focus, .form-check-input:focus, .form-control:focus {
+  border-color: #32b3a6;
+  box-shadow: 0 0 0 0.25rem rgba(64, 224, 208, 0.5);
+}
+
+.form-check-input:checked {
+  background-color: #32B3A6;
+  border-color: #40E0D0;
+}
+
+.form-switch .form-check-input:focus {
+  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%2340E0D0'/%3e%3c/svg%3e");
 }
 
 .pulsar-d-none {

@@ -49,5 +49,29 @@ $(document).ready(function() {
     $menuExpanded.css({ width: COLLAPSE_WIDTH });
     $menuExpanded.animate({ width: targetWidth }, ANIMATION_DURATION);
   });
+
+  // Handle Nebula Binaries radio button state
+  function updateNebulaBinariesState() {
+    const $filePathBox = $('#nebulaBinariesFilePathBox');
+    const $filePathBrowse = $('#nebulaBinariesFilePathBrowse');
+    const isSysPathChecked = $('#nebulaBinariesSysPath').is(':checked');
+
+    // Disable file path elements if system path is selected
+    $filePathBox.prop('disabled', isSysPathChecked);
+    $filePathBrowse.prop('disabled', isSysPathChecked);
+
+    if (!isSysPathChecked) {
+      $filePathBox.focus();
+    }
+
+  }
+
+  // Initialize on page load
+  updateNebulaBinariesState();
+
+  // Update when radio buttons change
+  $(document).on('change', 'input[name="nebulaBinaries"]', function() {
+    updateNebulaBinariesState();
+  });
 });
 

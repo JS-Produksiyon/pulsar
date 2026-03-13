@@ -1,0 +1,67 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+  <diagram name="Page-1" id="1wLK7bSlt_7rT_kkVQs1">
+    <mxGraphModel dx="1426" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-1" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=none;" value="Pulsar v2.0" vertex="1">
+          <mxGeometry height="30" width="100" x="10" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-2" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Segoe UI;labelBackgroundColor=none;" value="pulsar.py" vertex="1">
+          <mxGeometry height="30" width="60" x="740" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-8" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Segoe UI;rounded=0;labelBackgroundColor=none;" value="System&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Modules&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="140" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-9" parent="I0uluNDXCyBr1iDFw6WD-8" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Segoe UI;rounded=0;labelBackgroundColor=none;" value="sys, os" vertex="1">
+          <mxGeometry height="30" width="140" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-10" parent="I0uluNDXCyBr1iDFw6WD-8" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Segoe UI;rounded=0;labelBackgroundColor=none;" value="Flask Babel gettext as _" vertex="1">
+          <mxGeometry height="30" width="140" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-11" parent="I0uluNDXCyBr1iDFw6WD-8" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Segoe UI;rounded=0;labelBackgroundColor=none;" value="pystray" vertex="1">
+          <mxGeometry height="30" width="140" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-12" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontFamily=Segoe UI;rounded=0;labelBackgroundColor=none;" value="shutdown" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-20" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontFamily=Segoe UI;rounded=0;labelBackgroundColor=none;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;tray_click&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="gui_windows" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="tray_icon" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-26" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="settings" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-27" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Pulsar Modules" vertex="1">
+          <mxGeometry height="180" width="140" x="20" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-28" parent="I0uluNDXCyBr1iDFw6WD-27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="WebviewGui" vertex="1">
+          <mxGeometry height="30" width="140" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-29" parent="I0uluNDXCyBr1iDFw6WD-27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="nebula" vertex="1">
+          <mxGeometry height="30" width="140" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="I0uluNDXCyBr1iDFw6WD-30" parent="I0uluNDXCyBr1iDFw6WD-27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="util" vertex="1">
+          <mxGeometry height="30" width="140" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="84HdiCsLi61eyGle9sXA-3" parent="I0uluNDXCyBr1iDFw6WD-27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="hostsfile" vertex="1">
+          <mxGeometry height="30" width="140" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="84HdiCsLi61eyGle9sXA-4" parent="I0uluNDXCyBr1iDFw6WD-27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="webapp" vertex="1">
+          <mxGeometry height="30" width="140" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="84HdiCsLi61eyGle9sXA-1" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="disconnect" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="84HdiCsLi61eyGle9sXA-2" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="connect" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="520" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

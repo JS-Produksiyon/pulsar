@@ -3,9 +3,13 @@
 
 
 $pulsar_teal_light: #40E0D0;
+$pulsar_teal_light_rgb: rgb(64, 224, 208);
 $pulsar_teal_dark: #32B3A6;
+$pulsar_teal_dark_rgb: rgb(50, 179, 166);
 $pulsar_purple_light: #A13A6C;
+$pulsar_purple_light_rgb: rgb(161, 58, 108);
 $pulsar_purple_dark: #30123A;
+$pulsar_purple_dark_rgb: rgb(48, 18, 58);
 
 $pulsar_light_bkg_edge: #E6E6E6;
 $pulsar_light_bkg_mid: #FFFFFF;
@@ -35,7 +39,9 @@ $link-color: $pulsar_teal_dark;
 $link-hover-color: $pulsar_teal_light;
 $link-hover-decoration: none;
 
-$input-focus-border-color: $pulsar_teal_dark;
+$input-focus-border-color: rgba($pulsar_teal_dark_rgb, 1);
+$input-focus-feather-color: rgba($pulsar_teal_light_rgb, 0.5);
+$pulsar-form-switch-focus-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$pulsar_teal_light}'/></svg>") !default;
 
 /* Fonts */
 /* Using Segoe UI as the base font for a modern and clean look, with fallbacks for cross-platform compatibility */
@@ -312,6 +318,7 @@ footer {
   width: auto;
   vertical-align: middle;
   margin-bottom: 5px;
+  margin-right: 0.3em;
 }
 .settings-menu {
   overflow: hidden;
@@ -338,13 +345,6 @@ footer {
   .settings-menu-collapse-link {
     margin-top: auto;
   }
-  a:link, a:visited {
-    color: var(--bs-body-color);
-    text-decoration: none;
-  }
-  a:hover, a:active {
-    color: white !important;
-  }
 }
 .dark {
   .settings-nebula-icon-black {
@@ -368,6 +368,17 @@ footer {
 #settings-menu-collapsed {
   width: 65px;
   text-align: center;
+}
+.form-select:focus, .form-check-input:focus, .form-control:focus {
+  border-color: $input-focus-border-color;
+  box-shadow: 0 0 0 0.25rem $input-focus-feather-color;
+}
+.form-check-input:checked {
+    background-color: $pulsar_teal_dark;
+    border-color: $pulsar_teal_light;
+}
+.form-switch .form-check-input:focus {
+  --#{$prefix}form-switch-bg: #{escape-svg($pulsar-form-switch-focus-bg-image)};
 }
 // most important mods that need to be universal
 .pulsar-d-none {

@@ -1,12 +1,12 @@
 <!-- 
     Updated: 2026-03-11 
 -->
-<html lang="en" data-bs-theme="light">
+<html lang="en" data-bs-theme="dark">
 <head >
     <link rel="stylesheet" href="./css/fontawesome/css/all.min.css"> <!-- FontAwesome 7.1.0 -->
     <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
 </head>
-<body class="light">
+<body class="dark">
     <div class="container-fluid vh-100 overflow-hidden">
         <header>
             <!-- drag bar -->
@@ -47,19 +47,109 @@
                     <i class="fa-regular fa-cloud"></i> 
                     Connection Profiles
                 </p>
-                <p class="settings-link" data-pulsar-link="nebulaLocation">
-                    <img src="img/nebula-white-transparent.svg" alt="Nebula white icon" class="settings-nebula-icon-white">  
-                    <img src="img/nebula-black-transparent.svg" alt="Nebula black icon" class="settings-nebula-icon-black">
-                    Nebula Location
-                </p>
                 <div class="settings-menu-collapse-link">
                     <p class="settings-link" data-pulsar-link="collapseMenu">
                        <i class="fa-regular fa-circle-chevron-left"></i> Collapse Menu
                     </p>
                 </div>
             </div>
-            <div class="col-9">
-                This is where the settings will be
+            <div class="col-9 settings-height overflow-y-auto">
+                <!-- General Settings -->
+                <div id="settings-general">
+                    <h1 data-i18n="settingGeneralSettings">General Settings</h1>
+                    <h2 data-i18n="settingGeneralSettingsInterface">Interface</h2>
+                    <div class="row">
+                        <div class="col-11 col-md-8 col-lg-7 offset-1">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="ifaceLangSelect" data-i18n="settingGeneralSettingsInterfaceLangLabel">
+                                    Interface Language
+                                </label>
+                                <select class="form-select" id="ifaceLangSelect">
+                                    <option value="de" data-i18n="ifaceLangSelectDe">Deutsch (German)</option>
+                                    <option value="en" data-i18n="ifaceLangSelectEn" selected>English</option>
+                                    <option value="tr" data-i18n="ifaceLangSelectTr">Türkçe (Turkish)</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="ifaceDisplayModeSelect" data-i18n="settingGeneralSettingsDisplayModeLabel">
+                                    Display Mode
+                                </label>
+                                <select class="form-select" id="ifaceDisplayModeSelect">
+                                    <option value="dark" data-i18n="ifaceDisplayModeSelectDark">Dark</option>
+                                    <option value="light" data-i18n="ifaceDisplayModeSelectLight">Light</option>
+                                    <option value="system" data-i18n="ifaceDisplayModeSelectSystem" selected>Follow System</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 data-i18n="settingGeneralSettingsStartup">Startup Behavior</h2>
+                    <div class="row">
+                        <div class="col-11 col-md-8 col-lg-7 offset-1">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchStartupTray" checked>
+                                <label class="form-check-label" for="switchStartupTray" data-i18n="switchStartupTrayLabel">Start Pulsar in the tray</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchStartupLogin">
+                                <label class="form-check-label" for="switchStartupLogin" data-i18n="switchStartupLoginLabel">Start Pulsar at login</label>
+                            </div>                            
+                        </div>
+                    </div>
+                    <h2 data-i18n="settingGeneralSettingsConnection">Connection Behavior</h2>
+                    <div class="row">
+                        <div class="col-11 col-md-8 col-lg-7 offset-1">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchMultipleConnections">
+                                <label class="form-check-label" for="switchMultipleConnections" data-i18n="switchMultipleConnectionsLabel">Multiple connections</label>
+                                <p data-i18n="switchMultipleConnectionsBlurb" class="small">
+                                    If you select this item, then Pulsar will allow you to connect to up to five separate Nebula instances simultaneously. 
+                                    If left unchecked, Pulsar will connect to only one Nebula instance.
+                                </p>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-group-text" for="inputPingInterval" data-i18n="inputPingIntervalLabel">Ping Interval</label>
+                                <input type="number" class="form-control" id="inputPingInterval" value="300">
+                                <span class="input-group-text" data-i18n="inputPingIntervalSecondsLabel">seconds</span>
+                            </div>
+                                <p data-i18n="inputPingIntervalBlurb" class="small mb-3 ps-2 pe-2">
+                                    Defines how often Pulsar pings a random lighthouse to make sure that the Nebula network is up.
+                                </p>
+
+                        </div>
+                    </div>
+                    <h2 data-i18n="settingGeneralSettingsNebula">Nebula Binaries</h2>
+                    <div class="row">
+                        <div class="col-11 col-md-8 col-lg-7 offset-1">
+                            <p  data-i18n="settingGeneralSettingsNebulaBlurb">Select where Pulsar will look for the Nebula binaries.</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="nebulaBinaries" id="nebulaBinariesSysPath" checked>
+                                <label class="form-check-label" for="nebulaBinariesSysPath" data-i18n="nebulaBinariesSysPathLabel">
+                                    System path
+                                </label>
+                                <p class="small" data-i18n="nebulaBinariesSysPathBlurb">Look for the Nebula binary in the system path.</p>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="nebulaBinaries" id="nebulaBinariesFilePath">
+                                <label class="form-check-label" for="nebulaBinariesFilePath" data-i18n="nebulaBinariesFilePath">
+                                    Exact path to executable
+                                </label>
+                                <p class="small" data-i18n="nebulaBinariesFilePathBlurb">Select the exact path to the Nebula executable below.</p>
+                            </div>
+                            <div class="input-group mb-5 input-group">
+                                    <input type="text" class="form-control" id="nebulaBinariesFilePathBox">
+                                    <button class="btn btn-outline-primary" role="button" id="nebulaBinariesFilePathBrowse" title="Browse" data-i18n-title="nebulaBinariesFilePathBrowseBtn">
+                                        <i class="fa-regular fa-folder-open"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- List of Connections -->
+                <div id="settings-multiple-connections" class="pulsar-d-none"></div>
+                <!-- Single Connection / Edit Connection -->
+                <div id="settings-connection-edit" class="pulsar-d-none"></div>
             </div>
         </div>
         <footer class="border-top border-tertiary">
