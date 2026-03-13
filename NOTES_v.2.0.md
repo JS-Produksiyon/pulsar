@@ -18,6 +18,8 @@
   * Nebula location → find in system PATH or point to a 
     binary location
 
+***-- DONE --***
+
 ### Profile settings
 
 * Profile name
