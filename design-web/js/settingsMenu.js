@@ -1,4 +1,7 @@
 // Settings Menu Collapse/Expand Animation
+/*
+  Last Updated: 2026-04-01
+*/
 
 $(document).ready(function() {
   const COLLAPSE_WIDTH = 65; // px
@@ -26,8 +29,6 @@ $(document).ready(function() {
   // Expand menu
   $(document).on('click', '[data-pulsar-link="expandMenu"]', function(e) {
     e.preventDefault();
-
-    console.log("Expand");
     
     const $menuExpanded = $('#settings-menu-expanded');
     const $menuCollapsed = $('#settings-menu-collapsed');
@@ -73,5 +74,36 @@ $(document).ready(function() {
   $(document).on('change', 'input[name="nebulaBinaries"]', function() {
     updateNebulaBinariesState();
   });
+
+  // Show or hide settings sections
+  $(".settings-link").click(function (instance) {
+    // hide all instances of the settings sections
+    $(".settings-config-panel").hide();
+
+    // display the correct settings sections
+    if ($(this).data("pulsar-link") == "generalSettings") {
+      $("#settings-general").show();
+    }
+    if ($(this).data("pulsar-link") == "connectionProfiles") {
+      if ($("#switchMultipleConnections").is(":checked")) {
+        $("#settings-multiple-connections").show();
+      } else {
+        $("#settings-connection-edit").show();
+      }
+    }
+  });
+
+  // Show single connection screen on edit
+  $(".connection-edit").click(function (instance) {
+    // hide all instances of the settings sections
+    $(".settings-config-panel").hide();
+
+    // code to load single connection data goes here
+
+    // show single connection
+    $("#settings-connection-edit").show();;
+
+  })
+
 });
 

@@ -197,6 +197,9 @@ body.light {
 }
 
 // Main UI
+code {
+  color: inherit;
+}
 .pulsar-main {
   width: 520px;
   height: 520px;
@@ -380,6 +383,16 @@ footer {
 .form-switch .form-check-input:focus {
   --#{$prefix}form-switch-bg: #{escape-svg($pulsar-form-switch-focus-bg-image)};
 }
+// Multiple connections
+#settings-multiple-connections button {
+  height: 40px;
+}
+// set table columns that contain an icon
+.td-icon {
+  width: 3em;
+}
+
+
 // most important mods that need to be universal
 .pulsar-d-none {
   display: none;
