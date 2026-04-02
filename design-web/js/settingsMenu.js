@@ -10,8 +10,7 @@ $(document).ready(function() {
 
   // Collapse menu
   $(document).on('click', '[data-pulsar-link="collapseMenu"]', function(e) {
-    e.preventDefault();
-    console.log("Collapse")
+    e.preventDefault(); 
     
     const $menuExpanded = $('#settings-menu-expanded');
     const $menuCollapsed = $('#settings-menu-collapsed');
@@ -23,7 +22,9 @@ $(document).ready(function() {
       // Hide expanded, show collapsed
       $menuExpanded.addClass('d-none');
       $menuCollapsed.removeClass('d-none');
+      $(".settings-height-right").addClass("expanded");
     });
+    
   });
 
   // Expand menu
@@ -34,6 +35,8 @@ $(document).ready(function() {
     const $menuCollapsed = $('#settings-menu-collapsed');
     
     if (!$menuExpanded.length || !$menuCollapsed.length) return;
+
+    $(".settings-height-right").removeClass("expanded");
 
     // Show expanded menu
     $menuExpanded.removeClass('d-none');
@@ -77,9 +80,10 @@ $(document).ready(function() {
 
   // Show or hide settings sections
   $(".settings-link").click(function (instance) {
-    // hide all instances of the settings sections
-    $(".settings-config-panel").hide();
-
+    // hide all instances of the settings sections, but only if not collapsing...
+    if ($(this).data("pulsar-link") != "collapseMenu" && $(this).data("pulsar-link") != "expandMenu") {
+      $(".settings-config-panel").hide();
+    }
     // display the correct settings sections
     if ($(this).data("pulsar-link") == "generalSettings") {
       $("#settings-general").show();

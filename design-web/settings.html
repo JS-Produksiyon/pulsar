@@ -2,13 +2,13 @@
 <!-- 
     Updated: 2026-04-02
 -->
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="light">
 <head >
     <title>Pulsar :: Settings</title>
     <link rel="stylesheet" href="./css/fontawesome/css/all.min.css"> <!-- FontAwesome 7.1.0 -->
     <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
     <link rel="icon" href="./img/pulsar-teal.ico" type="image/x-icon">
-<body class="dark">
+<body class="light">
     <div class="container-fluid vh-100 overflow-hidden">
         <header>
             <!-- drag bar -->
@@ -179,10 +179,10 @@
                         </div>
                         <div class="col-6 h3" data-i8n="connectionATitle">Connection Name</div>
                         <div class="col-5 text-end">
-                            <button class="btn btn-outline-light me-1 connection-autoonnect" data-connection-id="A" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network">
+                            <button class="btn btn-outline-primary me-1 connection-autoonnect" data-connection-id="A" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network">
                                 <i class="fa-regular fa-cloud-check"></i>
                             </button>
-                            <button class="btn btn-outline-light me-1 connection-edit" data-connection-id="A" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="A" data-i18n-title="connectionBtnEdit" title="Configure connection">
                                 <i class="fa-regular fa-pencil"></i>
                             </button>
                         </div>
@@ -193,14 +193,57 @@
                         </div>
                         <div class="col-6 h3" data-i8n="connectionBTitle">Connection Name</div>
                         <div class="col-5 text-end">
-                            <button class="btn btn-outline-light me-1 connection-autoconnect" data-connection-id="B" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="B" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
                                 <i class="fa-regular fa-cloud"></i>
                             </button>
-                            <button class="btn btn-outline-light me-1 connection-edit" data-connection-id="C" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="B" data-i18n-title="connectionBtnEdit" title="Configure connection">
                                 <i class="fa-regular fa-pencil"></i>
                             </button>
                         </div>
                     </div>
+                    <div class="row border border-1 rounded-3 p-2 mb-2">
+                        <div class="col-1 form-switch pt-2 text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="connectionBSwitchEnable" disabled>
+                        </div>
+                        <div class="col-6 h3" data-i8n="connectionBTitle">Connection Name</div>
+                        <div class="col-5 text-end">
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="C" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
+                                <i class="fa-regular fa-cloud"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="C" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                                <i class="fa-regular fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row border border-1 rounded-3 p-2 mb-2">
+                        <div class="col-1 form-switch pt-2 text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="connectionBSwitchEnable" disabled>
+                        </div>
+                        <div class="col-6 h3" data-i8n="connectionBTitle">Connection Name</div>
+                        <div class="col-5 text-end">
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="D" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
+                                <i class="fa-regular fa-cloud"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="D" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                                <i class="fa-regular fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row border border-1 rounded-3 p-2 mb-2">
+                        <div class="col-1 form-switch pt-2 text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="connectionBSwitchEnable" disabled>
+                        </div>
+                        <div class="col-6 h3" data-i8n="connectionBTitle">Connection Name</div>
+                        <div class="col-5 text-end">
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="E" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
+                                <i class="fa-regular fa-cloud"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="E" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                                <i class="fa-regular fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Single Connection / Edit Connection -->
@@ -254,7 +297,7 @@
                     
                     <h2 data-i18n="connectionEditSectionNetConfig" class="mt-4">Network Configuration</h2>
                     <h3 data-i18n="connectionEditSectionStaticHosts">Static Hosts</h3>
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="nodeStaticHostsTable">
                         <thead>
                             <tr>
                                 <th class="td-icon"><!-- Lighthouse icon goes here --></th>
@@ -264,12 +307,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="align-middle">
+                            <tr class="align-middle" data-row-id="1">
                                 <td class="text-center"><i class="fa-regular fa-lighthouse"></i></td>
                                 <td>192.168.73.1</td>
                                 <td>209.126.84.157:4242</td>
                                 <td class="text-end">
-                                    <button class="btn btn-sm btn-primary edit-static-host" data-i18n-title="settingsEditStaticHostBtn" title="Edit Static Host">
+                                    <button class="btn btn-sm btn-primary edit-static-host" data-row-id="1" data-i18n-title="settingsEditStaticHostBtn" title="Edit Static Host">
                                         <i class="fa-regular fa-pencil"></i>
                                     </button>
                                 </td>
@@ -282,7 +325,7 @@
                             <span data-i18n="settingsAddStaticHostBtn">Add Host</span>
                         </button>
                     </div>
-                    <div class="mb3">
+                    <div class="mb-3">
                         <h3 data-i18n="connectionEditSectionFirewallTitle">Nebula Firewall Settings</h3>
                         <p  data-i18n="connectionEditSectionFirewallBlurb">The data here generally should not need to be edited on a client.</p>
                         <h4 data-i18n="connectionEditSectionFirewallOutboundTitle">Outbound Connections</h4>
@@ -299,24 +342,28 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="nodeOutboundConnectionTable">
                             <thead>
-                                <th data-i18n="connectionTableHeaderPort">Port</th>
-                                <th data-i18n="connectionTableHeaderProto">Protocol</th>
-                                <th data-i18n="connectionTableHeaderHost">Host</th>
-                                <th data-i18n="connectionTableHeaderGroup">Group</th>
-                                <th><!-- buttons go here --></th>
+                                <tr>
+                                    <th data-i18n="connectionTableHeaderPort">Port</th>
+                                    <th data-i18n="connectionTableHeaderProto">Protocol</th>
+                                    <th data-i18n="connectionTableHeaderHost">Host</th>
+                                    <th data-i18n="connectionTableHeaderGroup">Group</th>
+                                    <th><!-- buttons go here --></th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <td>Any</td>
-                                <td>Any</td>
-                                <td>Any</td>
-                                <td>N/A</td>
-                                <td class="text-end">
-                                    <button class="btn btn-sm btn-primary edit-static-host" data-i18n-title="settingsEditOutboundBtn" title="Edit Outbound Connection">
-                                        <i class="fa-regular fa-pencil"></i>
-                                    </button>
-                                </td>
+                                <tr data-row-id="1">
+                                    <td>Any</td>
+                                    <td>Any</td>
+                                    <td>Any</td>
+                                    <td>N/A</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-primary edit-static-host" data-row-id="1" data-i18n-title="settingsEditOutboundBtn" title="Edit Outbound Connection">
+                                            <i class="fa-regular fa-pencil"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="mb-3">
@@ -326,7 +373,7 @@
                             </button>
                         </div>
 
-                        <h4 data-i18n="connectionEditSectionFirewallInboundTitle">Inbound Connections</h4>
+                        <h4 data-i18n="connectionEditSectionFirewallInboundTitle" class="mt-3">Inbound Connections</h4>
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="input-group mb-3">
@@ -340,24 +387,28 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="nodeInboundConnectionTable">
                             <thead>
-                                <th data-i18n="connectionTableHeaderPort">Port</th>
-                                <th data-i18n="connectionTableHeaderProto">Protocol</th>
-                                <th data-i18n="connectionTableHeaderHost">Host</th>
-                                <th data-i18n="connectionTableHeaderGroup">Group</th>
-                                <th><!-- buttons go here --></th>
+                                <tr>
+                                    <th data-i18n="connectionTableHeaderPort">Port</th>
+                                    <th data-i18n="connectionTableHeaderProto">Protocol</th>
+                                    <th data-i18n="connectionTableHeaderHost">Host</th>
+                                    <th data-i18n="connectionTableHeaderGroup">Group</th>
+                                    <th><!-- buttons go here --></th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <td>Any</td>
-                                <td>Any</td>
-                                <td>Any</td>
-                                <td>N/A</td>
-                                <td class="text-end">
-                                    <button class="btn btn-sm btn-primary edit-static-host" data-i18n-title="settingsEditInboundBtn" title="Edit Inbound Connection">
-                                        <i class="fa-regular fa-pencil"></i>
-                                    </button>
-                                </td>
+                                <tr data-row-id="1">
+                                    <td>Any</td>
+                                    <td>Any</td>
+                                    <td>Any</td>
+                                    <td>N/A</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-primary edit-static-host" data-row-id="1" data-i18n-title="settingsEditInboundBtn" title="Edit Inbound Connection">
+                                            <i class="fa-regular fa-pencil"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="mb-3">
@@ -446,6 +497,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- JavaScript libraries -->
     <script src="./js/jquery.js"></script>

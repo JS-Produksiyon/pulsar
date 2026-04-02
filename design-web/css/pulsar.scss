@@ -371,6 +371,9 @@ footer {
 .settings-height-right {
   height: calc(100vh - 51px - 2em);
 }
+.settings-height-right.expanded {
+  width: calc(100vw - 65px);
+}
 #settings-menu-collapsed {
   width: 65px;
   text-align: center;
