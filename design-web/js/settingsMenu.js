@@ -99,11 +99,121 @@ $(document).ready(function() {
     $(".settings-config-panel").hide();
 
     // code to load single connection data goes here
+    $("#connectionProfileId").text($(this).data("connection-id"));
 
     // show single connection
     $("#settings-connection-edit").show();;
 
   })
 
+  // ====================================================================
+  // EDIT CERTIFICATE MODAL HANDLERS
+  // ====================================================================
+  
+  // Reference to the Bootstrap modal instance
+  let editCertificateModalInstance = null;
+  
+  // Certificate type mapping for display labels
+  // This cannot stay like this when we go into localization. I'll leave it for now.
+  const certificateTypeLabels = {
+    'root': 'Nebula Network Root Certificate',
+    'private': 'Node Private Certificate',
+    'key': 'Node Private Key'
+  };
+
+  // Initialize the modal instance
+  const modalElement = document.getElementById('editCertificateModal');
+  if (modalElement) {
+    editCertificateModalInstance = new bootstrap.Modal(modalElement, {
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  // Open certificate edit modal when edit buttons are clicked
+  $(document).on('click', '#settings-connection-root-cert-edit, #settings-connection-private-cert-edit, #settings-connection-private-key-edit', function(e) {
+    e.preventDefault();
+    
+    // Determine which certificate type is being edited based on button ID
+    const buttonId = $(this).attr('id');
+    let certType = '';
+    
+    if (buttonId === 'settings-connection-root-cert-edit') {
+      certType = 'root';
+    } else if (buttonId === 'settings-connection-private-cert-edit') {
+      certType = 'private';
+    } else if (buttonId === 'settings-connection-private-key-edit') {
+      certType = 'key';
+    }
+    
+    // Set the certificate type in the modal title
+    $('#certificateTypeLabel').text(certificateTypeLabels[certType] || 'Certificate');
+    
+    // Store the certificate type for use in save handler
+    $('#editCertificateModal').data('currentCertType', certType);
+    
+    // Clear the form fields
+    $('#certificateTextArea').val('');
+    $('#certificateFilePath').val('');
+    
+    // Show the modal
+    if (editCertificateModalInstance) {
+      editCertificateModalInstance.show();
+    }
+  });
+
+  // Handle save certificate button click
+  $(document).on('click', '#modalCertificateSave', function(e) {
+    e.preventDefault();
+    
+    // Get the current certificate type
+    const certType = $('#editCertificateModal').data('currentCertType');
+    
+    // Get the certificate data (either from text area or file path)
+    const certificateText = $('#certificateTextArea').val().trim();
+    const certificateFile = $('#certificateFilePath').val().trim();
+    
+    // Validate that at least one field is filled
+    if (!certificateText && !certificateFile) {
+      alert('Please enter certificate text or select a certificate file.');
+      return;
+    }
+    
+    // TODO: Add backend call here to import/save the certificate
+    // Example structure:
+    // $.ajax({
+    //   url: '/api/certificate/import',
+    //   type: 'POST',
+    //   data: {
+    //     type: certType,
+    //     text: certificateText,
+    //     file: certificateFile
+    //   },
+    //   success: function(response) {
+    //     // Handle successful save
+    //     editCertificateModalInstance.hide();
+    //   },
+    //   error: function(error) {
+    //     // Handle error
+    //     console.error('Certificate save error:', error);
+    //   }
+    // });
+    
+    console.log('Saving certificate of type:', certType);
+    console.log('Certificate text provided:', !!certificateText);
+    console.log('Certificate file path:', certificateFile);
+  });
+
+  // Handle file browse button click for certificate file selection
+  $(document).on('click', '#certificateFileBrowse', function(e) {
+    e.preventDefault();
+    
+    // TODO: Implement file browser dialog
+    // This will depend on your desktop application framework
+    // For web-based apps, you might use a file input instead
+    console.log('Certificate file browser clicked');
+  });
+
 });
+
 

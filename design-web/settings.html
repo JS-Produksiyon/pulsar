@@ -1,5 +1,6 @@
+<!DOCTYPE html>
 <!-- 
-    Updated: 2026-04-01
+    Updated: 2026-04-02
 -->
 <html lang="en" data-bs-theme="dark">
 <head >
@@ -50,7 +51,7 @@
                     </p>
                 </div>
             </div>
-            <div class="col-9 settings-height overflow-y-auto pt-3 pb-3 ps-5 pe-5">
+            <div class="col-9 settings-height-right overflow-y-auto pt-3 pb-3 ps-5 pe-5">
                 <!-- General Settings -->
                 <div id="settings-general" class="settings-config-panel">
                     <h1 data-i18n="settingGeneralSettings">General Settings</h1>
@@ -77,6 +78,12 @@
                                     <option value="system" data-i18n="ifaceDisplayModeSelectSystem" selected>Follow System</option>
                                 </select>
                             </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchCloseOnWindow">
+                                <label class="form-check-label" for="switchCloseOnWindow" data-i18n="switchCloseOnWindowLabel">Exit Pulsar when connection window is closed</label>
+                                <p class="small" data-i18n="switchCloseOnWindowBlurb">If this is enabled, Pulsar will shut down when the user closes the main connection window. Disable this item to make sure that Pulsar keeps running in the status area even when the window is closed.</p>
+                            </div>
+
                         </div>
                     </div>
                     <h2 data-i18n="settingGeneralSettingsStartup">Startup Behavior</h2>
@@ -144,7 +151,7 @@
                             <p id="txtNebulaBinaryNotFound">
                                 <span class="text-accent"><i class="fa-regular fa-binary-slash"></i></span>
                                 <span data-i18n="txtNebulaBinaryNotFound" class="fw-bold">Could not find <code>nebula</code> executable file.</span> 
-                                <span data-i18n="txtNebulaBinaryNotFoundExplanation">Pulsar will not be able to connect to the Nebula network. Please either add the path to the directory with the binary file to your system path, or else directly point to the location of the <code>nebula</code> executable file. </span>
+                                <span data-i18n="txtNebulaBinaryNotFoundExplanation">Pulsar will not be able to connect to the Nebula network. Please either add the path to the directory with the executable file to your system path, or else directly point to the location of the <code>nebula</code> executable file. </span>
                             </p>
                             <p id="txtNebulaCertBinaryFound">
                                 <span class="text-info"><i class="fa-regular fa-binary-circle-check"></i></span>
@@ -152,8 +159,8 @@
                             </p>
                             <p id="txtNebulaCertBinaryNotFound">
                                 <span class="text-accent"><i class="fa-regular fa-binary-slash"></i></span>
-                                <span data-i18n="txtNebulaCertBinaryNotFound" class="fw-bold">Could not find <code>nebula-cert</code> executable binary file.</span>
-                                <span data-i18n="txtNebulaCertBinaryNotFoundExplanation">Pulsar will function without any issues without the <code>nebula-cert</code> executable. However, Pulsar will not be able to determine the validity of the connection authentication certificates or the IP address of your node. To rectify this, make sure the <code>nebula-cert</code> executable file is in the same directory as the <code>nebula</code> executable file. </span>
+                                <span data-i18n="txtNebulaCertBinaryNotFound" class="fw-bold">Could not find <code>nebula-cert</code> executable  file.</span>
+                                <span data-i18n="txtNebulaCertBinaryNotFoundExplanation"><em>Pulsar will function without the <code>nebula-cert</code> executable.</em> However, Pulsar will not be able to determine the validity of the connection authentication certificates or the IP address of your node. To rectify this, make sure the <code>nebula-cert</code> executable file is in the same directory as the <code>nebula</code> executable file. </span>
                             </p>
                         </div>
                     </div>
@@ -198,7 +205,7 @@
 
                 <!-- Single Connection / Edit Connection -->
                 <div id="settings-connection-edit" class="settings-config-panel pulsar-d-none">
-                    <h1 data-i18n="connectionEditHeading">Edit Connection Profile</h1>
+                    <h1><span data-i18n="connectionEditHeading">Edit Connection Profile</span> <span id="connectionProfileId"></span></h1>
                     <p data-i18n="connectionEditHeadingBlurb">Pulsar uses this profile to connect to the designated nebula network as a node. You can edit the information for this profile using the fields below. Be sure to save the connection profile before continuing.</p>
                     
                     <div class="input-group mb-3">
@@ -391,6 +398,55 @@
             A Nebula mesh network connection GUI by JS Prodüksiyon © 2024-2026 JS Prodüksiyon Ltd. Şti.
         </footer>    
     </div>
+    <!-- Modals go here -->
+    
+    <!-- Edit Certificate Modal -->
+    <div class="modal fade" id="editCertificateModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">
+                        <span data-i18n="modalEditCertificateTitle">Edit</span>
+                        <span id="certificateTypeLabel"></span>
+                    </h1>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Certificate Text Input -->
+                    <div class="mb-3">
+                        <label for="certificateTextArea" class="form-label" data-i18n="modalCertificateTextLabel">Enter as text</label>
+                        <textarea class="form-control" id="certificateTextArea" rows="8" data-i18n-placeholder="certificateTextAreaPlaceholder" placeholder="Paste Base64 encoded content here..."></textarea>
+                    </div>
+
+                    <!-- Certificate File Input -->
+                    <div class="mb-3">
+                        <label for="certificateFilePath" class="form-label" data-i18n="modalCertificateFileLabel">Load from file</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="certificateFilePath">
+                            <button class="btn btn-outline-primary" type="button" id="certificateFileBrowse" data-i18n-title="modalCertificateFileBrowseBtn" title="Browse for certificate file">
+                                <i class="fa-regular fa-folder-open"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalCertificateCancel"  data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalCertificateSave">
+                        <i class="fa-sharp fa-regular fa-badge-check"></i>
+                        <span data-i18n="modalSaveCertificateBtn">Save Certificate</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript libraries -->
     <script src="./js/jquery.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>

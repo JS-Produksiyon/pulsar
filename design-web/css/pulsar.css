@@ -12401,6 +12401,10 @@ footer {
   height: calc(100vh - 51px - 1.4em);
 }
 
+.settings-height-right {
+  height: calc(100vh - 51px - 2em);
+}
+
 #settings-menu-collapsed {
   width: 65px;
   text-align: center;
