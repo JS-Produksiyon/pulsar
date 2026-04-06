@@ -1,6 +1,6 @@
 // Settings Menu Collapse/Expand Animation
 /*
-  Last Updated: 2026-04-01
+  Last Updated: 2026-04-06
 */
 
 $(document).ready(function() {
@@ -91,7 +91,9 @@ $(document).ready(function() {
     if ($(this).data("pulsar-link") == "connectionProfiles") {
       if ($("#switchMultipleConnections").is(":checked")) {
         $("#settings-multiple-connections").show();
+        $("#deleteConnectionButton").removeClass("pulsar-d-none");
       } else {
+        $("#deleteConnectionButton").addClass("pulsar-d-none");
         $("#settings-connection-edit").show();
       }
     }
@@ -654,6 +656,17 @@ $(document).ready(function() {
       connectionModalInstance.hide();
     }
   });
+
+  // Open dialog to edit config file directly
+  $("#connectionEditConfigFile").click(function (instance){
+    // code to get raw .yaml from backend goes here
+
+    // open the modal
+    $("#modalEditConfigFile").modal("show");
+    // focus on the edit field as soon as the modal opens
+    $("#modalEditConfigFileText").trigger("focus");
+  });
+
 
 });
 

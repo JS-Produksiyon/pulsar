@@ -422,7 +422,7 @@
                     <p data-i18n="connectionEditSectionAdvancedConfigBlurb">For more configuration options, you can edit the Nebula node connection configuration file directly.</p>
                     <p data-i18n="connectionEditSectionAdvancedConfigWarning" class="fst-italic"><strong>Warning!</strong> If this is done incorrectly, the entire connection can stop working! Only edit the configuration file directly if you know what you are doing.</p>
                     <p class="text-center">
-                        <button class="btn btn-secondary">
+                        <button class="btn btn-secondary" id="connectionEditConfigFile">
                             <i class="fa-regular fa-file-pen"></i>
                             <span data-i18n="connectionEditConfigFileBtn">Edit Configuration File</span>
                         </button>
@@ -430,15 +430,21 @@
                     <div class="border-bottom mt-3 mb-3"></div>
                     <div class="row mb-5">
                         <div class="col text-center">
-                            <button class="btn btn-outline-accent">
+                            <button class="btn btn-outline-accent" type="button">
                                 <i class="fa-regular fa-circle-xmark"></i>
                                 <span data-i18n="btnCancel">Cancel</span>
                             </button>
                         </div>
+                        <div class="col text-center pulsar-d-none" id="deleteConnectionButton">
+                            <button class="btn btn-outline-danger" type="button">
+                                <i class="fa-regular fa-trash-can"></i>
+                                <span data-i18n="btnDelConnection">Delete Connection</span>
+                            </button>
+                        </div>
                         <div class="col text-center">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" type="button">
                                 <i class="fa-regular fa-circle-check"></i>
-                                <span data-i18n="btnSaveSettings">Save Settings</span>
+                                <span data-i18n="btnSaveConnection">Save Connection</span>
                             </button>
                         </div>
                     </div>
@@ -659,6 +665,36 @@
                     <button type="button" class="btn btn-danger" id="modalConnectionConfirmDelete">
                         <i class="fa-regular fa-trash-can"></i>
                         <span data-i18n="modalConfirmDeleteConnectionBtn">Delete Connection</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Configuration File Directly Modal -->
+    <div class="modal" id="modalEditConfigFile">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" data-i8n="modalEditConfigFileTitle">Edit Configuration File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" data-i18n-title="btnClose" title="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column">
+                    <p data-i18n="modalEditConfigFileBlurb">
+                        You can edit the Nebula node .yaml configuration file directly below. 
+                        If you don&rsquo;t know what you are doing, there is a high likelihood of severely screwing up your connection.
+                        So make sure you back up the unedited file and then proceed with caution!
+                    </p>
+                    <textarea class="form-control flex-grow-1" id="modalEditConfigFileText"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalConfigFileCancel" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalConfigFileSave">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span data-i18n="modalSaveConnectionBtn">Save Configuration File</span>
                     </button>
                 </div>
             </div>

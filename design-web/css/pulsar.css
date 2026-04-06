@@ -12432,6 +12432,10 @@ footer {
   height: 40px;
 }
 
+#switchMultipleConnections:checked ~ #deleteConnectionButton {
+  display: inline-block;
+}
+
 .td-icon {
   width: 3em;
 }

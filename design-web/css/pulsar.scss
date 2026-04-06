@@ -393,6 +393,9 @@ footer {
 #settings-multiple-connections button {
   height: 40px;
 }
+#switchMultipleConnections:checked ~ #deleteConnectionButton {
+  display: inline-block;
+}
 // set table columns that contain an icon
 .td-icon {
   width: 3em;
@@ -403,3 +406,6 @@ footer {
 .pulsar-d-none {
   display: none;
 }
+
+// this needs to override pulsar-d-none
+
