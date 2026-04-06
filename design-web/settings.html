@@ -359,7 +359,7 @@
                                     <td>Any</td>
                                     <td>N/A</td>
                                     <td class="text-end">
-                                        <button class="btn btn-sm btn-primary edit-static-host" data-row-id="1" data-i18n-title="settingsEditOutboundBtn" title="Edit Outbound Connection">
+                                        <button class="btn btn-sm btn-primary edit-connection" data-connection-type="outbound" data-row-id="1" data-i18n-title="settingsEditOutboundBtn" title="Edit Outbound Connection">
                                             <i class="fa-regular fa-pencil"></i>
                                         </button>
                                     </td>
@@ -367,7 +367,7 @@
                             </tbody>
                         </table>
                         <div class="mb-3">
-                            <button class="btn btn-outline-primary" id="btn-add-static-host">
+                            <button class="btn btn-outline-primary" id="btn-add-connection-out">
                                 <i class="fa-regular fa-arrow-left-from-arc"></i>
                                 <span data-i18n="settingsAddConnectionOutBtn">Add Outbound Connection</span>
                             </button>
@@ -404,7 +404,7 @@
                                     <td>Any</td>
                                     <td>N/A</td>
                                     <td class="text-end">
-                                        <button class="btn btn-sm btn-primary edit-static-host" data-row-id="1" data-i18n-title="settingsEditInboundBtn" title="Edit Inbound Connection">
+                                        <button class="btn btn-sm btn-primary edit-connection" data-connection-type="inbound"  data-row-id="1" data-i18n-title="settingsEditInboundBtn" title="Edit Inbound Connection">
                                             <i class="fa-regular fa-pencil"></i>
                                         </button>
                                     </td>
@@ -412,7 +412,7 @@
                             </tbody>
                         </table>
                         <div class="mb-3">
-                            <button class="btn btn-outline-primary" id="btn-add-static-host">
+                            <button class="btn btn-outline-primary" id="btn-add-connection-in">
                                 <i class="fa-regular fa-arrow-right-to-arc"></i>
                                 <span data-i18n="settingsAddConnectionInBtn">Add Inbound Connection</span>
                             </button>
@@ -567,6 +567,98 @@
                     <button type="button" class="btn btn-danger" id="modalStaticHostConfirmDelete">
                         <i class="fa-regular fa-trash-can"></i>
                         <span data-i18n="modalConfirmDeleteStaticHostBtn">Delete Host</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configure Firewall Connection Modal -->
+    <div class="modal fade" id="configureConnectionModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">
+                        <span data-i18n="modalConfigureConnectionTitle">Nebula Firewall Connections</span> :: 
+                        <span id="connectionDirectionLabel"></span>
+                    </h1>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Port (0–65535) -->
+                    <div class="mb-3">
+                        <label for="connectionPort" class="form-label" data-i18n="modalConnectionPortLabel">Port</label>
+                        <input type="number" class="form-control" id="connectionPort" min="0" max="65535" value="0">
+                        <p class="small" data-i18n="modalConnectionPortBlurb">Set to 0 to allow any port to connect.</p>
+                    </div>
+
+                    <!-- Protocol -->
+                    <div class="mb-3">
+                        <label for="connectionProtocol" class="form-label" data-i18n="modalConnectionProtocolLabel">Protocol</label>
+                        <select class="form-select" id="connectionProtocol">
+                            <option value="any" data-i18n="selectConnectionProtocolAny" selected>Any</option>
+                            <option value="icmp">ICMP</option>
+                            <option value="tcp">TCP</option>
+                            <option value="udp">UDP</option>
+                        </select>
+                    </div>
+
+                    <!-- Host -->
+                    <div class="mb-3">
+                        <label for="connectionHost" class="form-label" data-i18n="modalConnectionHostLabel">Host</label>
+                        <input type="text" class="form-control" id="connectionHost" pattern="[a-zA-Z0-9\-]*">
+                    </div>
+
+                    <!-- Group -->
+                    <div class="mb-3">
+                        <label for="connectionGroup" class="form-label" data-i18n="modalConnectionGroupLabel">Group</label>
+                        <input type="text" class="form-control" id="connectionGroup" pattern="[a-zA-Z0-9\-]*">
+                        <p class="small" data-i18n="modalConnectionHostGroupBlurb">Either Host or Group must be filled in. If both are provided, the value in Host will be used.</p>
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalConnectionCancel" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" id="modalConnectionDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalDeleteConnectionBtn">Delete Connection</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalConnectionSave">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span data-i18n="modalSaveConnectionBtn">Save Connection</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Connection Confirmation Modal -->
+    <div class="modal fade" id="deleteConnectionModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalDeleteConnectionTitle">Delete Connection</h1>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <p data-i18n="modalDeleteConnectionConfirm">Are you sure you want to delete this connection?</p>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="modalConnectionConfirmDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalConfirmDeleteConnectionBtn">Delete Connection</span>
                     </button>
                 </div>
             </div>

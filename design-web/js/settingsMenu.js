@@ -394,6 +394,267 @@ $(document).ready(function() {
     }
   });
 
+  // ====================================================================
+  // CONFIGURE FIREWALL CONNECTION MODAL HANDLERS
+  // ====================================================================
+
+  // Bootstrap modal instances for firewall connection dialogs
+  let connectionModalInstance = null;
+  let deleteConnectionModalInstance = null;
+
+  // Track which row and table are being edited (null = adding new)
+  let editingConnectionRowId = null;
+  let editingConnectionType = null; // 'inbound' or 'outbound'
+
+  // Direction labels for the modal title
+  const connectionDirectionLabels = {
+    'inbound': 'Inbound',
+    'outbound': 'Outbound'
+  };
+
+  // Initialize connection modal
+  const connectionModalEl = document.getElementById('configureConnectionModal');
+  if (connectionModalEl) {
+    connectionModalInstance = new bootstrap.Modal(connectionModalEl, {
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  // Initialize delete connection confirmation modal
+  const deleteConnectionModalEl = document.getElementById('deleteConnectionModal');
+  if (deleteConnectionModalEl) {
+    deleteConnectionModalInstance = new bootstrap.Modal(deleteConnectionModalEl, {
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  /**
+   * Returns the jQuery table selector based on connection type.
+   */
+  function getConnectionTable(type) {
+    return type === 'inbound'
+      ? '#nodeInboundConnectionTable'
+      : '#nodeOutboundConnectionTable';
+  }
+
+  /**
+   * Strips non-alphanumeric/dash characters from a value.
+   */
+  function sanitizeAlphanumDash(val) {
+    return val.replace(/[^a-zA-Z0-9\-]/g, '');
+  }
+
+  /**
+   * Capitalises "any" to "Any" for table display, passes others through.
+   */
+  function displayValue(val) {
+    return val.toLowerCase() === 'any' ? 'Any' : val;
+  }
+
+  // Restrict Host and Group fields to alphanumeric + dash on input
+  $(document).on('input', '#connectionHost, #connectionGroup', function() {
+    $(this).val(sanitizeAlphanumDash($(this).val()));
+  });
+
+  // Open modal to EDIT an existing firewall connection row
+  $(document).on('click', '.edit-connection', function(e) {
+    e.preventDefault();
+
+    const rowId = $(this).data('row-id');
+    const connType = $(this).data('connection-type');
+    const tableSelector = getConnectionTable(connType);
+    const $row = $(tableSelector + ' tbody tr[data-row-id="' + rowId + '"]');
+    if (!$row.length) return;
+
+    // Store editing context
+    editingConnectionRowId = rowId;
+    editingConnectionType = connType;
+
+    // Set modal title direction label
+    $('#connectionDirectionLabel').text(connectionDirectionLabels[connType] || connType);
+
+    // Read values from row: Port, Protocol, Host, Group
+    const portText = $row.find('td:eq(0)').text().trim();
+    const protoText = $row.find('td:eq(1)').text().trim();
+    const hostText = $row.find('td:eq(2)').text().trim();
+    const groupText = $row.find('td:eq(3)').text().trim();
+
+    // Populate fields ("Any" → 0 for port, lowercase for selects/text)
+    $('#connectionPort').val(portText === 'Any' ? 0 : parseInt(portText, 10));
+    $('#connectionProtocol').val(protoText.toLowerCase());
+    $('#connectionHost').val(hostText === 'N/A' ? '' : hostText.toLowerCase());
+    $('#connectionGroup').val(groupText === 'N/A' ? '' : groupText.toLowerCase());
+
+    // Show delete button when editing
+    $('#modalConnectionDelete').show();
+
+    if (connectionModalInstance) {
+      connectionModalInstance.show();
+    }
+  });
+
+  // Open modal to ADD a new OUTBOUND connection
+  $(document).on('click', '#btn-add-connection-out', function(e) {
+    e.preventDefault();
+
+    editingConnectionRowId = null;
+    editingConnectionType = 'outbound';
+
+    // Set title direction
+    $('#connectionDirectionLabel').text(connectionDirectionLabels['outbound']);
+
+    // Default field values
+    $('#connectionPort').val(0);
+    $('#connectionProtocol').val('any');
+    $('#connectionHost').val('any');
+    $('#connectionGroup').val('');
+
+    // Hide delete button for new entries
+    $('#modalConnectionDelete').hide();
+
+    if (connectionModalInstance) {
+      connectionModalInstance.show();
+    }
+  });
+
+  // Open modal to ADD a new INBOUND connection
+  $(document).on('click', '#btn-add-connection-in', function(e) {
+    e.preventDefault();
+
+    editingConnectionRowId = null;
+    editingConnectionType = 'inbound';
+
+    // Set title direction
+    $('#connectionDirectionLabel').text(connectionDirectionLabels['inbound']);
+
+    // Default field values
+    $('#connectionPort').val(0);
+    $('#connectionProtocol').val('any');
+    $('#connectionHost').val('any');
+    $('#connectionGroup').val('');
+
+    // Hide delete button for new entries
+    $('#modalConnectionDelete').hide();
+
+    if (connectionModalInstance) {
+      connectionModalInstance.show();
+    }
+  });
+
+  // SAVE firewall connection (update existing row or append new row)
+  $(document).on('click', '#modalConnectionSave', function(e) {
+    e.preventDefault();
+
+    let port = parseInt($('#connectionPort').val(), 10);
+    const protocol = $('#connectionProtocol').val();
+    let host = sanitizeAlphanumDash($('#connectionHost').val().trim());
+    let group = sanitizeAlphanumDash($('#connectionGroup').val().trim());
+
+    // Clamp port to valid range
+    if (isNaN(port) || port < 0) port = 0;
+    if (port > 65535) port = 65535;
+
+    // Normalize "any" to lowercase for comparison
+    if (host.toLowerCase() === 'any') host = 'any';
+    if (group.toLowerCase() === 'any') group = 'any';
+
+    // If both Host and Group are empty, default Host to "any"
+    if (!host && !group) {
+      host = 'any';
+    }
+
+    // If Host is filled, Group becomes N/A
+    // If Host is empty but Group is filled, Host becomes N/A
+    let displayHost, displayGroup;
+    if (host) {
+      displayHost = displayValue(host);
+      displayGroup = 'N/A';
+    } else {
+      displayHost = 'N/A';
+      displayGroup = displayValue(group);
+    }
+
+    // Port display: 0 → "Any", otherwise the number
+    const displayPort = (port === 0) ? 'Any' : port;
+
+    // Protocol display: capitalise "any" → "Any", uppercase others
+    const protoMap = { 'any': 'Any', 'icmp': 'ICMP', 'tcp': 'TCP', 'udp': 'UDP' };
+    const displayProto = protoMap[protocol] || protocol;
+
+    const tableSelector = getConnectionTable(editingConnectionType);
+    const connTypeAttr = editingConnectionType;
+    const editBtnTitle = connTypeAttr === 'inbound' ? 'Edit Inbound Connection' : 'Edit Outbound Connection';
+    const editBtnI18n = connTypeAttr === 'inbound' ? 'settingsEditInboundBtn' : 'settingsEditOutboundBtn';
+
+    if (editingConnectionRowId) {
+      // --- Update existing row ---
+      const $row = $(tableSelector + ' tbody tr[data-row-id="' + editingConnectionRowId + '"]');
+      $row.find('td:eq(0)').text(displayPort);
+      $row.find('td:eq(1)').text(displayProto);
+      $row.find('td:eq(2)').text(displayHost);
+      $row.find('td:eq(3)').text(displayGroup);
+    } else {
+      // --- Add new row ---
+      // Determine next row ID from the target table
+      let maxId = 0;
+      $(tableSelector + ' tbody tr').each(function() {
+        const id = parseInt($(this).data('row-id'), 10);
+        if (id > maxId) maxId = id;
+      });
+      const newId = maxId + 1;
+
+      // Build row HTML matching existing table structure
+      const newRow =
+        '<tr data-row-id="' + newId + '">' +
+          '<td>' + $('<span>').text(displayPort).html() + '</td>' +
+          '<td>' + $('<span>').text(displayProto).html() + '</td>' +
+          '<td>' + $('<span>').text(displayHost).html() + '</td>' +
+          '<td>' + $('<span>').text(displayGroup).html() + '</td>' +
+          '<td class="text-end">' +
+            '<button class="btn btn-sm btn-primary edit-connection" data-connection-type="' + connTypeAttr + '" data-row-id="' + newId + '" data-i18n-title="' + editBtnI18n + '" title="' + editBtnTitle + '">' +
+              '<i class="fa-regular fa-pencil"></i>' +
+            '</button>' +
+          '</td>' +
+        '</tr>';
+
+      $(tableSelector + ' tbody').append(newRow);
+    }
+
+    // Close modal
+    if (connectionModalInstance) {
+      connectionModalInstance.hide();
+    }
+  });
+
+  // DELETE button — open confirmation modal
+  $(document).on('click', '#modalConnectionDelete', function(e) {
+    e.preventDefault();
+    if (deleteConnectionModalInstance) {
+      deleteConnectionModalInstance.show();
+    }
+  });
+
+  // CONFIRM DELETE — remove the row and close both modals
+  $(document).on('click', '#modalConnectionConfirmDelete', function(e) {
+    e.preventDefault();
+
+    if (editingConnectionRowId && editingConnectionType) {
+      const tableSelector = getConnectionTable(editingConnectionType);
+      $(tableSelector + ' tbody tr[data-row-id="' + editingConnectionRowId + '"]').remove();
+      editingConnectionRowId = null;
+    }
+
+    // Close confirmation modal, then the connection modal
+    if (deleteConnectionModalInstance) {
+      deleteConnectionModalInstance.hide();
+    }
+    if (connectionModalInstance) {
+      connectionModalInstance.hide();
+    }
+  });
+
 });
 
 
