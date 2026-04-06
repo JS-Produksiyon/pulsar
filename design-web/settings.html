@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <!-- 
-    Updated: 2026-04-02
+    Updated: 2026-04-06
 -->
-<html lang="en" data-bs-theme="light">
+<html lang="en" data-bs-theme="dark">
 <head >
     <title>Pulsar :: Settings</title>
     <link rel="stylesheet" href="./css/fontawesome/css/all.min.css"> <!-- FontAwesome 7.1.0 -->
     <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
     <link rel="icon" href="./img/pulsar-teal.ico" type="image/x-icon">
-<body class="light">
+<body class="dark">
     <div class="container-fluid vh-100 overflow-hidden">
         <header>
             <!-- drag bar -->
@@ -450,7 +450,6 @@
         </footer>    
     </div>
     <!-- Modals go here -->
-    
     <!-- Edit Certificate Modal -->
     <div class="modal fade" id="editCertificateModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-lg">
@@ -498,6 +497,81 @@
         </div>
     </div>
 
+    <!-- Configure Static Host Modal -->
+    <div class="modal fade" id="configureStaticHostModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalConfigureStaticHostTitle">Configure Static Host</h1>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Internal IP -->
+                    <div class="mb-3">
+                        <label for="staticHostInternalIP" class="form-label" data-i18n="modalStaticHostInternalIPLabel">Internal IP</label>
+                        <input type="text" class="form-control" id="staticHostInternalIP">
+                    </div>
+
+                    <!-- External IP (IP:Port) -->
+                    <div class="mb-3">
+                        <label for="staticHostExternalIP" class="form-label" data-i18n="modalStaticHostExternalIPLabel">External IP</label>
+                        <input type="text" class="form-control" id="staticHostExternalIP" data-i18n-placeholder="staticHostExternalIPPlaceholder" placeholder="IP:Port">
+                    </div>
+
+                    <!-- Lighthouse Switch -->
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchStaticHostLighthouse">
+                        <label class="form-check-label" for="switchStaticHostLighthouse" data-i18n="switchStaticHostLighthouseLabel">Host is a Lighthouse</label>
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalStaticHostCancel" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" id="modalStaticHostDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalDeleteStaticHostBtn">Delete Host</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalStaticHostSave">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span data-i18n="modalSaveStaticHostBtn">Save Host</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Static Host Confirmation Modal -->
+    <div class="modal fade" id="deleteStaticHostModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalDeleteStaticHostTitle">Delete Static Host</h1>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <p data-i18n="modalDeleteStaticHostConfirm">Are you sure you want to delete this static host?</p>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="modalStaticHostConfirmDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalConfirmDeleteStaticHostBtn">Delete Host</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript libraries -->
     <script src="./js/jquery.js"></script>

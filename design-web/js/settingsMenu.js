@@ -218,6 +218,182 @@ $(document).ready(function() {
     console.log('Certificate file browser clicked');
   });
 
+  // ====================================================================
+  // CONFIGURE STATIC HOSTS MODAL HANDLERS
+  // ====================================================================
+
+  // Bootstrap modal instances for static host dialogs
+  let staticHostModalInstance = null;
+  let deleteStaticHostModalInstance = null;
+
+  // Track which row is being edited (null = adding new)
+  let editingStaticHostRowId = null;
+
+  // Initialize static host modal
+  const staticHostModalEl = document.getElementById('configureStaticHostModal');
+  if (staticHostModalEl) {
+    staticHostModalInstance = new bootstrap.Modal(staticHostModalEl, {
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  // Initialize delete confirmation modal
+  const deleteStaticHostModalEl = document.getElementById('deleteStaticHostModal');
+  if (deleteStaticHostModalEl) {
+    deleteStaticHostModalInstance = new bootstrap.Modal(deleteStaticHostModalEl, {
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  // Open modal to EDIT an existing static host row
+  $(document).on('click', '.edit-static-host', function(e) {
+    e.preventDefault();
+
+    const rowId = $(this).data('row-id');
+    const $row = $('#nodeStaticHostsTable tbody tr[data-row-id="' + rowId + '"]');
+    if (!$row.length) return;
+
+    // Store row ID so save/delete know which row to target
+    editingStaticHostRowId = rowId;
+
+    // Read values from the table row columns
+    const internalIP = $row.find('td:eq(1)').text().trim();
+    const externalIP = $row.find('td:eq(2)').text().trim();
+    const isLighthouse = $row.find('td:eq(0) .fa-lighthouse').length > 0;
+
+    // Populate modal fields
+    $('#staticHostInternalIP').val(internalIP);
+    $('#staticHostExternalIP').val(externalIP);
+    $('#switchStaticHostLighthouse').prop('checked', isLighthouse);
+
+    // Show delete button when editing an existing host
+    $('#modalStaticHostDelete').show();
+
+    if (staticHostModalInstance) {
+      staticHostModalInstance.show();
+    }
+  });
+
+  // Open modal to ADD a new static host (empty fields)
+  $(document).on('click', '#btn-add-static-host', function(e) {
+    e.preventDefault();
+
+    // No row being edited
+    editingStaticHostRowId = null;
+
+    // Clear all fields
+    $('#staticHostInternalIP').val('');
+    $('#staticHostExternalIP').val('');
+    $('#switchStaticHostLighthouse').prop('checked', false);
+
+    // Hide delete button when adding a new host
+    $('#modalStaticHostDelete').hide();
+
+    if (staticHostModalInstance) {
+      staticHostModalInstance.show();
+    }
+  });
+
+  // SAVE static host (update existing row or append new row)
+  $(document).on('click', '#modalStaticHostSave', function(e) {
+    e.preventDefault();
+
+    const internalIP = $('#staticHostInternalIP').val().trim();
+    const externalIP = $('#staticHostExternalIP').val().trim();
+    const isLighthouse = $('#switchStaticHostLighthouse').is(':checked');
+
+    // Require both fields
+    if (!internalIP || !externalIP) {
+      alert('Please fill in both IP fields.');
+      return;
+    }
+
+    // Check for duplicate Internal IP (skip the row being edited)
+    let duplicateFound = false;
+    $('#nodeStaticHostsTable tbody tr').each(function() {
+      const rowId = $(this).data('row-id');
+      if (editingStaticHostRowId && rowId == editingStaticHostRowId) return; // skip self
+      if ($(this).find('td:eq(1)').text().trim() === internalIP) {
+        duplicateFound = true;
+        return false; // break
+      }
+    });
+    if (duplicateFound) {
+      alert('A static host with Internal IP "' + internalIP + '" already exists.');
+      return;
+    }
+
+    // Lighthouse icon HTML (empty string when not a lighthouse)
+    const lighthouseHtml = isLighthouse
+      ? '<i class="fa-regular fa-lighthouse"></i>'
+      : '';
+
+    if (editingStaticHostRowId) {
+      // --- Update existing row ---
+      const $row = $('#nodeStaticHostsTable tbody tr[data-row-id="' + editingStaticHostRowId + '"]');
+      $row.find('td:eq(0)').html(lighthouseHtml);
+      $row.find('td:eq(1)').text(internalIP);
+      $row.find('td:eq(2)').text(externalIP);
+    } else {
+      // --- Add new row ---
+      // Determine next row ID (highest existing + 1)
+      let maxId = 0;
+      $('#nodeStaticHostsTable tbody tr').each(function() {
+        const id = parseInt($(this).data('row-id'), 10);
+        if (id > maxId) maxId = id;
+      });
+      const newId = maxId + 1;
+
+      // Build row HTML matching existing table structure
+      const newRow =
+        '<tr class="align-middle" data-row-id="' + newId + '">' +
+          '<td class="text-center">' + lighthouseHtml + '</td>' +
+          '<td>' + $('<span>').text(internalIP).html() + '</td>' +
+          '<td>' + $('<span>').text(externalIP).html() + '</td>' +
+          '<td class="text-end">' +
+            '<button class="btn btn-sm btn-primary edit-static-host" data-row-id="' + newId + '" data-i18n-title="settingsEditStaticHostBtn" title="Edit Static Host">' +
+              '<i class="fa-regular fa-pencil"></i>' +
+            '</button>' +
+          '</td>' +
+        '</tr>';
+
+      $('#nodeStaticHostsTable tbody').append(newRow);
+    }
+
+    // Close modal
+    if (staticHostModalInstance) {
+      staticHostModalInstance.hide();
+    }
+  });
+
+  // DELETE button — open confirmation modal
+  $(document).on('click', '#modalStaticHostDelete', function(e) {
+    e.preventDefault();
+    if (deleteStaticHostModalInstance) {
+      deleteStaticHostModalInstance.show();
+    }
+  });
+
+  // CONFIRM DELETE — remove the row and close both modals
+  $(document).on('click', '#modalStaticHostConfirmDelete', function(e) {
+    e.preventDefault();
+
+    if (editingStaticHostRowId) {
+      $('#nodeStaticHostsTable tbody tr[data-row-id="' + editingStaticHostRowId + '"]').remove();
+      editingStaticHostRowId = null;
+    }
+
+    // Close confirmation modal, then close the host modal
+    if (deleteStaticHostModalInstance) {
+      deleteStaticHostModalInstance.hide();
+    }
+    if (staticHostModalInstance) {
+      staticHostModalInstance.hide();
+    }
+  });
+
 });
 
 
