@@ -227,6 +227,29 @@ code {
   cursor: move;
 }
 
+/* resize handle area */
+#resize-handle {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    bottom: 0;
+    right: 0;
+    cursor: nwse-resize;
+    z-index: 1000;
+}
+#resize-handle::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    /* create triangle */
+    width: 0;
+    height:0;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid rgba(173,181,189,0.5);
+}
+
 // title bar
 #title-bar img {
   height: 32px;
@@ -378,6 +401,19 @@ footer {
   width: 65px;
   text-align: center;
 }
+// collapse the settings menu if window is smaller than 1065 pixels
+@media screen and (max-width: 1065px) {
+  #settings-menu-collapsed {
+    display: block !important;
+  }
+  #settings-menu-expanded, #settings-menu-collapsed .settings-menu-collapse-link {
+    display: none;
+  }
+  .settings-height-right {
+    width: calc(100vw - 65px);
+  }
+}
+
 .form-select:focus, .form-check-input:focus, .form-control:focus {
   border-color: $input-focus-border-color;
   box-shadow: 0 0 0 0.25rem $input-focus-feather-color;
@@ -401,10 +437,33 @@ footer {
   width: 3em;
 }
 
+// too small settings
+#too-small {
+  display: none;
+}
+@media screen and (max-width: 640px) {
+  #too-small {
+    display: inline-block;
+  }
+  #settings {
+    display: none;
+  }
+}
+
 
 // most important mods that need to be universal
 .pulsar-d-none {
   display: none;
+}
+/* hide layer class */
+.jsp-d-none, .jsp-btn-none {
+    display: none;
+}
+.jsp-d-none.show  {
+    display: block;
+}
+.jsp-btn-none.show {
+    display: inline-block;
 }
 
 // this needs to override pulsar-d-none

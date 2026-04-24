@@ -1,27 +1,38 @@
 <!DOCTYPE html>
 <!-- 
-    Updated: 2026-04-06
+    Updated: 2026-04-24
 -->
 <html lang="en" data-bs-theme="dark">
 <head >
     <title>Pulsar :: Settings</title>
+
     <link rel="stylesheet" href="./css/fontawesome/css/all.min.css"> <!-- FontAwesome 7.1.0 -->
     <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
     <link rel="icon" href="./img/pulsar-teal.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <body class="dark">
     <div class="container-fluid vh-100 overflow-hidden">
+        <!-- Title bar -->
         <header>
             <!-- drag bar -->
             <div id="drag-bar"></div>
             <nav class="row mt-2 mb-2" id="title-bar">
                 <div class="col h3"><img src="./img/pulsar-logo-blue.svg" alt="Pulsar logo"> <strong>Pulsar</strong> :: Settings</div>
                 <div class="col text-end">
+                    <button class="btn btn-menu" id="btn-win-minimize" data-js-action="minimize" data-i18n-title="btnIconMinimize" title="Minimize Window"><i class="fa-regular fa-window-minimize"></i></button>
+                    <button class="btn btn-menu" id="btn-win-maximize" data-js-action="maximize" data-i18n-title="btnIconMaximize" title="Maximize Window"><i class="fa-regular fa-window-maximize"></i></button>
+                    <button class="btn btn-menu jsp-btn-none" id="btn-win-restore" data-js-action="restore" data-i18n-title="btnIconRestore" title="Restore Window"><i class="fa-regular fa-window-restore"></i></button>
                     <button class="btn btn-menu red" title="Close Window"><i class="fa-regular fa-xmark"></i></button>
                 </div>
             </nav>
         </header>
+        <!-- Window resize handle -->
+        <div id="resize-handle"></div>
         <!-- main screen -->
-        <div id="too-small"></div>
+        <div id="too-small" class="mt-5 vw-100 text-center">
+            <p class="h4" data-i18n="tooSmallTextWarning">The window size is too narrow to display the content.</p>
+            <p data-i18n="tooSmallTextMitigation">Please resize the window to access the content.</p>
+        </div>
         <div id="settings" class="row border-top border-tertiary align-items-stretch settings-height">
             <div id="settings-menu-collapsed" class="settings-menu col-3 h4 border-end border-tertiary pt-3 d-none">
                 <p class="settings-link" data-pulsar-link="generalSettings" title="General Settings">
@@ -179,8 +190,11 @@
                         </div>
                         <div class="col-6 h3" data-i8n="connectionATitle">Connection Name</div>
                         <div class="col-5 text-end">
-                            <button class="btn btn-outline-primary me-1 connection-autoonnect" data-connection-id="A" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network">
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="A" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network">
                                 <i class="fa-regular fa-cloud-check"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive">
+                                <i class="fa-regular fa-heart-pulse"></i>
                             </button>
                             <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="A" data-i18n-title="connectionBtnEdit" title="Configure connection">
                                 <i class="fa-regular fa-pencil"></i>
@@ -196,6 +210,9 @@
                             <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="B" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
                                 <i class="fa-regular fa-cloud"></i>
                             </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive" disabled>
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
                             <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="B" data-i18n-title="connectionBtnEdit" title="Configure connection">
                                 <i class="fa-regular fa-pencil"></i>
                             </button>
@@ -209,6 +226,9 @@
                         <div class="col-5 text-end">
                             <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="C" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
                                 <i class="fa-regular fa-cloud"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive" disabled>
+                                <i class="fa-regular fa-heart"></i>
                             </button>
                             <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="C" data-i18n-title="connectionBtnEdit" title="Configure connection">
                                 <i class="fa-regular fa-pencil"></i>
@@ -224,6 +244,9 @@
                             <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="D" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
                                 <i class="fa-regular fa-cloud"></i>
                             </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive" disabled>
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
                             <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="D" data-i18n-title="connectionBtnEdit" title="Configure connection">
                                 <i class="fa-regular fa-pencil"></i>
                             </button>
@@ -237,6 +260,9 @@
                         <div class="col-5 text-end">
                             <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="E" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
                                 <i class="fa-regular fa-cloud"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive" disabled>
+                                <i class="fa-regular fa-heart"></i>
                             </button>
                             <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="E" data-i18n-title="connectionBtnEdit" title="Configure connection">
                                 <i class="fa-regular fa-pencil"></i>
@@ -258,6 +284,16 @@
                     <div class="form-check form-switch mb-3">
                         <input class="form-check-input" type="checkbox" role="switch" id="switchProfileAutoconnect">
                         <label class="form-check-label" for="switchProfileAutoconnect" data-i18n="settingsSwitchAutoConnectLabel">Automatically connect node to Nebula network on startup</label>
+                    </div>
+                    <div class="form-check form-switch mb-2">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchProfileKeepAlive" checked>
+                        <label class="form-check-label" for="switchProfileKeepAlive" data-i18n="settingsSwitchKeepAliveLabel">Keep this connection alive</label>
+                        <p data-i18n="settingsSwitchKeepAliveBlurb" class="small">This option will ping a random lighthouse as frequently as defined under the Ping Interval option in General Settings.</p>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchProfileNoPing" disabled>
+                        <label class="form-check-label" for="switchProfileNoPing" data-i18n="settingsSwitchNoPingLabel">Do not ping lighthouse</label>
+                        <p data-i18n="settingsSwitchNoPingBlurb" class="small">Prevent the connection from pinging the lighthouse at all. This can only be enabled if the connection is not kept alive. Only enable this if you have a slow connection or your lighthouse is being overwhelmed.</p>
                     </div>
 
                     <div id class="mb-3 text-center">

@@ -668,6 +668,20 @@ $(document).ready(function() {
   });
 
 
+  // Keep Alive button functions
+  if ($("#switchProfileKeepAlive").length > 0) {
+    $("#switchProfileKeepAlive").click(function (instance) {
+      let pingSwitch = $("#switchProfileNoPing");
+      
+      if ($(this).is(":checked")) {
+        pingSwitch.prop("checked", false);
+        pingSwitch.prop("disabled", true);
+      } else {
+        pingSwitch.prop("disabled", false);
+      }
+    });
+  }
+
 });
 
 
