@@ -1,6 +1,6 @@
 // Settings Menu Collapse/Expand Animation
 /*
-  Last Updated: 2026-04-06
+  Last Updated: 2026-04-25
 */
 
 $(document).ready(function() {
