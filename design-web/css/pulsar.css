@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* SCSS file to generate Pulsar UI styling */
-/* Updated: 2026-03-13 */
+/* Updated: 2026-04-26 */
 /* set colors */
 /* Fonts */
 /* Using Segoe UI as the base font for a modern and clean look, with fallbacks for cross-platform compatibility */
@@ -12103,6 +12103,13 @@ body.light {
   color: #1A1A1A;
 }
 
+[data-bs-theme=dark] {
+  --bs-link-color: #32B3A6;
+  --bs-link-color-rgb: 50, 179, 166;
+  --bs-link-hover-color: #40E0D0;
+  --bs-link-hover-color-rgb: 64, 224, 208;
+}
+
 .btn-pulsar-teal {
   display: inline-block;
   text-align: center;
@@ -12482,10 +12489,24 @@ footer {
   #too-small {
     display: inline-block;
   }
-  #settings {
+  #settings, #log-windows {
     display: none;
   }
 }
+#aboutPulsarLogo img {
+  width: 80%;
+}
+
+.log-content-box {
+  width: 100%;
+  height: 20em;
+  overflow: auto;
+  font-family: monospace;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+}
+
 .pulsar-d-none {
   display: none;
 }

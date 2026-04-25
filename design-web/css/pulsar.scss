@@ -1,5 +1,5 @@
 /* SCSS file to generate Pulsar UI styling */
-/* Updated: 2026-03-13 */
+/* Updated: 2026-04-26 */
 
 
 $pulsar_teal_light: #40E0D0;
@@ -102,6 +102,13 @@ body.light {
   color: $pulsar_dark_bkg_mid;
 }
 
+// make sure links propagate correctly in dark mode
+[data-bs-theme="dark"] {
+  --bs-link-color: #{$pulsar_teal_dark};
+  --bs-link-color-rgb: #{red($pulsar_teal_dark)}, #{green($pulsar_teal_dark)}, #{blue($pulsar_teal_dark)};
+  --bs-link-hover-color: #{$pulsar_teal_light};
+  --bs-link-hover-color-rgb: #{red($pulsar_teal_light)}, #{green($pulsar_teal_light)}, #{blue($pulsar_teal_light)};
+}
 
 // Button styles
 // Mixin: pulsar-btn-gradient
@@ -445,9 +452,21 @@ footer {
   #too-small {
     display: inline-block;
   }
-  #settings {
+  #settings, #log-windows {
     display: none;
   }
+}
+
+// About page
+#aboutPulsarLogo img {
+  width: 80%;
+}
+.log-content-box {
+  width: 100%;
+  height: 20em;
+  overflow: auto;
+  font-family: monospace;
+  user-select: text;
 }
 
 

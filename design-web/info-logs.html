@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!-- 
+    Updated: 2026-04-24
+-->
+<html lang="en" data-bs-theme="dark">
+<head >
+    <title>Pulsar :: Information</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="./css/fontawesome/css/all.min.css"> <!-- FontAwesome 7.1.0 -->
+    <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
+    <link rel="icon" href="./img/pulsar-teal.ico" type="image/x-icon">
+</head>
+<body class="dark">
+    <div class="container-fluid vh-100 overflow-hidden">
+        <!-- Title bar -->
+        <header>
+            <!-- drag bar -->
+            <div id="drag-bar"></div>
+            <nav class="row mt-2 mb-2" id="title-bar">
+                <div class="col h3"><img src="./img/pulsar-logo-blue.svg" alt="Pulsar logo"> <strong>Pulsar</strong> :: Settings</div>
+                <div class="col text-end">
+                    <button class="btn btn-menu" id="btn-win-minimize" data-js-action="minimize" data-i18n-title="btnIconMinimize" title="Minimize Window"><i class="fa-regular fa-window-minimize"></i></button>
+                    <button class="btn btn-menu" id="btn-win-maximize" data-js-action="maximize" data-i18n-title="btnIconMaximize" title="Maximize Window"><i class="fa-regular fa-window-maximize"></i></button>
+                    <button class="btn btn-menu jsp-btn-none" id="btn-win-restore" data-js-action="restore" data-i18n-title="btnIconRestore" title="Restore Window"><i class="fa-regular fa-window-restore"></i></button>
+                    <button class="btn btn-menu red" title="Close Window"><i class="fa-regular fa-xmark"></i></button>
+                </div>
+            </nav>
+        </header>
+        <!-- Window resize handle -->
+        <div id="resize-handle"></div>
+        <!-- main screen -->
+        <div id="about" class="border-top border-tertiary settings-height overflow-y-auto overflow-x-hidden">
+            <div class="row">
+                <div class="col-3 col-md-2 col-lg-1 pt-3 text-end" id="aboutPulsarLogo">
+                    <img src="img/pulsar-logo-blue.svg" alt="Pulsar logo">
+                </div>
+                <div class="col-9 col-md-10 col-lg-11 pt-3">
+                    <h2 data-i18n="aboutBlurbTitle">Pulsar :: A GUI Wrapper for Nebula</h2>
+                    <p data-i18n="aboutBlurbDescription">Pulsar is a cross-platform, graphical user interface wrapper for Slack&rsquo;s Nebula command line client, which was developed to make it easier for non-technical users to connect to a Nebula mesh network. Like a pulsar inside a nebula, it sends out a regular pulse to make the connection possible. While it is best used for connecting to a single Nebula mesh network, Pulsar has the capability to connect to up to five networks simultaneously, provided the networks have differing IP address ranges. It makes setting up the connections easy through the <a href="settings.html">Settings page</a>.</p>
+                    <p data-i18n="aboutBlurbNebulaInfo">For security, Pulsar does not provide the Nebula command line executable file. The user needs to download and install it themselves and either add it to the system path or else point Nebula to the executable file. Because Nebula opens a special encrypted tunnel to the mesh network, the executable requires administrative privileges. The request dialog for these privileges will be triggered when the <i>Connect</i> button is clicked. It will trigger separately for each connection, so if you have multiple connections, you will see multiple privilege elevation dialogues.</p>
+                    <p data-i18n="aboutBlurbDevBy">Pulsar is developed in Python by JS Prodüksiyon Ltd. Şti.</p>
+                    <p data-i18n="aboutBlurbLicense">Pulsar is licensed under the GNU GPL v.3.0 license.</p>
+                </div>
+            </div>
+            <div id="build-info" class="border-top border-tertiary pb-5">
+                <div class="container mt-3">
+                    <h3>Build Information</h3>
+                    <div class="row">
+                        <div class="col fw-bold text-end" data-i18n="aboutBuildVersionLabel">Version:</div>
+                        <div class="col text-beginning" id="aboutBuildVersion">2.0</div>
+                    </div>
+                    <div class="row">
+                        <div class="col fw-bold text-end" data-i18n="aboutBuildNumberLabel">Build:</div>
+                        <div class="col text-beginning" id="aboutBuildNumber">2026-04-24 18:21</div>
+                    </div>
+                    <div class="row">
+                        <div class="col fw-bold text-end" data-i18n="aboutBuildDevsLabel">Developers:</div>
+                        <div class="col text-beginning" id="aboutBuildDevs">Josh Wibberley</div>
+                    </div>
+                    <div class="row">
+                        <div class="col fw-bold text-end" data-i18n="aboutBuildPythonLabel">Python Version:</div>
+                        <div class="col text-beginning" id="aboutBuildPythonVersion">3.11.9</div>
+                    </div>
+                    <div class="row">
+                        <div class="col fw-bold text-end" data-i18n="aboutBuildNebulaLabel">Detected Nebula Version:</div>
+                        <div class="col text-beginning" id="aboutBuildNebula Version">1.9.4</div>
+                    </div>
+                </div>
+            </div>
+            <div id="connection-logs" class="border-top border-tertiary">
+                <div class="container mt-3">
+                    <h3 data-i18n="aboutLogsTitle">Connection Log</h3>
+                    <p data-i18n="aboutLogsBlurb">The live logs for the current connection(s) can be observed in the boxes below. By default, these will update every 30 seconds. You can disable the live update by switching off the corresponding <i>Refresh log automatically</i> switches. You can also update the logs manually with the <i>Refresh Log Now</i> buttons. If you have multiple connections enabled, each connection is tracked separately.</p>
+                    <div id="too-small" class="mt-5 text-center">
+                        <p class="h4" data-i18n="aboutLogsTooSmallTextWarning">The window size is too narrow to display the connection logs.</p>
+                    </div>
+                    <div id="log-windows">
+                        <!-- First (main) Connection -->
+                        <div id="logConnectionA" data-connection-id="A" class="mt-3">
+                            <h4 id="logConnectionATitle">Connection Name A</h4>
+                            <textarea readonly id="logConnectionAContent" class="log-content-box" data-connection-id="A"></textarea>
+                            <div class="row">
+                                <div class="col text-beginning">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="switchLogRefreshConnectionA" value="multiple" data-connection-id="A" checked>
+                                        <label class="form-check-label" for="switchLogRefreshConnectionA" data-i18n="switchLogRefreshLabel">Refresh log automatically every 30 seconds</label>
+                                    </div>
+                                </div>
+                                <div class="col text-end">
+                                    <button id="btnLogRefreshConnectionA" class="btn btn-primary btn-log-refresh" data-connection-id="A">
+                                        <i class="fa-regular fa-arrows-rotate"></i>
+                                        <span data-i18n="btnLogRefreshLabel">Refresh Log Now</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second Connection -->
+                        <div id="logConnectionB" data-connection-id="B" class="mt-3">
+                            <h4 id="logConnectionBTitle">Connection Name B</h4>
+                            <textarea readonly id="logConnectionBContent" class="log-content-box" data-connection-id="B"></textarea>
+                            <div class="row">
+                                <div class="col text-beginning">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="switchLogRefreshConnectionB" value="multiple" data-connection-id="B" checked>
+                                        <label class="form-check-label" for="switchLogRefreshConnectionB" data-i18n="switchLogRefreshLabel">Refresh log automatically every 30 seconds</label>
+                                    </div>
+                                </div>
+                                <div class="col text-end">
+                                    <button id="btnLogRefreshConnectionB" class="btn btn-primary btn-log-refresh" data-connection-id="B">
+                                        <i class="fa-regular fa-arrows-rotate"></i>
+                                        <span data-i18n="btnLogRefreshLabel">Refresh Log Now</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third Connection -->
+                        <div id="logconnectionC" data-connection-id="C" class="mt-3">
+                            <h4 id="logconnectionCTitle">Connection Name C</h4>
+                            <textarea readonly id="logconnectionCContent" class="log-content-box" data-connection-id="C"></textarea>
+                            <div class="row">
+                                <div class="col text-beginning">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="switchLogRefreshconnectionC" value="multiple" data-connection-id="C" checked>
+                                        <label class="form-check-label" for="switchLogRefreshconnectionC" data-i18n="switchLogRefreshLabel">Refresh log automatically every 30 seconds</label>
+                                    </div>
+                                </div>
+                                <div class="col text-end">
+                                    <button id="btnLogRefreshconnectionC" class="btn btn-primary btn-log-refresh" data-connection-id="C">
+                                        <i class="fa-regular fa-arrows-rotate"></i>
+                                        <span data-i18n="btnLogRefreshLabel">Refresh Log Now</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fourth Connection -->
+                        <div id="logconnectionD" data-connection-id="D" class="mt-3">
+                            <h4 id="logconnectionDTitle">Connection Name D</h4>
+                            <textarea readonly id="logconnectionDContent" class="log-content-box" data-connection-id="D"></textarea>
+                            <div class="row">
+                                <div class="col text-beginning">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="switchLogRefreshconnectionD" value="multiple" data-connection-id="D" checked>
+                                        <label class="form-check-label" for="switchLogRefreshconnectionD" data-i18n="switchLogRefreshLabel">Refresh log automatically every 30 seconds</label>
+                                    </div>
+                                </div>
+                                <div class="col text-end">
+                                    <button id="btnLogRefreshconnectionD" class="btn btn-primary btn-log-refresh" data-connection-id="D">
+                                        <i class="fa-regular fa-arrows-rotate"></i>
+                                        <span data-i18n="btnLogRefreshLabel">Refresh Log Now</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fifth Connection -->
+                        <div id="logconnectionE" data-connection-id="E" class="mt-3">
+                            <h4 id="logconnectionETitle">Connection Name E</h4>
+                            <textarea readonly id="logconnectionEContent" class="log-content-box" data-connection-id="E"></textarea>
+                            <div class="row">
+                                <div class="col text-beginning">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="switchLogRefreshconnectionE" value="multiple" data-connection-id="E" checked>
+                                        <label class="form-check-label" for="switchLogRefreshconnectionE" data-i18n="switchLogRefreshLabel">Refresh log automatically every 30 seconds</label>
+                                    </div>
+                                </div>
+                                <div class="col text-end">
+                                    <button id="btnLogRefreshconnectionE" class="btn btn-primary btn-log-refresh" data-connection-id="E">
+                                        <i class="fa-regular fa-arrows-rotate"></i>
+                                        <span data-i18n="btnLogRefreshLabel">Refresh Log Now</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
