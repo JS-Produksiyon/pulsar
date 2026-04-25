@@ -7,7 +7,7 @@
 * Interface
   * Display mode → light, dark, system
   * Interface Language
-* Startup behavionr
+* Startup behavior
   * Start in tray
   * Start at login
 * Connection Behavior

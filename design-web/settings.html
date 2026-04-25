@@ -361,9 +361,13 @@
                             <span data-i18n="settingsAddStaticHostBtn">Add Host</span>
                         </button>
                     </div>
+
+                    <!-- Nebula Firewall Settings -->
                     <div class="mb-3">
                         <h3 data-i18n="connectionEditSectionFirewallTitle">Nebula Firewall Settings</h3>
                         <p  data-i18n="connectionEditSectionFirewallBlurb">The data here generally should not need to be edited on a client.</p>
+
+                        <!-- Nebula Firewall Settings: Outbound connections -->
                         <h4 data-i18n="connectionEditSectionFirewallOutboundTitle">Outbound Connections</h4>
                         <div class="row">
                             <div class="col-md-8">
@@ -409,6 +413,7 @@
                             </button>
                         </div>
 
+                        <!-- Nebula Firewall Settings: Inbound connections -->
                         <h4 data-i18n="connectionEditSectionFirewallInboundTitle" class="mt-3">Inbound Connections</h4>
                         <div class="row">
                             <div class="col-md-8">
@@ -454,6 +459,9 @@
                             </button>
                         </div>
                     </div>
+                    <!-- End Nebula Firewall -->
+
+                    <!-- Advanced configuration options -->
                     <h2 data-i18n="connectionEditSectionAdvancedConfig" class="mt-4">Advanced Configuration</h2>
                     <p data-i18n="connectionEditSectionAdvancedConfigBlurb">For more configuration options, you can edit the Nebula node connection configuration file directly.</p>
                     <p data-i18n="connectionEditSectionAdvancedConfigWarning" class="fst-italic"><strong>Warning!</strong> If this is done incorrectly, the entire connection can stop working! Only edit the configuration file directly if you know what you are doing.</p>
@@ -463,6 +471,40 @@
                             <span data-i18n="connectionEditConfigFileBtn">Edit Configuration File</span>
                         </button>
                     </p>
+                    <!-- End Advanced Configuration Options -->
+
+                    <!-- Hosts File -->
+                    <h2 data-i18n="connectionEditSectionResolveHosts" class="mt-4">Resolve Host Names on Nebula Network</h2>
+                    <p data-i18n="connectionEditSectionResolveHostsBlurb">Below is a list of host names that resolve to IP addresses on the Nebula mesh network. These will be written to your system's hosts file when Pulsar connects to the Nebula network. They will be erased when the network disconnects.</p>
+                    <table class="table table-striped" id="hostsTable">
+                        <thead>
+                            <tr>
+                                <th data-i18n="hostsTableHeadHostName">Host name</th>
+                                <th data-i18n="hostsTableHeadHostIP">Host IP address</th>
+                                <th><!-- Buttons go here --></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-row-id="1">
+                                <td>myhost.mesh.mydomain.com</td>
+                                <td>192.168.1.1</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-hosts" data-row-id="1" data-i18n-title="settingsEditHostRecord" title="Edit Host Record">
+                                            <i class="fa-regular fa-pencil"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mb-3">
+                        <button class="btn btn-outline-primary" id="btn-add-host">
+                            <i class="fa-regular fa-network-wired"></i>
+                            <span data-i18n="settingsAddConnectionOutBtn">Add Host Record</span>
+                        </button>
+                    </div>
+                    <!-- End Hosts File -->
+
                     <div class="border-bottom mt-3 mb-3"></div>
                     <div class="row mb-5">
                         <div class="col text-center">
@@ -615,6 +657,76 @@
         </div>
     </div>
 
+    <!-- Configure Host Modal -->
+    <div class="modal fade" id="configureHostModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalConfigureHostTitle">Configure Host</h1>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Host Name -->
+                    <div class="mb-3">
+                        <label for="hostName" class="form-label" data-i18n="modalHostNameLabel">Host Name</label>
+                        <input type="text" class="form-control" id="hostName">
+                    </div>
+
+                    <!-- Host IP Address -->
+                    <div class="mb-3">
+                        <label for="hostIPAddress" class="form-label" data-i18n="modalHostIPAddressLabel">Host IP Address</label>
+                        <input type="text" class="form-control" id="hostIPAddress">
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalHostCancel" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" id="modalHostDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalDeleteHostBtn">Delete Record</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalHostSave">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span data-i18n="modalSaveHostBtn">Save Record</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Host Confirmation Modal -->
+    <div class="modal fade" id="deleteHostModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalDeleteHostTitle">Delete Host</h1>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <p data-i18n="modalDeleteHostConfirm">Are you sure you want to delete this host?</p>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="modalHostConfirmDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalConfirmDeleteHostBtn">Delete Host</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Configure Firewall Connection Modal -->
     <div class="modal fade" id="configureConnectionModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
@@ -736,6 +848,8 @@
             </div>
         </div>
     </div>
+
+
 
     <!-- JavaScript libraries -->
     <script src="./js/jquery.js"></script>

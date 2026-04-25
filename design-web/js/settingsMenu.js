@@ -397,6 +397,177 @@ $(document).ready(function() {
   });
 
   // ====================================================================
+  // CONFIGURE HOST MODAL HANDLERS
+  // ====================================================================
+
+  // Bootstrap modal instances for host dialogs
+  let hostModalInstance = null;
+  let deleteHostModalInstance = null;
+
+  // Track which row is being edited (null = adding new)
+  let editingHostRowId = null;
+
+  // Initialize host modal
+  const hostModalEl = document.getElementById('configureHostModal');
+  if (hostModalEl) {
+    hostModalInstance = new bootstrap.Modal(hostModalEl, {
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  // Initialize delete confirmation modal
+  const deleteHostModalEl = document.getElementById('deleteHostModal');
+  if (deleteHostModalEl) {
+    deleteHostModalInstance = new bootstrap.Modal(deleteHostModalEl, {
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  // Open modal to EDIT an existing host row
+  $(document).on('click', '.edit-hosts', function(e) {
+    e.preventDefault();
+
+    const rowId = $(this).data('row-id');
+    const $row = $('#hostsTable tbody tr[data-row-id="' + rowId + '"]');
+    if (!$row.length) return;
+
+    // Store row ID so save/delete know which row to target
+    editingHostRowId = rowId;
+
+    // Read values from the table row columns
+    const hostName = $row.find('td:eq(0)').text().trim();
+    const hostIP = $row.find('td:eq(1)').text().trim();
+
+    // Populate modal fields
+    $('#hostName').val(hostName);
+    $('#hostIPAddress').val(hostIP);
+
+    // Show delete button when editing an existing host
+    $('#modalHostDelete').show();
+
+    if (hostModalInstance) {
+      hostModalInstance.show();
+    }
+  });
+
+  // Open modal to ADD a new host (empty fields)
+  $(document).on('click', '#btn-add-host', function(e) {
+    e.preventDefault();
+
+    // No row being edited
+    editingHostRowId = null;
+
+    // Clear all fields
+    $('#hostName').val('');
+    $('#hostIPAddress').val('');
+
+    // Hide delete button when adding a new host
+    $('#modalHostDelete').hide();
+
+    if (hostModalInstance) {
+      hostModalInstance.show();
+    }
+  });
+
+  // SAVE host (update existing row or append new row)
+  $(document).on('click', '#modalHostSave', function(e) {
+    e.preventDefault();
+
+    const hostName = $('#hostName').val().trim();
+    const hostIP = $('#hostIPAddress').val().trim();
+
+    // Require both fields
+    if (!hostName || !hostIP) {
+      alert('Both Host Name and Host IP Address are required.');
+      return;
+    }
+
+    // Validate Host Name (domain name syntax)
+    const domainRegex = /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!domainRegex.test(hostName)) {
+      alert('Host Name must conform to correct domain name syntax.');
+      return;
+    }
+
+    // Validate Host IP Address (IPv4 or IPv6)
+    const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    const ipv6Regex = /^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$/;
+    if (!ipv4Regex.test(hostIP) && !ipv6Regex.test(hostIP)) {
+      alert('Host IP Address must be a valid IPv4 or IPv6 address.');
+      return;
+    }
+
+    // Check for duplicate Host Name (skip the row being edited)
+    let duplicateFound = false;
+    $('#hostsTable tbody tr').each(function() {
+      if ($(this).data('row-id') === editingHostRowId) return; // Skip the row being edited
+      const existingHostName = $(this).find('td:eq(0)').text().trim();
+      if (existingHostName === hostName) {
+        duplicateFound = true;
+        return false;
+      }
+    });
+    if (duplicateFound) {
+      alert('A host with this name already exists.');
+      return;
+    }
+
+    if (editingHostRowId) {
+      // Update existing row
+      const $row = $('#hostsTable tbody tr[data-row-id="' + editingHostRowId + '"]');
+      $row.find('td:eq(0)').text(hostName);
+      $row.find('td:eq(1)').text(hostIP);
+    } else {
+      // Add new row
+      const newRowId = Date.now(); // Simple unique ID
+      const newRow = `
+        <tr data-row-id="${newRowId}">
+          <td>${hostName}</td>
+          <td>${hostIP}</td>
+          <td>
+            <button class="btn btn-sm btn-primary edit-hosts" data-row-id="${newRowId}" data-i18n-title="settingsEditHostRecord" title="Edit Host Record">
+              <i class="fa-regular fa-pencil"></i>
+            </button>
+          </td>
+        </tr>
+      `;
+      $('#hostsTable tbody').append(newRow);
+    }
+
+    // Close modal
+    if (hostModalInstance) {
+      hostModalInstance.hide();
+    }
+  });
+
+  // DELETE button — open confirmation modal
+  $(document).on('click', '#modalHostDelete', function(e) {
+    e.preventDefault();
+    if (deleteHostModalInstance) {
+      deleteHostModalInstance.show();
+    }
+  });
+
+  // CONFIRM DELETE — remove the row and close both modals
+  $(document).on('click', '#modalHostConfirmDelete', function(e) {
+    e.preventDefault();
+
+    if (editingHostRowId) {
+      $('#hostsTable tbody tr[data-row-id="' + editingHostRowId + '"]').remove();
+    }
+
+    // Close confirmation modal, then close the host modal
+    if (deleteHostModalInstance) {
+      deleteHostModalInstance.hide();
+    }
+    if (hostModalInstance) {
+      hostModalInstance.hide();
+    }
+  });
+
+  // ====================================================================
   // CONFIGURE FIREWALL CONNECTION MODAL HANDLERS
   // ====================================================================
 
