@@ -329,7 +329,8 @@
                             <i class="fa-regular fa-pencil"></i>
                         </button>
                     </p>
-                    <p><span data-i18n="settingsPrivIP">Node IP Address</span>: <span id="settings-connection-node-ip">Undefined</span></p>
+                    <p><em><span data-i18n="settingsPrivIP">Node IP Address</span>:</em> <span id="settings-connection-node-ip">Undefined</span></p>
+                    <p><em><span data-i18n="settingsCertExpiration">Node Certificate Expiration Date</span>:</em> <span id="settings-connection-node-expiration">Undefined</span></p>
                     
                     <h2 data-i18n="connectionEditSectionNetConfig" class="mt-4">Network Configuration</h2>
                     <h3 data-i18n="connectionEditSectionStaticHosts">Static Hosts</h3>
@@ -476,6 +477,10 @@
                     <!-- Hosts File -->
                     <h2 data-i18n="connectionEditSectionResolveHosts" class="mt-4">Resolve Host Names on Nebula Network</h2>
                     <p data-i18n="connectionEditSectionResolveHostsBlurb">Below is a list of host names that resolve to IP addresses on the Nebula mesh network. These will be written to your system's hosts file when Pulsar connects to the Nebula network. They will be erased when the network disconnects.</p>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchUseHosts" checked>
+                        <label class="form-check-label" for="switchUseHosts" data-i18n="switchUseHostsLabel">Enable host name resolution when connected to Nebula network</label>
+                    </div>
                     <table class="table table-striped" id="hostsTable">
                         <thead>
                             <tr>
@@ -529,7 +534,7 @@
                 </div>
             </div>
         </div>
-        <footer class="border-top border-tertiary">
+        <footer class="border-top border-tertiary" data-i18n="textFooter">
             A Nebula mesh network connection GUI by JS Prodüksiyon © 2024-2026 JS Prodüksiyon Ltd. Şti.
         </footer>    
     </div>
