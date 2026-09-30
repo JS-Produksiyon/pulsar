@@ -5,7 +5,7 @@
 ### General Settings
 
 * Interface
-  *  Display mode → light, dark, system
+  * Display mode → light, dark, system
   * Interface Language
 * Startup behavior
   * Start in tray
@@ -68,6 +68,41 @@ The ca and cert need to also be available as separate files to be able to check 
 
 The program is in the `src` directory.
 
+### General coding guidelines
+
+1. Every file needs to have the following header:
+
+    ```python
+    # -*- coding: utf-8 -*-
+    # ================================================================================
+    """
+        File name: [File name]
+        Description: [Brief (max 10-word) description]
+        Date Created: [yyyy-mm-dd]
+        Date Modified: [yyyy-mm-dd]
+        Python version: 3.13+
+    """
+    __author__ = "Josh Wibberley (JMW)"
+    __copyright__ = "Copyright © 2026 JS Prodüksiyon"
+    __credits__ = ["Josh Wibberley"]
+    __license__ = "GNU GPL v3.0"
+    __version__ = "2.0.0"
+    __maintainer__ = ["JS Prodüksiyon Yazılım Departmanı"]
+    __email__ = "yazilim@jsproduksiyon.com"
+    __status__ = "Development"
+    __build__ = "[yyyy-mm-dd] [hh:mm] (of last date compiled)"
+    __debugState__ = False
+    # ================================================================================
+    # Check for python version 3.13 or greater
+    import sys
+
+    MIN_PYTHON = (3,13)
+    if sys.version_info < MIN_PYTHON:
+        sys.exit("Python %s.%s or later is required to run Pulsar.\n" % MIN_PYTHON)
+    ```
+
+2. Variables will be in camelCase. Classes will be in UpperCamelCase 
+
 ### Main Module (pulsar.py)
 
 The main module is the application. It loads all the submodules and starts the application, loading the global `SETTINGS` object and starting the system tray icon and instantiating the windows. It contains the commands to trigger the shutdown of the application either from the system tray icon or from the window being closed, depending on what is in the `exit_on_window_close` key in `settings.json` and the global `SETTINGS` object.
@@ -87,7 +122,7 @@ The main module is the application. It loads all the submodules and starts the a
 
 ### System tray icon manager (system/trayIcon.py)
 
-This module handles passes the PulsarTray class to the main module and does the following:
+This module handles pysystray via the PulsarTray class to the main module and does the following:
 
 * Creates the tray module.
 
@@ -147,6 +182,8 @@ The system settings management module handles all functions and features concern
 
 ### GUI management (gui/gui.py)
 
+* Handles calls to pywebview and provides he pulsarGUI class to the program.
+
 * Contains the code to draw the two windows:
   1. The main connection window (fixed size; depending on setting can close application).
   2. The settings and logs window (resizable; cannot close application).
@@ -204,7 +241,7 @@ Localization JSON structure:
       "sv": "Swedish",
       "th": "Thai",
       "tr": "Turkish",
-      "uk": "Ukranian",
+      "uk": "Ukrainian",
       "vi": "Vietnamese",
       "zh-tw": "Chinese Traditional",
       "zh": "Chinese Simplified"      
@@ -232,7 +269,7 @@ Localization JSON structure:
 
 When the application starts up it does the following:
 
-1. It checks for instance/settings.json and reads the data into the system. If settings.json does not exist, it creates an empty version of it like so:
+1. It checks for `instance/settings.json` and reads the data into the system. If `settings.json` does not exist, it creates an empty version of it like so:
 
     ```python
     {
@@ -261,9 +298,12 @@ When the application starts up it does the following:
           'log_level': 'info', 
           'nebula_log': 'instance/connectionA.log'
         },
+        # continue with B, C, D, and E
       }
     }
     ```
+
+    This needs to be `json.dump`ed and written to `instance/settings.json`.
 
 2. It checks for the nebula binary, depending on `nebula_path`. 
 
@@ -279,7 +319,17 @@ When the application starts up it does the following:
 
 1. Build `pulsar.py`, `trayIcon.py`, `settings.py`, and `gui`, along with any utility functions necessary in `utils.py`. Make sure the application starts up.
 
+   Use the unigrated-solutions/example-pywebview-nicegui-tray repository as an example for how the pywebview and pystray can integrate with each other. We will NOT be using NiceGUI. Rather we'll be using pywebview's builtin backend to serve the web pages.
+
 2. Build NebulaConnect.py and NebulaConfig.py and connect them to the frontend.
 
+3. Test with a single Nebula connection (A).
+
+4. Release alpha version at this point.
+
+5. Add code for multiple Nebula connections to work.
+
+6. Release beta version at this point.
+
 ---
-Updated: 2026-06-09
+Updated: 2026-06-16

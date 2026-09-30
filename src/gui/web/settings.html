@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<!-- 
+    Updated: 2026-04-25
+-->
+<html lang="en" data-bs-theme="dark">
+<head >
+    <title>Pulsar :: Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="./css/fontawesome-all.min.css"> <!-- FontAwesome 7.1.0 -->
+    <link rel="stylesheet" href="./css/pulsar.css"> <!-- Compiled Pulsar CSS -->
+    <link rel="icon" href="./img/pulsar-teal.ico" type="image/x-icon">
+</head>
+<body class="dark">
+    <div class="container-fluid vh-100 overflow-hidden">
+        <!-- Title bar -->
+        <header>
+            <!-- drag bar -->
+            <div id="drag-bar"></div>
+            <nav class="row mt-2 mb-2" id="title-bar">
+                <div class="col h3"><img src="./img/pulsar-logo-blue.svg" alt="Pulsar logo"> <strong>Pulsar</strong> :: Settings</div>
+                <div class="col text-end">
+                    <button class="btn btn-menu" id="btnWinMinimize" data-js-action="minimize" data-i18n-title="btnIconMinimize" title="Minimize Window"><i class="fa-regular fa-window-minimize"></i></button>
+                    <button class="btn btn-menu" id="btnWinMaximize" data-js-action="maximize" data-i18n-title="btnIconMaximize" title="Maximize Window"><i class="fa-regular fa-window-maximize"></i></button>
+                    <button class="btn btn-menu jsp-btn-none" id="btnWinRestore" data-js-action="restore" data-i18n-title="btnIconRestore" title="Restore Window"><i class="fa-regular fa-window-restore"></i></button>
+                    <button class="btn btn-menu red" id="btnWinClose" title="Close Window"><i class="fa-regular fa-xmark"></i></button>
+                </div>
+            </nav>
+        </header>
+        <!-- Window resize handle -->
+        <div id="resize-handle"></div>
+        <!-- main screen -->
+        <div id="too-small" class="mt-5 vw-100 text-center">
+            <p class="h4" data-i18n="settingsTooSmallTextWarning">The window size is too narrow to display the content.</p>
+            <p data-i18n="tooSmallTextMitigation">Please resize the window to access the content.</p>
+        </div>
+        <div id="settings" class="row border-top border-tertiary align-items-stretch settings-height">
+            <div id="settings-menu-collapsed" class="settings-menu col-3 h4 border-end border-tertiary pt-3 d-none">
+                <p class="settings-link" data-pulsar-link="generalSettings" title="General Settings">
+                    <i class="fa-regular fa-sliders"></i> 
+                </p>
+                <p class="settings-link" data-pulsar-link="connectionProfiles" title="Connection Profiles">
+                    <i class="fa-regular fa-cloud"></i> 
+                </p>
+                <div class="settings-menu-collapse-link">
+                    <p class="settings-link" data-pulsar-link="expandMenu" title="Expand Menu">
+                       <i class="fa-regular fa-circle-chevron-right"></i>
+                    </p>
+                </div>                
+            </div>
+            <div id="settings-menu-expanded" class="settings-menu col-3 h4 border-end border-tertiary pt-3">
+                <p class="settings-link" data-pulsar-link="generalSettings">
+                    <i class="fa-regular fa-sliders"></i> 
+                    General Settings
+                </p>
+                <p class="settings-link" data-pulsar-link="connectionProfiles">
+                    <i class="fa-regular fa-cloud"></i> 
+                    Connection Profiles
+                </p>
+                <div class="settings-menu-collapse-link">
+                    <p class="settings-link" data-pulsar-link="collapseMenu">
+                       <i class="fa-regular fa-circle-chevron-left"></i> Collapse Menu
+                    </p>
+                </div>
+            </div>
+            <div class="col-9 settings-height-right overflow-y-auto pt-3 pb-3 ps-5 pe-5">
+                <!-- General Settings -->
+                <div id="settings-general" class="settings-config-panel">
+                    <h1 data-i18n="settingGeneralSettings">General Settings</h1>
+                    <h2 data-i18n="settingGeneralSettingsInterface">Interface</h2>
+                    <div class="row">
+                        <div class="col-11 col-md-8 col-lg-7 offset-1">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="ifaceLangSelect" data-i18n="settingGeneralSettingsInterfaceLangLabel">
+                                    Interface Language
+                                </label>
+                                <select class="form-select" id="ifaceLangSelect">
+                                    <!-- populated by back end -->
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="ifaceDisplayModeSelect" data-i18n="settingGeneralSettingsDisplayModeLabel">
+                                    Display Mode
+                                </label>
+                                <select class="form-select" id="ifaceDisplayModeSelect">
+                                    <option value="dark" data-i18n="ifaceDisplayModeSelectDark">Dark</option>
+                                    <option value="light" data-i18n="ifaceDisplayModeSelectLight">Light</option>
+                                    <option value="system" data-i18n="ifaceDisplayModeSelectSystem" selected>Follow System</option>
+                                </select>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchCloseOnWindow">
+                                <label class="form-check-label" for="switchCloseOnWindow" data-i18n="switchCloseOnWindowLabel">Exit Pulsar when connection window is closed</label>
+                                <p class="small" data-i18n="switchCloseOnWindowBlurb">If this is enabled, Pulsar will shut down when the user closes the main connection window. Disable this item to make sure that Pulsar keeps running in the status area even when the window is closed.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <h2 data-i18n="settingGeneralSettingsStartup">Startup Behavior</h2>
+                    <div class="row">
+                        <div class="col-11 col-md-8 col-lg-7 offset-1">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchStartupTray" checked>
+                                <label class="form-check-label" for="switchStartupTray" data-i18n="switchStartupTrayLabel">Start Pulsar in the tray</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchStartupLogin">
+                                <label class="form-check-label" for="switchStartupLogin" data-i18n="switchStartupLoginLabel">Start Pulsar at login</label>
+                            </div>                            
+                        </div>
+                    </div>
+                    <h2 data-i18n="settingGeneralSettingsConnection">Connection Behavior</h2>
+                    <div class="row">
+                        <div class="col-11 col-md-8 col-lg-7 offset-1">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchMultipleConnections" value="multiple">
+                                <label class="form-check-label" for="switchMultipleConnections" data-i18n="switchMultipleConnectionsLabel">Multiple connections</label>
+                                <p data-i18n="switchMultipleConnectionsBlurb" class="small">
+                                    If you select this item, then Pulsar will allow you to connect to up to five separate Nebula instances simultaneously. 
+                                    If left unchecked, Pulsar will connect to only one Nebula instance.
+                                </p>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-group-text" for="inputPingInterval" data-i18n="inputPingIntervalLabel">Ping Interval</label>
+                                <input type="number" class="form-control" id="inputPingInterval" value="300">
+                                <span class="input-group-text" data-i18n="inputPingIntervalSecondsLabel">seconds</span>
+                            </div>
+                            <p data-i18n="inputPingIntervalBlurb" class="small mb-3 ps-2 pe-2">
+                                Defines how often Pulsar pings a random lighthouse to make sure that the Nebula network is up.
+                            </p>
+                        </div>
+                    </div>
+                    <h2 id="settingGeneralSettingsNebula" data-i18n="settingGeneralSettingsNebula">Nebula Binaries</h2>
+                    <div class="row">
+                        <div class="col-11 col-md-8 col-lg-7 offset-1 mb-5">
+                            <p  data-i18n="settingGeneralSettingsNebulaBlurb">Select where Pulsar will look for the Nebula binaries.</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="nebulaBinaries" id="nebulaBinariesSysPath" checked>
+                                <label class="form-check-label" for="nebulaBinariesSysPath" data-i18n="nebulaBinariesSysPathLabel">
+                                    System path
+                                </label>
+                                <p class="small" data-i18n="nebulaBinariesSysPathBlurb">Look for the Nebula binary in the system path.</p>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="nebulaBinaries" id="nebulaBinariesFilePath">
+                                <label class="form-check-label" for="nebulaBinariesFilePath" data-i18n="nebulaBinariesFilePath">
+                                    Exact path to executable
+                                </label>
+                                <p class="small" data-i18n="nebulaBinariesFilePathBlurb">Select the exact path to the Nebula executable below.</p>
+                            </div>
+                            <div class="input-group input-group mb-3">
+                                <input type="text" class="form-control" id="nebulaBinariesFilePathBox">
+                                <button class="btn btn-outline-primary" role="button" id="nebulaBinariesFilePathBrowse" title="Browse" data-i18n-title="nebulaBinariesFilePathBrowseBtn">
+                                    <i class="fa-regular fa-folder-open"></i>
+                                </button>
+                            </div>
+                            <p id="txtNebulaBinaryFound">
+                                <span class="text-info"><i class="fa-regular fa-binary-circle-check"></i></span>
+                                <span data-i18n="txtNebulaBinaryFound">Found <code>nebula</code> executable file.</span>
+                            </p>
+                            <p id="txtNebulaBinaryNotFound">
+                                <span class="text-accent"><i class="fa-regular fa-binary-slash"></i></span>
+                                <span data-i18n="txtNebulaBinaryNotFound" class="fw-bold">Could not find <code>nebula</code> executable file.</span> 
+                                <span data-i18n="txtNebulaBinaryNotFoundExplanation">Pulsar will not be able to connect to the Nebula network. Please either add the path to the directory with the executable file to your system path, or else directly point to the location of the <code>nebula</code> executable file. </span>
+                            </p>
+                            <p id="txtNebulaCertBinaryFound">
+                                <span class="text-info"><i class="fa-regular fa-binary-circle-check"></i></span>
+                                <span data-i18n="txtNebulaCertBinaryFound">Found <code>nebula-cert</code> executable binary file.</span>
+                            </p>
+                            <p id="txtNebulaCertBinaryNotFound">
+                                <span class="text-accent"><i class="fa-regular fa-binary-slash"></i></span>
+                                <span data-i18n="txtNebulaCertBinaryNotFound" class="fw-bold">Could not find <code>nebula-cert</code> executable  file.</span>
+                                <span data-i18n="txtNebulaCertBinaryNotFoundExplanation"><em>Pulsar will function without the <code>nebula-cert</code> executable.</em> However, Pulsar will not be able to determine the validity of the connection authentication certificates or the IP address of your node. To rectify this, make sure the <code>nebula-cert</code> executable file is in the same directory as the <code>nebula</code> executable file. </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List of Connections -->
+                <div id="settings-multiple-connections" class="settings-config-panel pulsar-d-none">
+                    <h1 data-i18n="connectionListHeading">Connection Profiles</h1>
+                    <p data-i18n="connectionListingBlurb">
+                        The following connections are available for connection to Nebula networks using Pulsar. 
+                        Enable a connection by flipping the switch at the front. Any connection that has not been configured cannot be enabled.
+                    </p>
+                    <div class="row border border-1 rounded-3 p-2 mb-2">
+                        <div class="col-1 form-switch pt-2 text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="connectionASwitchEnable" checked>
+                        </div>
+                        <div class="col-6 h3" id="connectionATitle">Connection Name</div>
+                        <div class="col-5 text-end">
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="A" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network">
+                                <i class="fa-regular fa-cloud-check"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive">
+                                <i class="fa-regular fa-heart-pulse"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="A" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                                <i class="fa-regular fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row border border-1 rounded-3 p-2 mb-2">
+                        <div class="col-1 form-switch pt-2 text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="connectionBSwitchEnable" disabled>
+                        </div>
+                        <div class="col-6 h3" id="connectionBTitle">Connection Name</div>
+                        <div class="col-5 text-end">
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="B" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
+                                <i class="fa-regular fa-cloud"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive" disabled>
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="B" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                                <i class="fa-regular fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row border border-1 rounded-3 p-2 mb-2">
+                        <div class="col-1 form-switch pt-2 text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="connectionCSwitchEnable" disabled>
+                        </div>
+                        <div class="col-6 h3" id="connectionCTitle">Connection Name</div>
+                        <div class="col-5 text-end">
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="C" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
+                                <i class="fa-regular fa-cloud"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive" disabled>
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="C" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                                <i class="fa-regular fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row border border-1 rounded-3 p-2 mb-2">
+                        <div class="col-1 form-switch pt-2 text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="connectionDSwitchEnable" disabled>
+                        </div>
+                        <div class="col-6 h3" id="connectionDTitle">Connection Name</div>
+                        <div class="col-5 text-end">
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="D" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
+                                <i class="fa-regular fa-cloud"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive" disabled>
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="D" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                                <i class="fa-regular fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row border border-1 rounded-3 p-2 mb-2">
+                        <div class="col-1 form-switch pt-2 text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="connectionESwitchEnable" disabled>
+                        </div>
+                        <div class="col-6 h3" id="connectionBTitle">Connection Name</div>
+                        <div class="col-5 text-end">
+                            <button class="btn btn-outline-primary me-1 connection-autoconnect" data-connection-id="E" data-i18n-title="connectionBtnAutoConnect" title="Automatically connect to Nebula network" disabled>
+                                <i class="fa-regular fa-cloud"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-keepalive" data-connection-id="A" data-i18n-title="connectionBtnKeepAlive" title="Keep Connection Alive" disabled>
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <button class="btn btn-outline-primary me-1 connection-edit" data-connection-id="E" data-i18n-title="connectionBtnEdit" title="Configure connection">
+                                <i class="fa-regular fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Single Connection / Edit Connection -->
+                <div id="settings-connection-edit" class="settings-config-panel pulsar-d-none">
+                    <h1><span data-i18n="connectionEditHeading">Edit Connection Profile</span> <span id="connectionProfileId"></span></h1>
+                    <p data-i18n="connectionEditHeadingBlurb">Pulsar uses this profile to connect to the designated nebula network as a node. You can edit the information for this profile using the fields below. Be sure to save the connection profile before continuing.</p>
+                    
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="settingsProfileName" data-i18n="settingsProfileNameLabel">Profile Name</label>
+                        <input type="text" id="settingsProfileName" class="form-control" value="Nebula Mesh Network">
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchProfileAutoconnect">
+                        <label class="form-check-label" for="switchProfileAutoconnect" data-i18n="settingsSwitchAutoConnectLabel">Automatically connect node to Nebula network on startup</label>
+                    </div>
+                    <div class="form-check form-switch mb-2">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchProfileKeepAlive" checked>
+                        <label class="form-check-label" for="switchProfileKeepAlive" data-i18n="settingsSwitchKeepAliveLabel">Keep this connection alive</label>
+                        <p data-i18n="settingsSwitchKeepAliveBlurb" class="small">This option will ping a random lighthouse as frequently as defined under the Ping Interval option in General Settings.</p>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchProfileNoPing" disabled>
+                        <label class="form-check-label" for="switchProfileNoPing" data-i18n="settingsSwitchNoPingLabel">Do not ping lighthouse</label>
+                        <p data-i18n="settingsSwitchNoPingBlurb" class="small">Prevent the connection from pinging the lighthouse at all. This can only be enabled if the connection is not kept alive. Only enable this if you have a slow connection or your lighthouse is being overwhelmed.</p>
+                    </div>
+
+                    <div id class="mb-3 text-center">
+                        <button class="btn btn-primary">
+                            <i class="fa-regular fa-arrow-down-to-square"></i>
+                            <span data-i18n="settingsImportFromFileBtn">Import Configuration from File</span>
+                        </button>
+                    </div>
+                    <div class="border-bottom mb-3"></div>
+                    <h2 data-i18n="connectionEditSectionAuth" class="mt-4">Authentication Certificates</h2>
+                    <p data-i18n="connectionEditSectionAuthBlurb">The PKI certificates defined below make it possible for this node to authenticate with the Nebula infrastructure.</p>
+                    <p class="h4">
+                        <span id="settings-connection-root-cert-valid" class="text-success"><i class="fa-sharp fa-regular fa-badge-check"></i></span>
+                        <span id="settings-connection-root-cert-invalid" class="text-danger"><i class="fa-regular fa-seal-exclamation"></i></span>
+                        <span data-i18n="connectionEditNetRootCert">Nebula Network Root Certificate </span>
+                        <button id="settings-connection-root-cert-edit" class="btn btn-primary btn-sm ms-3" data-i18n-title="settingsRootCertEditBtn" title="Edit Root Certificate">
+                            <i class="fa-regular fa-pencil"></i>
+                        </button>
+                    </p>
+                    <p class="h4">
+                        <span id="settings-connection-private-cert-valid" class="text-success"><i class="fa-sharp fa-regular fa-badge-check"></i></span>
+                        <span id="settings-connection-private-cert-invalid" class="text-danger"><i class="fa-regular fa-seal-exclamation"></i></span>
+                        <span data-i18n="connectionEditPrivateCert">Node Private Certificate</span>
+                        <button id="settings-connection-private-cert-edit" class="btn btn-primary btn-sm ms-3" data-i18n-title="settingsPrivCertEditBtn" title="Edit Private Certificate">
+                            <i class="fa-regular fa-pencil"></i>
+                        </button>
+                    </p>
+                    <p class="h4">
+                        <span id="settings-connection-private-key-valid" class="text-success"><i class="fa-sharp fa-regular fa-badge-check"></i></span>
+                        <span id="settings-connection-private-key-invalid" class="text-danger"><i class="fa-regular fa-seal-exclamation"></i></span>
+                        <span data-i18n="connectionEditPrivateKey">Node Private Key</span>
+                        <button id="settings-connection-private-key-edit" class="btn btn-primary btn-sm ms-3" data-i18n-title="settingsPrivKeyEditBtn" title="Edit Private Key">
+                            <i class="fa-regular fa-pencil"></i>
+                        </button>
+                    </p>
+                    <p><em><span data-i18n="settingsPrivIP">Node IP Address</span>:</em> <span id="settings-connection-node-ip">Undefined</span></p>
+                    <p><em><span data-i18n="settingsCertExpiration">Node Certificate Expiration Date</span>:</em> <span id="settings-connection-node-expiration">Undefined</span></p>
+                    
+                    <h2 data-i18n="connectionEditSectionNetConfig" class="mt-4">Network Configuration</h2>
+                    <h3 data-i18n="connectionEditSectionStaticHosts">Static Hosts</h3>
+                    <table class="table table-striped" id="nodeStaticHostsTable">
+                        <thead>
+                            <tr>
+                                <th class="td-icon"><!-- Lighthouse icon goes here --></th>
+                                <th>Internal IP</th>
+                                <th>Public IP and Port</th>
+                                <th><!-- buttons go here --></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="align-middle" data-row-id="1">
+                                <td class="text-center"><i class="fa-regular fa-lighthouse"></i></td>
+                                <td>192.168.73.1</td>
+                                <td>209.126.84.157:4242</td>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-primary edit-static-host" data-row-id="1" data-i18n-title="settingsEditStaticHostBtn" title="Edit Static Host">
+                                        <i class="fa-regular fa-pencil"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mb-3">
+                        <button class="btn btn-outline-primary" id="btn-add-static-host">
+                            <i class="fa-regular fa-location-plus"></i>
+                            <span data-i18n="settingsAddStaticHostBtn">Add Host</span>
+                        </button>
+                    </div>
+
+                    <!-- Nebula Firewall Settings -->
+                    <div class="mb-3">
+                        <h3 data-i18n="connectionEditSectionFirewallTitle">Nebula Firewall Settings</h3>
+                        <p  data-i18n="connectionEditSectionFirewallBlurb">The data here generally should not need to be edited on a client.</p>
+
+                        <!-- Nebula Firewall Settings: Outbound connections -->
+                        <h4 data-i18n="connectionEditSectionFirewallOutboundTitle">Outbound Connections</h4>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="nodeOutboundConnectionAction" data-i18n="settingProfileConnDefaultActionLabel">
+                                        Default action
+                                    </label>
+                                    <select class="form-select" id="nodeOutboundConnectionAction">
+                                        <option value="drop" data-i18n="selectConnectionOptionDrop" selected>Drop</option>
+                                        <option value="reject" data-i18n="selectConnectionOptionReject">Reject</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped" id="nodeOutboundConnectionTable">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="connectionTableHeaderPort">Port</th>
+                                    <th data-i18n="connectionTableHeaderProto">Protocol</th>
+                                    <th data-i18n="connectionTableHeaderHost">Host</th>
+                                    <th data-i18n="connectionTableHeaderGroup">Group</th>
+                                    <th><!-- buttons go here --></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-row-id="1">
+                                    <td>Any</td>
+                                    <td>Any</td>
+                                    <td>Any</td>
+                                    <td>N/A</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-primary edit-connection" data-connection-type="outbound" data-row-id="1" data-i18n-title="settingsEditOutboundBtn" title="Edit Outbound Connection">
+                                            <i class="fa-regular fa-pencil"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mb-3">
+                            <button class="btn btn-outline-primary" id="btn-add-connection-out">
+                                <i class="fa-regular fa-arrow-left-from-arc"></i>
+                                <span data-i18n="settingsAddConnectionOutBtn">Add Outbound Connection</span>
+                            </button>
+                        </div>
+
+                        <!-- Nebula Firewall Settings: Inbound connections -->
+                        <h4 data-i18n="connectionEditSectionFirewallInboundTitle" class="mt-3">Inbound Connections</h4>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="nodeInboundConnectionAction" data-i18n="settingProfileConnDefaultActionLabel">
+                                        Default action
+                                    </label>
+                                    <select class="form-select" id="nodeInboundConnectionAction">
+                                        <option value="drop" data-i18n="selectConnectionOptionDrop" selected>Drop</option>
+                                        <option value="reject" data-i18n="selectConnectionOptionReject">Reject</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped" id="nodeInboundConnectionTable">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="connectionTableHeaderPort">Port</th>
+                                    <th data-i18n="connectionTableHeaderProto">Protocol</th>
+                                    <th data-i18n="connectionTableHeaderHost">Host</th>
+                                    <th data-i18n="connectionTableHeaderGroup">Group</th>
+                                    <th><!-- buttons go here --></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-row-id="1">
+                                    <td>Any</td>
+                                    <td>Any</td>
+                                    <td>Any</td>
+                                    <td>N/A</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-primary edit-connection" data-connection-type="inbound"  data-row-id="1" data-i18n-title="settingsEditInboundBtn" title="Edit Inbound Connection">
+                                            <i class="fa-regular fa-pencil"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mb-3">
+                            <button class="btn btn-outline-primary" id="btn-add-connection-in">
+                                <i class="fa-regular fa-arrow-right-to-arc"></i>
+                                <span data-i18n="settingsAddConnectionInBtn">Add Inbound Connection</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- End Nebula Firewall -->
+
+                    <!-- Advanced configuration options -->
+                    <h2 data-i18n="connectionEditSectionAdvancedConfig" class="mt-4">Advanced Configuration</h2>
+                    <p data-i18n="connectionEditSectionAdvancedConfigBlurb">For more configuration options, you can edit the Nebula node connection configuration file directly.</p>
+                    <p data-i18n="connectionEditSectionAdvancedConfigWarning" class="fst-italic"><strong>Warning!</strong> If this is done incorrectly, the entire connection can stop working! Only edit the configuration file directly if you know what you are doing.</p>
+                    <p class="text-center">
+                        <button class="btn btn-secondary" id="connectionEditConfigFile">
+                            <i class="fa-regular fa-file-pen"></i>
+                            <span data-i18n="connectionEditConfigFileBtn">Edit Configuration File</span>
+                        </button>
+                    </p>
+                    <!-- End Advanced Configuration Options -->
+
+                    <!-- Hosts File -->
+                    <h2 data-i18n="connectionEditSectionResolveHosts" class="mt-4">Resolve Host Names on Nebula Network</h2>
+                    <p data-i18n="connectionEditSectionResolveHostsBlurb">Below is a list of host names that resolve to IP addresses on the Nebula mesh network. These will be written to your system's hosts file when Pulsar connects to the Nebula network. They will be erased when the network disconnects.</p>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchUseHosts" checked>
+                        <label class="form-check-label" for="switchUseHosts" data-i18n="switchUseHostsLabel">Enable host name resolution when connected to Nebula network</label>
+                    </div>
+                    <table class="table table-striped" id="hostsTable">
+                        <thead>
+                            <tr>
+                                <th data-i18n="hostsTableHeadHostName">Host name</th>
+                                <th data-i18n="hostsTableHeadHostIP">Host IP address</th>
+                                <th><!-- Buttons go here --></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-row-id="1">
+                                <td>myhost.mesh.mydomain.com</td>
+                                <td>192.168.1.1</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-hosts" data-row-id="1" data-i18n-title="settingsEditHostRecord" title="Edit Host Record">
+                                            <i class="fa-regular fa-pencil"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mb-3">
+                        <button class="btn btn-outline-primary" id="btn-add-host">
+                            <i class="fa-regular fa-network-wired"></i>
+                            <span data-i18n="settingsAddConnectionOutBtn">Add Host Record</span>
+                        </button>
+                    </div>
+                    <!-- End Hosts File -->
+
+                    <div class="border-bottom mt-3 mb-3"></div>
+                    <div class="row mb-5">
+                        <div class="col text-center">
+                            <button class="btn btn-outline-accent" type="button">
+                                <i class="fa-regular fa-circle-xmark"></i>
+                                <span data-i18n="btnCancel">Cancel</span>
+                            </button>
+                        </div>
+                        <div class="col text-center pulsar-d-none" id="deleteConnectionButton">
+                            <button class="btn btn-outline-danger" type="button">
+                                <i class="fa-regular fa-trash-can"></i>
+                                <span data-i18n="btnDelConnection">Delete Connection</span>
+                            </button>
+                        </div>
+                        <div class="col text-center">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa-regular fa-circle-check"></i>
+                                <span data-i18n="btnSaveConnection">Save Connection</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="border-top border-tertiary" data-i18n="textFooter">
+            A Nebula mesh network connection GUI by JS Prodüksiyon © 2024-2026 JS Prodüksiyon Ltd. Şti.
+        </footer>    
+    </div>
+    <!-- Modals go here -->
+    <!-- Edit Certificate Modal -->
+    <div class="modal fade" id="editCertificateModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">
+                        <span data-i18n="modalEditCertificateTitle">Edit</span>
+                        <span id="certificateTypeLabel"></span>
+                    </h1>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Certificate Text Input -->
+                    <div class="mb-3">
+                        <label for="certificateTextArea" class="form-label" data-i18n="modalCertificateTextLabel">Enter as text</label>
+                        <textarea class="form-control" id="certificateTextArea" rows="8" data-i18n-placeholder="certificateTextAreaPlaceholder" placeholder="Paste Base64 encoded content here..."></textarea>
+                    </div>
+
+                    <!-- Certificate File Input -->
+                    <div class="mb-3">
+                        <label for="certificateFilePath" class="form-label" data-i18n="modalCertificateFileLabel">Load from file</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="certificateFilePath">
+                            <button class="btn btn-outline-primary" type="button" id="certificateFileBrowse" data-i18n-title="modalCertificateFileBrowseBtn" title="Browse for certificate file">
+                                <i class="fa-regular fa-folder-open"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalCertificateCancel"  data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalCertificateSave">
+                        <i class="fa-sharp fa-regular fa-badge-check"></i>
+                        <span data-i18n="modalSaveCertificateBtn">Save Certificate</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configure Static Host Modal -->
+    <div class="modal fade" id="configureStaticHostModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalConfigureStaticHostTitle">Configure Static Host</h1>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Internal IP -->
+                    <div class="mb-3">
+                        <label for="staticHostInternalIP" class="form-label" data-i18n="modalStaticHostInternalIPLabel">Internal IP</label>
+                        <input type="text" class="form-control" id="staticHostInternalIP">
+                    </div>
+
+                    <!-- External IP (IP:Port) -->
+                    <div class="mb-3">
+                        <label for="staticHostExternalIP" class="form-label" data-i18n="modalStaticHostExternalIPLabel">External IP</label>
+                        <input type="text" class="form-control" id="staticHostExternalIP" data-i18n-placeholder="staticHostExternalIPPlaceholder" placeholder="IP:Port">
+                    </div>
+
+                    <!-- Lighthouse Switch -->
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchStaticHostLighthouse">
+                        <label class="form-check-label" for="switchStaticHostLighthouse" data-i18n="switchStaticHostLighthouseLabel">Host is a Lighthouse</label>
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalStaticHostCancel" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" id="modalStaticHostDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalDeleteStaticHostBtn">Delete Host</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalStaticHostSave">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span data-i18n="modalSaveStaticHostBtn">Save Host</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Static Host Confirmation Modal -->
+    <div class="modal fade" id="deleteStaticHostModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalDeleteStaticHostTitle">Delete Static Host</h1>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <p data-i18n="modalDeleteStaticHostConfirm">Are you sure you want to delete this static host?</p>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="modalStaticHostConfirmDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalConfirmDeleteStaticHostBtn">Delete Host</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configure Host Modal -->
+    <div class="modal fade" id="configureHostModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalConfigureHostTitle">Configure Host</h1>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Host Name -->
+                    <div class="mb-3">
+                        <label for="hostName" class="form-label" data-i18n="modalHostNameLabel">Host Name</label>
+                        <input type="text" class="form-control" id="hostName">
+                    </div>
+
+                    <!-- Host IP Address -->
+                    <div class="mb-3">
+                        <label for="hostIPAddress" class="form-label" data-i18n="modalHostIPAddressLabel">Host IP Address</label>
+                        <input type="text" class="form-control" id="hostIPAddress">
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalHostCancel" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" id="modalHostDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalDeleteHostBtn">Delete Record</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalHostSave">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span data-i18n="modalSaveHostBtn">Save Record</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Host Confirmation Modal -->
+    <div class="modal fade" id="deleteHostModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalDeleteHostTitle">Delete Host</h1>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <p data-i18n="modalDeleteHostConfirm">Are you sure you want to delete this host?</p>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="modalHostConfirmDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalConfirmDeleteHostBtn">Delete Host</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configure Firewall Connection Modal -->
+    <div class="modal fade" id="configureConnectionModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">
+                        <span data-i18n="modalConfigureConnectionTitle">Nebula Firewall Connections</span> :: 
+                        <span id="connectionDirectionLabel"></span>
+                    </h1>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Port (0–65535) -->
+                    <div class="mb-3">
+                        <label for="connectionPort" class="form-label" data-i18n="modalConnectionPortLabel">Port</label>
+                        <input type="number" class="form-control" id="connectionPort" min="0" max="65535" value="0">
+                        <p class="small" data-i18n="modalConnectionPortBlurb">Set to 0 to allow any port to connect.</p>
+                    </div>
+
+                    <!-- Protocol -->
+                    <div class="mb-3">
+                        <label for="connectionProtocol" class="form-label" data-i18n="modalConnectionProtocolLabel">Protocol</label>
+                        <select class="form-select" id="connectionProtocol">
+                            <option value="any" data-i18n="selectConnectionProtocolAny" selected>Any</option>
+                            <option value="icmp">ICMP</option>
+                            <option value="tcp">TCP</option>
+                            <option value="udp">UDP</option>
+                        </select>
+                    </div>
+
+                    <!-- Host -->
+                    <div class="mb-3">
+                        <label for="connectionHost" class="form-label" data-i18n="modalConnectionHostLabel">Host</label>
+                        <input type="text" class="form-control" id="connectionHost" pattern="[a-zA-Z0-9\-]*">
+                    </div>
+
+                    <!-- Group -->
+                    <div class="mb-3">
+                        <label for="connectionGroup" class="form-label" data-i18n="modalConnectionGroupLabel">Group</label>
+                        <input type="text" class="form-control" id="connectionGroup" pattern="[a-zA-Z0-9\-]*">
+                        <p class="small" data-i18n="modalConnectionHostGroupBlurb">Either Host or Group must be filled in. If both are provided, the value in Host will be used.</p>
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalConnectionCancel" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" id="modalConnectionDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalDeleteConnectionBtn">Delete Connection</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalConnectionSave">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span data-i18n="modalSaveConnectionBtn">Save Connection</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Connection Confirmation Modal -->
+    <div class="modal fade" id="deleteConnectionModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" data-i18n="modalDeleteConnectionTitle">Delete Connection</h1>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <p data-i18n="modalDeleteConnectionConfirm">Are you sure you want to delete this connection?</p>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="modalConnectionConfirmDelete">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span data-i18n="modalConfirmDeleteConnectionBtn">Delete Connection</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Configuration File Directly Modal -->
+    <div class="modal" id="modalEditConfigFile">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" data-i8n="modalEditConfigFileTitle">Edit Configuration File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" data-i18n-title="btnClose" title="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column">
+                    <p data-i18n="modalEditConfigFileBlurb">
+                        You can edit the Nebula node .yaml configuration file directly below. 
+                        If you don&rsquo;t know what you are doing, there is a high likelihood of severely screwing up your connection.
+                        So make sure you back up the unedited file and then proceed with caution!
+                    </p>
+                    <textarea class="form-control flex-grow-1" id="modalEditConfigFileText"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-accent" id="modalConfigFileCancel" data-bs-dismiss="modal">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <span data-i18n="btnCancel">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="modalConfigFileSave">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span data-i18n="modalSaveConnectionBtn">Save Configuration File</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript libraries -->
+    <script src="./js/jquery.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/settingsMenu.js"></script>
+    <script src="./js/i18n/tools.js"></script>
+</body>
+</html>
